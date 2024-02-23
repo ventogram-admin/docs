@@ -31,23 +31,7 @@
       "url": "api-reference"
     }
   ],
-  "anchors": [
-    {
-      "name": "Documentation",
-      "icon": "book-open-cover",
-      "url": "https://docs.getpartna.com"
-    },
-    {
-      "name": "Community",
-      "icon": "slack",
-      "url": "https://join.slack.com/t/partnaers/shared_invite/zt-2ce6pf3cj-VygbxYf0yS3ttXJNUPwbWw"
-    },
-    {
-      "name": "Blog",
-      "icon": "newspaper",
-      "url": "https://getpartna.com/blog"
-    }
-  ],
+ 
   "navigation": [
     {
       "group": "Get Started",
