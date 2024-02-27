@@ -55,7 +55,7 @@
       ]
     },
     {
-      "group": "Onramp",
+      "group": "Collect & Onramp",
       "pages": [
         "api-reference/endpoint/ventogram/balance/retrieve-merchant-account-balance",
         "api-reference/endpoint/ventogram/merchants/retrieve-merchant-record",
@@ -68,12 +68,12 @@
         "api-reference/endpoint/ventogram/voucher/get-multiple-records",
         "api-reference/endpoint/ventogram/voucher/redeem-existing-unused-voucher",
         "api-reference/endpoint/ventogram/voucher/redeem-and-withdraw",
-        "docs/api-reference/endpoint/ventogram/voucher-fee/retrieves-conversion-rates",
-        "docs/api-reference/endpoint/ventogram/voucher-min-max-amount/retrieves-minimum-and-maximum-voucher-amounts"
+        "api-reference/endpoint/ventogram/voucher-fee/retrieves-conversion-rates",
+        "api-reference/endpoint/ventogram/voucher-min-max-amount/retrieves-minimum-and-maximum-voucher-amounts"
       ]
     },
     {
-      "group": "Offramp",
+      "group": "Payout & Offramp",
       "pages": [
         "api-reference/endpoint/biz/convert-funds",
         "api-reference/endpoint/biz/create-api-key",
