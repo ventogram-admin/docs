@@ -41,6 +41,7 @@
       "group": "Get Started",
       "pages": [
         "introduction",
+        "environments",
         "collect",
         "onramp",
         "payout",
