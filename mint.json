@@ -47,8 +47,7 @@
         "payout",
         "offramp"
       ]
-    },
-    
+    },    
     {
       "group": "API Documentation",
       "pages": [
@@ -56,16 +55,53 @@
       ]
     },
     {
-      "group": "Endpoint Examples",
+      "group": "Onramp",
       "pages": [
-        "api-reference/endpoint/get",
-        "api-reference/endpoint/create",
-        "api-reference/endpoint/delete"
+        "api-reference/endpoint/ventogram/balance/retrieve-merchant-account-balance",
+        "api-reference/endpoint/ventogram/merchants/retrieve-merchant-record",
+        "api-reference/endpoint/ventogram/merchants/update-merchant-record",
+        "api-reference/endpoint/ventogram/mock-payment/make-a-mock-payment",
+        "api-reference/endpoint/ventogram/rates/retrieves-conversion-rates",
+        "api-reference/endpoint/ventogram/transactions/retrieve-merchant-transaction-summary",
+        "api-reference/endpoint/ventogram/voucher/create-a-new-voucher-payment",
+        "api-reference/endpoint/ventogram/voucher/retrieve-voucher-record",
+        "api-reference/endpoint/ventogram/voucher/get-multiple-records",
+        "api-reference/endpoint/ventogram/voucher/redeem-existing-unused-voucher",
+        "api-reference/endpoint/ventogram/voucher/redeem-and-withdraw",
+        "docs/api-reference/endpoint/ventogram/voucher-fee/retrieves-conversion-rates",
+        "docs/api-reference/endpoint/ventogram/voucher-min-max-amount/retrieves-minimum-and-maximum-voucher-amounts"
+      ]
+    },
+    {
+      "group": "Offramp",
+      "pages": [
+        "api-reference/endpoint/biz/convert-funds",
+        "api-reference/endpoint/biz/create-api-key",
+        "api-reference/endpoint/biz/create-payment",
+        "api-reference/endpoint/biz/get-a-single-payment",
+        "api-reference/endpoint/biz/get-a-transaction",
+        "api-reference/endpoint/biz/get-current-rates",
+        "api-reference/endpoint/biz/get-minimum-amount-allowed",
+        "api-reference/endpoint/biz/get-supported-currencies",
+        "api-reference/endpoint/biz/get-supported-cryptocurrencies-and-network",
+        "api-reference/endpoint/biz/resolve-bank-account",
+        "api-reference/endpoint/biz/resolve-overpaid-transaction",
+        "api-reference/endpoint/biz/retrieve-a-list-of-supported-banks",
+        "api-reference/endpoint/biz/retrieve-subscribed-webhook-url",
+        "api-reference/endpoint/biz/retrieve-users-account-balance",
+        "api-reference/endpoint/biz/retrieve-users-transaction-records",
+        "api-reference/endpoint/biz/retrieve-users-transaction-summary",
+        "api-reference/endpoint/biz/retrieves-a-users-crypto-wallet-addresses",
+        "api-reference/endpoint/biz/subscribe-to-webhook",
+        "api-reference/endpoint/biz/transfer-funds",
+        "api-reference/endpoint/biz/wallet-transfer",
+        "api-reference/endpoint/biz/withdraw-balance"
       ]
     }
   ],
   "footerSocials": {
     "twitter": "https://twitter.com/getpartna",
     "linkedin": "https://www.linkedin.com/company/getpartna"
-  }
+  },
+  "openapi": ["api-reference/openapi.yml", "api-reference/biz.yml"]
 }

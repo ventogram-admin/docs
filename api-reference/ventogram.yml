@@ -1,0 +1,1362 @@
+openapi: 3.0.2
+info:
+  title: Ventogram merchant API
+  version: 1.0.0
+  description: Ventogram merchant API
+servers:
+  - url: https://staging-vouchers.ventogram.com/api
+    description: Production
+paths:
+  /v1/merchants:
+    patch:
+      tags:
+        - Merchants
+      security:
+        - ApiUser: []
+          ApiKey: []
+      summary: Update merchant record
+      description: Updates merchant record
+      operationId: update-merchant
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                callbackUrl:
+                  type: string
+                  description: Merchant callback URL. Webhook will be sent to this URL.
+                  example: https://www.example.com/webhook/ventogram
+                logo:
+                  type: string
+                  description: Merchant logo URL
+                  example: https://www.example.com/favicon
+                feeBearer:
+                  type: string
+                  description: Bearer of the voucher fee
+                  enum:
+                    - client
+                    - merchant
+                  example: client
+                creditCurrency:
+                  type: string
+                  enum:
+                    - NGN
+                    - USD
+                    - ''
+                  description: Merchants can set this property to their desired currency. Their balance on Ventogram will be credited with this currency when their users redeem voucher created on Ventogram. Conversion between different currencies will be performed at the rate which is obtainable at the time of redeeming the voucher. If this is not set by the merchant,  their balance will be credited with the currency used in creating the voucher. 
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:                    
+                  success:
+                    type: boolean
+                    enum:
+                      - true
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      username:
+                        type: string
+                      callbackUrl:
+                        type: string
+                      logo:
+                        type: string
+                      creditCurrency:
+                        type: string
+                        enum:
+                          - NGN
+                          - USD
+                      feeBearer:
+                        type: string                      
+    get:
+      tags:
+        - Merchants
+      security:
+        - ApiUser: []
+          ApiKey: []
+      summary: Retrieve merchant record
+      description: Retrieves merchant record - username, email, callback URL, merchant logo, creditCurrency, API key expiry date-time
+      operationId: get-merchant
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    enum:
+                      - true
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      email:
+                        type: string
+                        description: Merchant email address
+                      username:
+                        type: string
+                        description: Merchant username
+                      expires:
+                        type: string
+                        format: date-time
+                        description: API key expiry date and time
+                        example: "2023-10-03T09:21:05.197Z"
+                      logo:
+                        type: string
+                        description: Merchant logo URL
+                        example: https://www.example.com/favicon
+                      creditCurrency:
+                        type: string
+                        description: Merchant's credit currency
+                        enum:
+                          - NGN
+                          - USD
+  /v1/balance:
+    get:
+      tags:
+        - Balance
+      security:
+        - ApiUser: []
+          ApiKey: []
+      summary: Retrieve merchant account balance
+      description: Retrieves account balance for the selected currency
+      operationId: get-balance
+      parameters:
+        - in: query
+          name: currency
+          description: One of supported currencies
+          required: true
+          schema:
+            type: string
+            enum:
+              - NGN
+              - USD
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:                    
+                  success:
+                    type: boolean
+                    enum:
+                      - true
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      currency:
+                        type: string
+                        description: The currency passed by merchant
+                      merchant:
+                        type: string
+                        description: Merchant'susername
+                      amount:
+                        type: integer
+                        format: int32
+                        description: Merchant's balance amount
+                      txnCount:
+                        type: integer
+                        format: int32
+                        description: Total count of voucher redeemption for a given merchant
+  /v1/transactions/summary:
+    get:
+      tags:
+        - Transactions
+      security:
+        - ApiUser: []
+          ApiKey: []
+      summary: Retrieve merchant transaction summary
+      description: Retrieves transaction summary for the selected currency for a merchant
+      operationId: get-summary
+      parameters:
+        - in: query
+          name: currency
+          description: One of supported currencies
+          required: true
+          schema:
+            type: string
+            enum:
+              - NGN
+              - USD
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:                    
+                  success:
+                    type: boolean
+                    enum:
+                      - true
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      totalPaid:
+                        type: integer
+                        format: int32
+                        description: Total count of paid vouchers
+                      totalUnpaid:
+                        type: integer
+                        format: int32
+                        description: Total count of unpaid vouchers
+                      totalRedeemed:
+                        type: integer
+                        format: int32
+                        description: Total count of redeemed vouchers
+                      totalUnredeemed:
+                        type: integer
+                        format: int32
+                        description: Total count of unredeemed vouchers
+  /v1/currency/rates:
+    get:
+      tags:
+        - Rates
+      summary: Retrieves conversion rates
+      description: Retrieves conversion rates for all supported currencies
+      operationId: get-rates
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:                    
+                  success:
+                    type: boolean
+                    enum:
+                      - true
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      USDNGN:
+                        type: object
+                        properties:
+                          value:
+                            type: integer
+                            format: int32
+                            example: 490
+                            description: 1 USD is equal to 500 NGN in this example
+                          rateKey:
+                            type: string
+                            description: Ventogram signed rate key
+                          description:
+                            type: string
+                            description: description text
+
+  /v1/voucher-fee:
+    get:
+      tags:
+        - Voucher fee
+      summary: Retrieves conversion rates
+      description: Retrieves fee for a given voucher amount and currency.
+      operationId: get-fee
+      parameters:
+        - in: query
+          name: amount
+          description: Voucher amount
+          required: true
+          schema:
+            type: integer          
+        - in: query
+          name: currency
+          description: Voucher currency
+          required: true
+          schema:
+            type: string
+            enum:
+              - NGN
+              - USD
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:                    
+                  success:
+                    type: boolean
+                    enum:
+                      - true
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      voucherFee:
+                        type: integer
+                        format: int32
+  /v1/vouchers:
+    post:
+      tags:
+        - Voucher
+      security:
+        - ApiUser: []
+          ApiKey: []
+      summary: Create a new voucher payment
+      description: Creates a new voucher payment for a user
+      operationId: create-voucher
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: User email
+                fullname:
+                  type: string
+                  description: Fullname of the user creating voucher
+                amount:
+                  type: integer
+                  format: int32
+                  description: Required voucher amount
+                currency:
+                  type: string
+                  description: Required voucher currency
+                  enum:
+                    - NGN
+                    - USD
+                rateKey:
+                  type: string
+                  description: This is a Ventogram-signed rate key. If provided when a voucher is created, the conversion will use the rate signed with this key if it is valid at the time of redeeming a voucher. Conversion will use the current rate if key has expired.
+              required:
+                - email
+                - amount
+                - currency
+                - fullname
+      responses:
+        "201":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:                    
+                  success:
+                    type: boolean
+                    enum:
+                      - true
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: Voucher unique id
+        "400":
+          description: Failed operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:                    
+                  success:
+                    type: boolean
+                    enum:
+                      - false
+                  message:
+                    type: string
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example: ["email is required", "Invalid or expired rateKey"]
+    get:
+      tags:
+        - Voucher
+      security:
+        - ApiUser: []
+          ApiKey: []
+      summary: Retrieve voucher record
+      description: Retrieves an existing voucher record(s). When no query param is provided, all the voucher record for the merchant will be returned. If accountNumber field is provided in the query, all the voucher records associated with the given accountNumber for the merchant will be returned.
+      operationId: get-voucher
+      parameters:
+        - in: query
+          name: id
+          description: Voucher id
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: memo
+          description: Voucher memo or reference number
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: accountNumber
+          description: The account number used to pay for voucher
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:                    
+                  success:
+                    type: boolean
+                    enum:
+                      - true
+                  message:
+                    type: string
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        email:
+                          type: string
+                        amount:
+                          type: number
+                        fullname:
+                          type: string
+                        currency:
+                          type: string
+                        fee:
+                          type: number
+                        feeBearer: 
+                          type: string
+                        paymentStatus:
+                          type: string
+                          enum:
+                            - paid
+                            - unpaid
+                            - declined
+                        paymentExpiresAt:
+                          type: string
+                          format: date-time
+                        merchant:
+                          type: string
+                        memo:
+                          type: string
+                        voucherCode:
+                          type: string
+                          description: Voucher code. Present only if voucher has been paid
+                        createdAt:
+                          type: string
+                        dateRedeemed:
+                          type: string
+                          format: date-time
+                          description: Timestamp of when the voucher was redeemed. If voucher has not been redeemed, this field is undefined.
+                        accountType:
+                          type: string
+                          enum:
+                            - dynamic
+                            - static
+                          description: Type of created bank account. Note that this property is only available in v2.
+                        cancelledAt:
+                          type: string
+                          format: date-time
+                          description: This property is optional. Only available if the voucher has been cancelled.
+        "404":
+          description: Failed operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:                    
+                  success:
+                    type: boolean
+                    enum:
+                      - false
+                  message:
+                    type: string
+                  errors:
+                    type: array
+                    example: []
+    patch:
+      tags:
+        - Voucher
+      security:
+        - ApiUser: []
+          ApiKey: []
+      summary: Redeem existing unused voucher
+      description: Redeems an existing unused voucher
+      operationId: redeem-voucher
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: Email that was used to create the voucher
+                voucherCode:
+                  type: string
+                  description: Voucher code to be redeemed
+              required:
+                - email
+                - voucherCode
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:                    
+                  success:
+                    type: boolean
+                    enum:
+                      - true
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: Voucher ID
+                      email:
+                        type: string
+                        description: Email that aws used to create the voucher
+                      voucherCode:
+                        type: string
+                        description: Voucher code to be redeemed
+                      amount:
+                        type: number
+                        description: Voucher amount after fee deduction
+                      fee:
+                        type: number
+                        description: The fee associated with voucher
+                      wavedFee:
+                        type: number
+                        description: Waved fee (if available)
+                      merchant:
+                        type: string
+                        description: username of the merchant that created the voucher
+                      currency:
+                        type: string
+                        description: voucher payment currency
+                        enum:
+                          - NGN
+                          - USD
+                      feeBearer:
+                        type: string
+                        description: The bearer of voucher fee
+                        enum:
+                          - client
+                          - merchant
+                        default: client
+                      toAmount:
+                        type: number
+                        description: The amount in the currency that was converted to when conversion was done. If there's no conversion, this is the same as fromAmount.
+                      fromAmount:
+                        type: number
+                        description: The amount in the currency that was converted from when conversion was done. If there's no conversion, this is the same as toAmount.
+                      fromCurrency:
+                        type: string
+                        description: The currency from which conversion was done. If there's no conversion, this is the same as toCurrency.
+                      toCurrency:
+                        type: string
+                        description: The currency to which conversion was done. If there's no conversion, this is the same as fromCurrency.
+                      rate:
+                        type: number
+                        description: The exchange rate that was used for conversion when conversion was done. If there's no conversion, the value is 1.
+                      previousBalance:
+                        type: number
+                        description: Merchant's balance before redeeming voucher
+                      currentBalance:
+                        type: number
+                        description: Merchant's balance after redeeming voucher
+        "400":
+          description: Failed operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:                    
+                  success:
+                    type: boolean
+                    enum:
+                      - false
+                  message:
+                    type: string
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example: ["voucherCode is required"]
+        "404":
+          description: Failed operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:                    
+                  success:
+                    type: boolean
+                    enum:
+                      - false
+                  message:
+                    type: string
+                  errors:
+                    type: array
+                    example: []
+  /v1/mock/payment:
+    post:
+      tags:
+        - "Mock Payment"
+      summary: Make a mock payment
+      description: Sends a mock payment request (only in staging environment)
+      operationId: mock-payment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                voucherId:
+                  type: string
+                  description: ID of the voucher to be paid    
+                amount:
+                  type: integer
+                  format: int32
+                  description: Amount to pay. This can be used to simulate overpayment and underpayment in staging environment. If this field is not provided, the expected amount will be paid.
+              required:
+                - voucherId
+      responses:
+        "201":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:                    
+                  success:
+                    type: boolean
+                    enum:
+                      - true
+                  message:
+                    type: string
+        "400":
+          description: Failed operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:                    
+                  success:
+                    type: boolean
+                    enum:
+                      - false
+                  message:
+                    type: string
+  /v2/vouchers:
+    post:
+      tags:
+        - Voucher V2
+      security:
+        - ApiUser: []
+          ApiKey: []
+      summary: Create a new voucher payment
+      description: Creates a new voucher payment for a user
+      operationId: create-voucher-v2
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                bvn:
+                  type: string
+                  description: User's 11-digit BVN
+                phoneNumber:
+                  type: string
+                  description: Phone number in international format
+                  example: +23480xxxxxxxx
+                email:
+                  type: string
+                  description: User email
+                  example: email@example.com
+                fullname:
+                  type: string
+                  description: Fullname of the user creating voucher
+                amount:
+                  type: integer
+                  format: int32
+                  description: Required voucher amount
+                currency:
+                  type: string
+                  description: Required voucher currency
+                  enum:
+                    - NGN
+                    - USD
+              required:
+                - bvn
+                - email
+                - amount
+                - currency
+                - fullname
+                - phoneNumber
+      responses:
+        "201":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:                    
+                  success:
+                    type: boolean
+                    enum:
+                      - true
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: Voucher unique id
+        "400":
+          description: Failed operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:                    
+                  success:
+                    type: boolean
+                    enum:
+                      - false
+                  message:
+                    type: string
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example: ["email is required"]
+        "409":
+          description: Duplicate request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:                    
+                  success:
+                    type: boolean
+                    enum:
+                      - false
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      activeVoucher:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                          email:
+                            type: string
+                          currency:
+                            type: string
+                          fullname:
+                            type: string
+                          amount:
+                            type: number
+                          fee:
+                            type: number
+                          expectedAmount:
+                            type: number
+                          waivedFee:
+                            type: number
+                          feeBearer:
+                            type: string
+                          bankName:
+                            type: string
+                          bankCode:
+                            type: string
+                          accountName:
+                            type: string
+                          accountNumber:
+                            type: string
+                          accountType:
+                            type: string
+                            enum:
+                              - dynamic
+                              - static
+                          paymentStatus:
+                            type: string
+                          paymentExpiresAt:
+                            type: string
+                          memo:
+                            type: string
+                          merchant:
+                            type: string
+                          merchantLogo:
+                            type: string
+                      newVoucherPayload:
+                        type: object
+                        properties:
+                          bvn:
+                            type: string
+                          email:
+                            type: string
+                          fullname:
+                            type: string
+                          amount:
+                            type: number
+                          currency:
+                            type: string
+                          merchant:
+                            type: string    
+    put:
+      tags:
+        - Voucher V2
+      security:
+        - ApiUser: []
+          ApiKey: []
+      summary:  Cancel existing voucher and create a new voucher one.
+      description: In V2, a user can only have one open voucher at a time. Merchants don't need to call this endpoint from their server if they have already integrated Ventogram frontend. Users will be prompted to continue to pay an open voucher or cancel before creating a new one on the UI. 
+      operationId: cancel-and-create-voucher
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                bvn:
+                  type: string
+                  description: User's 11-digit BVN
+                phoneNumber:
+                  type: string
+                  description: Phone number in international format
+                  example: +23480xxxxxxxx
+                email:
+                  type: string
+                  description: User email
+                  example: email@example.com
+                fullname:
+                  type: string
+                  description: Fullname of the user creating voucher
+                amount:
+                  type: integer
+                  format: int32
+                  description: Required voucher amount
+                currency:
+                  type: string
+                  description: Required voucher currency
+                  enum:
+                    - NGN
+                    - USD
+                cancelActiveVoucher:
+                  type: boolean
+              required:
+                - bvn
+                - email
+                - amount
+                - currency
+                - fullname
+                - phoneNumber
+      responses:
+        "201":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:                    
+                  success:
+                    type: boolean
+                    enum:
+                      - true
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: Voucher unique id
+        "400":
+          description: Failed operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:                    
+                  success:
+                    type: boolean
+                    enum:
+                      - false
+                  message:
+                    type: string
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example: ["email is required"]
+        "409":
+          description: Duplicate voucher
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:                    
+                  success:
+                    type: boolean
+                    enum:
+                      - false
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      activeVoucher:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                          email:
+                            type: string
+                          currency:
+                            type: string
+                          fullname:
+                            type: string
+                          amount:
+                            type: number
+                          fee:
+                            type: number
+                          expectedAmount:
+                            type: number
+                          waivedFee:
+                            type: number
+                          feeBearer:
+                            type: string
+                          bankName:
+                            type: string
+                          bankCode:
+                            type: string
+                          accountName:
+                            type: string
+                          accountNumber:
+                            type: string
+                          accountType:
+                            type: string
+                            enum:
+                              - dynamic
+                              - static
+                          paymentStatus:
+                            type: string
+                          paymentExpiresAt:
+                            type: string
+                          memo:
+                            type: string
+                          merchant:
+                            type: string
+                          merchantLogo:
+                            type: string
+                      newVoucherPayload:
+                        type: object
+                        properties:
+                          bvn:
+                            type: string
+                          email:
+                            type: string
+                          fullname:
+                            type: string
+                          amount:
+                            type: number
+                          currency:
+                            type: string
+                          merchant:
+                            type: string
+  /v1/voucher-min-max:
+    get:
+      tags:
+        - Voucher min-max amount
+      summary: Retrieves minimum and maximum voucher amounts
+      description: Retrieves minimum and maximum voucher amounts for each currency.
+      operationId: voucher-min-max
+      parameters:        
+        - in: query
+          name: currency
+          description: Voucher currency
+          schema:
+            type: string
+            enum:
+              - NGN
+              - USD
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:                    
+                  success:
+                    type: boolean
+                    enum:
+                      - true
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      NGN:
+                        type: object
+                        properties:
+                          min:
+                            type: number
+                            example: 500
+                          max:
+                            type: number
+                            example: 2000000
+                      USD:
+                        type: object
+                        properties:
+                          min:
+                            type: number
+                            example: 100
+                          max:
+                            type: number
+                            example: 2000
+  /v1/voucher:
+    patch:
+      tags:
+        - Voucher
+      security:
+        - ApiUser: []
+          ApiKey: []
+      summary: Redeem and withdraw
+      description: Redeems an existing unused voucher and transfers crypto to the provided wallet address
+      operationId: redeem-and-withdraw
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: Email that was used to create the voucher
+                voucherCode:
+                  type: string
+                  description: Voucher code to be redeemed
+                network:
+                  type: string
+                  description: Supported crypto network
+                currency:
+                  type: string
+                  enum:
+                    - USDC
+                    - USDT
+                  description: Cryptocurrency to send to the provided wallet details
+                merchantFee:
+                  type: string
+                  enum:
+                    - USD
+                  description: In USD (optional). Can be supplied if the merchant want to withdraw a portion of the voucher amount into their Ventogram balance. This must be a fraction or all of voucher value (ie received amount - voucher fee)
+                cryptoAddress:
+                  type: string
+                  description: Must be provided along with newtwork. The crypto wallet address on the provided network, to which crypto equivalent will be sent
+                rateKey:
+                  type: string
+                  description: This is a Ventogram-signed rate key. This will be returned in response if the signed rate was used for conversion.
+              required:
+                - email
+                - voucherCode
+                - network
+                - currency
+                - cryptoAddress
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:                    
+                  success:
+                    type: boolean
+                    enum:
+                      - true
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: Voucher ID
+                      email:
+                        type: string
+                        description: Email that aws used to create the voucher
+                      voucherCode:
+                        type: string
+                        description: Voucher code to be redeemed
+                      merchant:
+                        type: string
+                        description: username of the merchant that created the voucher
+                      fromCurrency:
+                        type: string
+                        description: voucher payment currency
+                      voucherFee:
+                        type: number
+                        description: The fee associated with voucher in the payment currency. This will be deducted from merchant's balance if merchant is the fee bearer.
+                      feeBearer:
+                        type: string
+                        description: The bearer of voucher fee
+                        enum:
+                          - merchant
+                          - client
+                      toAmount:
+                        type: number
+                        description: The amount that was sent to user wallet address.
+                      fromAmount:
+                        type: number
+                        description: Voucher payment amount.
+                      toCurrency:
+                        type: string
+                        description: The currency that was sent to user wallet.
+                      rate:
+                        type: number
+                        description: The exchange rate that was used for conversion (if applicable) at the time of redeeming the voucher. If there's no conversion, the value is 1.
+                      merchantFee:
+                        type: number
+                        description: This can be optionally provided by the merchant in the request if they want some of the received amount to be added to their Ventogram balance.
+                      withdrawalFee:
+                        type: number
+                        description:  The processing fee for the crypto transfer that will be deducted from the merchant's account. Merchants must maintain a sufficient balance to utilize the redeem-and-withdraw endpoint.
+                      previousBalance:
+                        type: number
+                        description: Merchant's balance before redeeming voucher
+                      convertedVoucherFee:
+                        type: number
+                        description: Voucher fee in the outgoing currency
+                      convertedVoucherFeeCurrency:
+                        type: string
+                        description: The same as toCurrency
+                      toAccount:
+                        type: string
+                        description: The crypto wallet address to which asset was transferred
+                      currentBalance:
+                        type: number
+                        description: Merchant's balance after redeeming voucher
+                      reference:
+                        type: string
+                        description: This is basically a unique id
+                      creditCurrency:
+                        type: string
+                        description: Merchant's balance currency
+
+        "400":
+          description: Failed operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:                    
+                  success:
+                    type: boolean
+                    enum:
+                      - false
+                  message:
+                    type: string
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example: ["voucherCode is required"]
+        "404":
+          description: Failed operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:                    
+                  success:
+                    type: boolean
+                    enum:
+                      - false
+                  message:
+                    type: string
+                  errors:
+                    type: array
+                    example: []
+  /v1/voucher/get-many:
+    get:
+      tags:
+        - Voucher
+      security:
+        - ApiUser: []
+          ApiKey: []
+      summary: Get multiple records
+      description: Retrieves a collection of voucher records, sorted in descending order by their creation date.
+      operationId: get-many
+      parameters:
+        - in: query
+          name: page
+          description: Defaults to 1. This is the current page being requested relative to size of a page
+          required: false
+          schema:
+            type: number
+        - in: query
+          name: pageSize
+          description: The number of items to be retured per page
+          required: false
+          schema:
+            type: number
+        - in: query
+          name: paymentStatus
+          description: Voucher payment status
+          required: false
+          schema:
+            type: string
+            enum:
+              - paid
+              - unpaid
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:                    
+                  success:
+                    type: boolean
+                    enum:
+                      - true
+                  message:
+                    type: string
+                  data:
+                    type: array
+                    description: An array containing the retrieved voucher records, sorted in descending order by their creation date.
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        email:
+                          type: string
+                        amount:
+                          type: number
+                        fee:
+                          type: number
+                        currency:
+                          type: string
+                        feeBearer:
+                          type: string
+                          enum:
+                            - client
+                            - merchant
+                        expectedAmount:
+                          type: number
+                        fullname:
+                          type: string
+                        paymentStatus:
+                          type: string
+                          enum:
+                            - paid
+                            - unpaid
+                        merchant:
+                          type: string
+                        memo:
+                          type: string
+                        createdAt:
+                          type: string
+                          format: date-time
+                        rateKey:
+                          type: string
+                          description: This is defined only if the voucher was created using a valid rate key
+                        voucherCode:
+                          type: string
+                          description: This is defined only if the voucher payment has been received
+                        paidAt:
+                          type: string
+                          format: date-time
+                          description: This is defined only if the voucher payment has been received
+                        receivedAmount:
+                          type: number
+                          description: This is defined only if the voucher payment has been received
+                        dateRedeemed:
+                          type: string
+                          format: date-time
+                          description: This is defined only if the voucher payment has been received
+                        rate:
+                          type: number
+                          description: This is defined only if the voucher has been paid and redeemed
+                  meta:
+                    type: object
+                    properties:
+                      nextPage:
+                        type: string
+                        description: Contanis the URL of the next page to be fetched relative on the URL parameters of the last paged fetched. This is null if there are no more records to fetch.
+                      prevPage:
+                        type: string
+                        description: Contanis the URL of the previous page that was fetched fetched relative on the URL parameters of the current paged
+        "400":
+          description: Failed operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:                    
+                  success:
+                    type: boolean
+                    enum:
+                      - false
+                  message:
+                    type: string
+                  errors:
+                    type: array
+                    items:
+                      type: string                       
+components:
+  securitySchemes:
+    ApiUser:
+      type: apiKey
+      in: header
+      name: X-Api-User
+    ApiKey:
+      type: apiKey
+      in: header
+      name: X-Api-Key
+    AdminSecret:
+      type: apiKey
+      in: header
+      name: X-Admin-Secret
+tags: []
