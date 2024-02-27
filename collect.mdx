@@ -31,7 +31,7 @@ Here's how the process looks like for your customers:
 
 ## Update your merchant information
 
-Once you get your API credentials, update your merchant details using our dedicated merchant endpoint. 
+Once you get your API credentials, update your merchant details using our **update merchant record**. 
 
 **Params:**
 1. `logo` : Sets your widget logo.
@@ -39,7 +39,7 @@ Once you get your API credentials, update your merchant details using our dedica
 3. `feeBearer` : Payee of the transaction fees.
 4. `creditCurrency` : Sets which currency to be settled in after voucher is redeemed
 
-See our update-merchant API reference for more details.
+See our [update-merchant](/api-reference/endpoint/ventogram/merchants/update-merchant-record) API reference for more details.
 
 ## Create a voucher
 
@@ -184,7 +184,7 @@ After creating a voucher, your users will be directed to the provided callback U
 1. `vouchercode` : The code used to redeem the voucher.
 2. `voucherId` : The ID of the created voucher.
 
-See our redeem-voucher API reference for more details
+See our [redeem-voucher](/api-reference/endpoint/ventogram/voucher/redeem-existing-unused-voucher)  API reference for more details
 
 <Tip>
   **feeBearer:** The `feeBearer` param allows you to choose between `client` or `merchant` as the payee of the fee. `merchant` will charge fees from your balance, while `client` will charge fees from the customer.

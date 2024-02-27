@@ -1,0 +1,1238 @@
+openapi: 3.0.2
+info:
+  title: Coinprofile business API
+  version: 1.0.0
+  description: Coinprofile business API
+servers:
+  - url: https://staging-biz.coinprofile.co/v2
+    description: Production
+paths:
+  /balance:
+    get:
+      security:
+        - ApiUser: []
+          ApiKey: []
+          UserVersion: []
+      description: Retrieves account balance for each currency
+      summary: Retrieve user's account balance
+      operationId: get-balance
+      parameters:
+        - in: query
+          name: currency
+          description: Currency for which balance is to be retrieved. When this is not supplied, balance will be retrieved for all available currencies.
+          schema:
+            type: string
+            enum:
+              - NGN
+              - USD
+              - USDT
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      balances:
+                        type: object
+                        properties:
+                          totalRecieved:
+                            type: integer
+                            format: int32
+                          totalSent:
+                            type: integer
+                            format: int32
+                          txnCount:
+                            type: number
+                          toCurrency:
+                            type: string
+                          amount:
+                            type: integer
+                            format: int32
+                            description: User's balance amount
+                          formattedAmount:
+                            type: integer
+                            format: int32
+  /balance/withdraw:
+    post:
+      security:
+        - ApiUser: []
+          ApiKey: []
+          UserVersion: []
+      description: Withdraw funds from the user's balance
+      summary: Withdraw balance
+      operationId: withdrawBalance
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                accountNumber:
+                  type: string
+                  description: The account number of the user's bank account.
+                accountName:
+                  type: string
+                  description: The account name. This is the name of the account holder.
+                bank:
+                  type: string
+                  description: The bank name. e.g. "Access Bank".
+                bankCode:
+                  type: string
+                  description: The bank code. e.g. "044".
+                currency:
+                  type: string
+                  description: The currency of the withdrawal.
+                amount:
+                  type: string
+                  description: The amount to be withdrawn.
+                token:
+                  type: string
+                  description: The token to be used for OTP.
+                otpType:
+                  type: string
+                  description: The type of OTP to be used.
+                  enum:
+                    - otp
+                    - totp
+              required:
+                - accountNumber
+                - accountName
+                - bank
+                - bankCode
+                - currency
+                - amount
+                - otpType
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+  /bank/resolve:
+    post:
+      description: Verifies the bank account and returns the bank account details
+      summary: Resolve bank account
+      operationId: resolveBankAccount
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                accountNumber:
+                  type: string
+                  description: The account number.
+                bankCode:
+                  type: string
+                  description: The bank code.
+              required:
+                - accountNumber
+                - bankCode
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      responsemessage:
+                        type: string
+                      responsecode:
+                        type: string
+                      uniquereference:
+                        type: string
+                      internalreference:
+                        type: string
+                      accountname:
+                        type: string
+                      accountnumber:
+                        type: string
+                      phonenumber:
+                        type: string
+                      currency:
+                        type: string
+                      country:
+                        type: string
+                      code:
+                        type: string
+                      name:
+                        type: string
+                      is_visible:
+                        type: string
+                      is_trashed:
+                        type: string
+                      deleted_at:
+                        type: string
+                      created_at:
+                        type: string
+                      updated_at:
+                        type: string
+  /bank/supported:
+    get:
+      description: Retrieve a list of supported banks
+      summary: Retrieve a list of supported banks
+      operationId: retrieveSupportedBanks
+      parameters:
+        - in: query
+          name: country
+          schema:
+            type: string
+          description: The country from which to retrieve supported banks
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        Code:
+                          type: string 
+                        Name: 
+                          type: string
+  /callbackurl:
+    put:
+      security:
+        - ApiUser: []
+          ApiKey: []
+          UserVersion: []
+      description: Set the callback url that will be used as webhook
+      summary: Subscribe to webhook
+      operationId: setCallbackUrl
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                callbackUrl:
+                  type: string
+                  description: The callback url. e.g. https://www.example.com/callback
+              required:
+                - callbackUrl
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:                    
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+    get:
+      security:
+        - ApiUser: []
+          ApiKey: []
+          UserVersion: []
+      description: Retrieve the callback url used as webhook
+      summary: Retrieve subscribed webhook url
+      operationId: getCallbackUrl
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:                    
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      callbackUrl:
+                        type: string
+                        description: The callback url. e.g. https://www.example.com/callback
+  /payment:
+    post:
+      security:
+        - ApiUser: []
+          ApiKey: []
+          UserVersion: []
+      description: Create a new payment
+      summary: Create payment
+      operationId: createPayment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                businessId:
+                  type: string
+                  description: The business id
+                reference:
+                  type: string
+                  description: The reference
+                incomingAmount:
+                  type: number
+                  description: The incoming amount
+                outgoingAmount:
+                  type: number
+                  description: The outgoing amount
+                incomingCurrency:
+                  type: string
+                  description: The incoming currency
+                outgoingCurrency:
+                  type: string
+                  description: The outgoing currency
+                rateKey:
+                  type: string
+                  description: The rate key
+                customerEmail:
+                  type: string
+                  description: The rate key
+                paymentType:
+                  type: string
+                  description: The payment type
+                coinprofileUsername:
+                  type: string
+                  description: The coinprofile username. Required when paymentType is profile
+                country:
+                  type: string
+                  description: The country. Required when paymentType is bank
+                accountNumber:
+                  type: string
+                  description: The account number. Required when paymentType is bank
+                accountName:
+                  type: string
+                  description: The account name. Required when paymentType is bank
+                bank:
+                  type: string
+                  description: The bank name. Required when paymentType is bank
+                bankCode:
+                  type: string
+                  description: The bank code. Required when paymentType is bank
+              required:
+                - businessId
+                - incomingCurrency
+                - outgoingCurrency
+                - paymentType
+                - customerEmail
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      incomingAmount:
+                        type: integer
+                        format: int32
+                      outgoingAmount:
+                        type: integer
+                        format: int32
+                      confirmedAmount:
+                        type: integer
+                        format: int32
+                      unconfirmedAmount:
+                        type: integer
+                        format: int32
+                      state:
+                        type: string
+                      _id:
+                        type: string
+                      businessId:
+                        type: string
+                      reference:
+                        type: string
+                      incomingCurrency:
+                        type: string
+                      outgoingCurrency:
+                        type: string
+                      expTime:
+                        type: string
+                      address:
+                        type: string
+                      customerEmail:
+                        type: string
+                      paymentType:
+                        type: string
+                      account:
+                        type: string
+                      rate:
+                        type: integer
+                        format: int32
+                      threadTS:
+                        type: string
+                      senderUsername:
+                        type: string
+                      createdAt:
+                        type: string
+                      updatedAt:
+                        type: string
+  /payment/{paymentId}:
+    get:
+      security:
+        - ApiUser: []
+          ApiKey: []
+          UserVersion: []
+      description: Get a single payment
+      summary: Get a single payment
+      operationId: getPayment
+      parameters:
+        - name: paymentId
+          in: path
+          description: The ID of the created payment
+          required: true
+          schema:
+            type: string
+      responses:
+        "200": 
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  success:
+                    type: boolean
+  /payment/resolve:
+    get:
+      description: Resolve overpaid Transaction
+      summary: Resolve overpaid Transaction
+      operationId: resolveOverpaidTransaction
+      parameters:
+        - name: id
+          in: query
+          description: The ID of the unresolved transaction
+          required: true
+          schema:
+            type: string
+        - name: option
+          in: query
+          description: This is the way you want the transaction to be completed. Either refundExcess or PayAll option
+          required: true
+          schema:
+            type: string
+            enum:
+              - refundexcess
+              - payall
+      responses:
+        "200": 
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  success:
+                    type: boolean
+  /currency/rate:
+    get:
+      description: Get the current rates
+      summary: Get current rates
+      operationId: getCurrentRates
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      publicKey:
+                        type: string
+                      signature:
+                        type: string
+                      YOUR_CURRENCY:
+                        type: object
+                        properties:
+                          rate:
+                            type: number
+                            format: float
+                          key:
+                            type: string
+  /currency/supported:
+    get:
+      description: Get supported currencies
+      summary: Get supported currencies
+      operationId: getSupportedCurrencies
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      incomingCurrencies:
+                        type: array
+                        items:
+                          type: string
+                      outgoingCurrencies:
+                        type: array
+                        items:
+                          type: string
+  /currency/minimum-allowed:
+    get:
+      description: Get minimum amount allowed
+      summary: Get minimum amount allowed
+      operationId: getMinimumAllowed
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+  /auth/api-key:
+    post:
+      security:
+        - ApiUser: []
+          ApiKey: []
+          UserVersion: []
+      description: Create a new api key
+      summary: Create api key
+      operationId: createApiKey
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                token:
+                  type: string
+                otpType:
+                  type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      key:
+                        type: string
+                      expires:
+                        type: string
+                        format: date
+  /balance/transfer:
+    post:
+      security:
+        - ApiUser: []
+          ApiKey: []
+          UserVersion: []
+      description: Transfer funds from user's balance to another user (fiat-to-fiat)
+      summary: Transfer funds
+      operationId: transferFunds
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                receiverUsername:
+                  type: string
+                  description: Receiver's coinprofile username.
+                currency:
+                  type: string
+                  description: Currency being sent.
+                  enum:
+                    - NGN
+                    - USD
+                amount:
+                  type: string
+                  description: Amount to transfer.
+                token:
+                  type: string
+                  description: The token to be used for OTP.
+                otpType:
+                  type: string
+                  description: The type of OTP to be used.
+                  enum:
+                    - otp
+                    - totp
+                memo:
+                  type: string
+                  description: Transaction memo.
+                  minLength: 0
+                  maxLength: 28
+              required:
+                - receiverUsername
+                - currency
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                        transactionId:
+                          type: string
+                        sender:
+                          type: string
+                        status:
+                          type: string
+                          enum:
+                            - fullfiled
+                            - processing
+                            - failed
+                        date:
+                          type: string
+                          format: date
+                        toCurrency:
+                          type: string
+                          enum:
+                            - NGN
+                            - USD
+                        fromCurrency:
+                          type: string
+                          enum:
+                            - NGN
+                            - USD
+                        receiveAmount:
+                          type: string
+                        amount:
+                          type: string
+                        username:
+                          type: string
+                        senderPrevbalance:
+                          type: string
+  /balance/convert:
+    post:
+      security:
+        - ApiUser: []
+          ApiKey: []
+          UserVersion: []
+      description: Convert user's balance from one currency to another (fiat-to-fiat)
+      summary: Convert funds
+      operationId: convertFunds
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                fromCurrency:
+                  type: string
+                  description: Base currency to convert.
+                  enum:
+                    - NGN
+                    - USD
+                toCurrency:
+                  type: string
+                  description: Currency being converted to.
+                  enum:
+                    - NGN
+                    - USD
+                amount:
+                  type: string
+                  description: Amount to convert.
+              required:
+                - fromCurrency
+                - toCurrency
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      transferDetail:
+                        type: object
+                        properties:
+                          transactionId:
+                            type: string
+                          sender:
+                            type: string
+                          status:
+                            type: string
+                            enum:
+                              - fullfiled
+                              - processing
+                              - failed
+                          date:
+                            type: string
+                            format: date
+                          toCurrency:
+                            type: string
+                            enum:
+                              - NGN
+                              - USD
+                          fromCurrency:
+                            type: string
+                            enum:
+                              - NGN
+                              - USD
+                          receiveAmount:
+                            type: string
+                          amount:
+                            type: string
+                          username:
+                            type: string
+                          senderPrevbalance:
+                            type: string
+  /transaction:
+    get:
+      security:
+        - ApiUser: []
+          ApiKey: []
+          UserVersion: []
+      description: Retrieves all user transactions
+      summary: Retrieve user's transaction records
+      operationId: get-transactions
+      parameters:
+        - in: query
+          name: currency
+          description: Currency for which transactions are to be retrieved. When this is not supplied, transactions will be retrieved for all available currencies.
+          schema:
+            type: string
+            enum:
+              - NGN
+              - USD        
+        - in: query
+          name: type
+          description: Type of transactions to be retrieved. When this is not supplied, transactions will be retrieved for all available types.
+          schema:
+            type: string
+            enum:
+              - deposit
+              - withdrawal
+              - sent
+              - transfer
+              - internalTransfer
+              - conversion        
+        - in: query
+          name: page
+          description: Number of pages to be retrieved.
+          schema:
+            type: number            
+        - in: query
+          name: limit
+          description: Number of transaction records to be retrieved per page page.
+          schema:
+            type: number                    
+        - in: query
+          name: duration
+          description: Duration of the transaction to be retrieved per page page.
+          schema:
+            type: number
+            enum:
+              - one day
+              - one week
+              - one month
+              - one year            
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          type: object
+                          properties:                            
+                            currency:
+                              type: string
+                            version:
+                              type: string
+                            transactionId:
+                              type: string
+                            sender:
+                              type: string
+                            isFromRegUser:
+                              type: boolean
+                            prevBalance:
+                              type: number
+                              format: int32
+                            senderPrevbalance:
+                              type: number
+                              format: int32
+                            type:
+                              type: string
+                            status:
+                              type: string
+                            businessId:
+                              type: string
+                            date:
+                              type: string
+                            fromCurrency:
+                              type: string
+                            fromAmount:
+                              type: number
+                              format: int32
+                            amount:
+                              type: number
+                              format: int32
+                            username:
+                              type: string
+                            fee:
+                              type: number
+                              format: int32
+                            createdAt:
+                              type: string
+                              format: date-time
+                            updatedAt:
+                              type: string
+                              format: date-time                    
+                      total:
+                        type: number
+                        format: int32
+                      perPage:
+                        type: number
+                        format: int32
+                      page:
+                        type: number
+                        format: int32
+                      pages:
+                        type: number
+                        format: int32
+  /transaction/{transactionId}:
+    get: 
+      security:
+        - ApiUser: []
+          ApiKey: []
+          UserVersion: []
+      description: Get a transaction
+      summary: Get a transaction
+      operationId: getTransaction
+      parameters:
+        - in: path
+          name: transactionId
+          required: true
+          schema:
+            type: string
+      responses:
+        "200": 
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  success:
+                    type: boolean
+                  transactionId:
+                    type: string
+                  amount:
+                    type: number
+                  businessId: 
+                    type: string
+                  currency: 
+                    type: string
+                  fromAmount: 
+                    type: number
+                  fromCurrency:
+                    type: string
+                  isFromRegUser: 
+                    type: boolean
+                  memo: 
+                    type: string
+                  prevBalance:
+                    type: number
+                  sender: 
+                    type: string
+                  status: 
+                    type: string
+                  type: 
+                    type: string
+                  username:
+                    type: string
+  /transaction/summary:
+    get:
+      security:
+        - ApiUser: []
+          ApiKey: []
+          UserVersion: []
+      description: Retrieves all user transactions summary
+      summary: Retrieve user's transaction summary
+      operationId: get-transactions-summary
+      parameters:
+        - in: query
+          name: currency
+          description: Currency for which transactions are to be retrieved. When this is not supplied, transactions will be retrieved for all available currencies.
+          schema:
+            type: string
+            enum:
+              - NGN
+              - USD        
+        - in: query
+          name: type
+          description: Type of transactions to be retrieved. When this is not supplied, transactions will be retrieved for all available types.
+          schema:
+            type: string
+            enum:
+              - deposit
+              - withdrawal
+              - sent
+              - transfer
+              - internalTransfer
+              - conversion        
+        - in: query
+          name: page
+          description: Number of pages to be retrieved.
+          schema:
+            type: number            
+        - in: query
+          name: limit
+          description: Number of transaction records to be retrieved per page page.
+          schema:
+            type: number                    
+        - in: query
+          name: duration
+          description: Duration of the transaction to be retrieved per page page.
+          schema:
+            type: number
+            enum:
+              - one day
+              - one week
+              - one month
+              - one year            
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      txn:
+                        type: object
+                        properties:
+                          data:
+                            type: array
+                            items:
+                              type: object
+                              properties:                            
+                                currency:
+                                  type: string
+                                version:
+                                  type: string
+                                transactionId:
+                                  type: string
+                                sender:
+                                  type: string
+                                isFromRegUser:
+                                  type: boolean
+                                prevBalance:
+                                  type: number
+                                  format: int32
+                                senderPrevbalance:
+                                  type: number
+                                  format: int32
+                                type:
+                                  type: string
+                                status:
+                                  type: string
+                                businessId:
+                                  type: string
+                                date:
+                                  type: string
+                                fromCurrency:
+                                  type: string
+                                fromAmount:
+                                  type: number
+                                  format: int32
+                                amount:
+                                  type: number
+                                  format: int32
+                                username:
+                                  type: string
+                                fee:
+                                  type: number
+                                  format: int32
+                                createdAt:
+                                  type: string
+                                  format: date-time
+                                updatedAt:
+                                  type: string
+                                  format: date-time                    
+                          total:
+                            type: number
+                            format: int32
+                          perPage:
+                            type: number
+                            format: int32
+                          page:
+                            type: number
+                            format: int32
+                          pages:
+                            type: number
+                            format: int32                      
+                      summary:
+                        type: object
+                        properties:                          
+                          volume:
+                            type: number
+                            format: int32
+                          txnCount:
+                            type: number
+                            format: int32
+                          duration:
+                            type: number
+                            format: int32
+  /wallet:
+    get:
+      security:
+        - ApiUser: []
+          ApiKey: []
+          UserVersion: []
+      description: get wallet 
+      summary: Retrieves a user's crypto wallet addresses
+      operationId: get-wallet
+      parameters:
+        - in: query
+          name: currency
+          description: The cryptocurrency for which address will be retrieved
+          schema:
+            type: string      
+        - in: query
+          name: network
+          description: The crypto network of the retrieved wallet address
+          schema:
+            type: string       
+      responses:
+        "200":
+          description: successfully retrieved wallet
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                  wallet:
+                    type: object
+                    properties:                 
+                      createdAt:
+                        type: number
+                        format: int32
+                      updatedAt:
+                        type: number
+                        format: int32
+                      appName:
+                        type: string
+                      reference:
+                        type: string
+                      uid:
+                        type: string
+                      status:
+                        type: string
+                      version:
+                        type: string
+                      addresses:
+                        type: array
+  /wallet/transfer:
+    post:
+      security:
+        - ApiUser: []
+          ApiKey: []
+          UserVersion: []
+      description: Transfer crypto from one wallet address to another
+      summary: wallet transfer
+      operationId: wallet-transfer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                network:
+                  type: string
+                  description: Network on which crypto is to be transferred
+                currency:
+                  type: string
+                  description: Currency of the crypto to be transferred
+                address:
+                  type: string
+                  description: Wallet address to transfer crypto
+                amount:
+                  type: number
+                  description: Amount of crypto to be transferred
+                walletType:
+                  type: string
+                  description: Wallet type
+                memo:
+                  type: string
+                  description: Optional transaction memo
+              required:
+                - network
+                - currency
+                - address
+                - amount          
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      transferDetail:
+                        type: object
+                        properties:
+                          transactionId:
+                            type: string
+                          sender:
+                            type: string
+                          type: 
+                            type: string
+                          status:
+                            type: string
+                          date: 
+                            type: string
+                          toCurrency:
+                            type: string
+                          fromCurrency: 
+                            type: string
+                          receiveAmount: 
+                            type: number
+                          amount: 
+                            type: number
+                          address: 
+                            type: string
+                          memo: 
+                            type: string
+                          username: 
+                            type: string
+  /wallet/supported/config:
+    get:
+      description: Get supported cryptocurrencies and networks
+      summary: Get supported cryptocurrencies and network
+      operationId: getSupportedParams
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  state:
+                    type: boolean
+                  data:
+                    type: object
+                    properties:
+                      byNetwork:
+                        type: object
+                      byCurrency:
+                        type: object
+                          
+components:
+  securitySchemes:
+    ApiUser:
+      type: apiKey
+      in: header
+      name: X-Api-User
+    ApiKey:
+      type: apiKey
+      in: header
+      name: X-Api-Key    
+    UserVersion:
+      type: apiKey
+      in: header
+      name: X-User-Version
+tags: []
