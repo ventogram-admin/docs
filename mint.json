@@ -82,9 +82,8 @@
       ]
     },
     {
-      "group": "Payout & Offramp",
+      "group": "Offramp",
       "pages": [
-        "api-reference/endpoint/biz/convert-funds",
         "api-reference/endpoint/biz/create-api-key",
         "api-reference/endpoint/biz/create-payment",
         "api-reference/endpoint/biz/get-a-single-payment",
@@ -93,18 +92,30 @@
         "api-reference/endpoint/biz/get-minimum-amount-allowed",
         "api-reference/endpoint/biz/get-supported-currencies",
         "api-reference/endpoint/biz/get-supported-cryptocurrencies-and-network",
-        "api-reference/endpoint/biz/resolve-bank-account",
         "api-reference/endpoint/biz/resolve-overpaid-transaction",
+        "api-reference/endpoint/biz/retrieve-subscribed-webhook-url",
+        "api-reference/endpoint/biz/retrieve-users-transaction-records",
+        "api-reference/endpoint/biz/retrieve-users-transaction-summary",
+        "api-reference/endpoint/biz/retrieves-a-users-crypto-wallet-addresses",
+        "api-reference/endpoint/biz/subscribe-to-webhook"
+      ]
+    },
+    {
+      "group": "Payout",
+      "pages": [
+        "api-reference/endpoint/biz/get-current-rates",
+        "api-reference/endpoint/biz/withdraw-balance",
+        "api-reference/endpoint/biz/get-a-transaction",
+        "api-reference/endpoint/biz/resolve-bank-account",
+        "api-reference/endpoint/biz/get-minimum-amount-allowed",
         "api-reference/endpoint/biz/retrieve-a-list-of-supported-banks",
         "api-reference/endpoint/biz/retrieve-subscribed-webhook-url",
         "api-reference/endpoint/biz/retrieve-users-account-balance",
         "api-reference/endpoint/biz/retrieve-users-transaction-records",
         "api-reference/endpoint/biz/retrieve-users-transaction-summary",
-        "api-reference/endpoint/biz/retrieves-a-users-crypto-wallet-addresses",
         "api-reference/endpoint/biz/subscribe-to-webhook",
         "api-reference/endpoint/biz/transfer-funds",
-        "api-reference/endpoint/biz/wallet-transfer",
-        "api-reference/endpoint/biz/withdraw-balance"
+        "api-reference/endpoint/biz/wallet-transfer"
       ]
     }
   ],
