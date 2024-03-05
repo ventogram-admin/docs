@@ -38,16 +38,25 @@
  
   "navigation": [
     {
-      "group": "Get Started",
+      "group": "Overview",
       "pages": [
         "introduction",
         "environments",
+        "authentication"
+      ]
+      
+    },  
+
+    {
+      "group": "Use cases",
+      "pages": [
         "collect",
         "onramp",
         "payout",
         "offramp"
       ]
-    },    
+      
+    },   
     {
       "group": "API Documentation",
       "pages": [
