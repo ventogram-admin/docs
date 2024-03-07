@@ -1,0 +1,398 @@
+---
+title: 'Webhooks'
+description: 'Webhooks allow you to set up a notification system that can be used to receive updates on certain requests made to the Partna API.'
+---
+
+## Receiving an event
+To receive an event, you need to create an unauthenticated POST endpoint in your application. The event object is sent as JSON in the request body.
+
+<CodeGroup>
+```javascript Node
+// Using Express
+app.post("/my/webhook/url", function(req, res) {
+    // Retrieve the request body
+    const eventType = req.body.event;
+    const eventData = req.body.data;
+    // Do something with event
+    res.sendStatus(200);
+});
+
+````
+</CodeGroup>
+
+## Supported events
+
+<AccordionGroup>
+  <Accordion title="Collect & Onramp">
+| Event | Description	                           |
+| -------- | ------------------------------------- |
+| `voucher.created`     | A voucher request was successfully created on Ventogram and payment is expected                  
+| `voucher.updated`     | A voucher payment was received on Ventogram
+| `voucher.redeemed`    | Voucher was successfully redeemed               
+| `voucher.update.declined`     | Voucher payment failed due to the reason which will be sent in the webhook as `paymentFailureReason`
+| `voucher.cancelled`     | Available in V2. This event will be raised after a user has cancelled an unpaid voucher
+
+<CodeGroup>
+```javascript voucher.created
+{
+  "event": "voucher.created",
+  "data": {
+    "id": string;
+    "email": string;
+    "amount": number;
+    "fullname": string;
+    "fee": number;
+    "wavedFee": number;
+    "feeBearer": string;
+    "merchant": string;
+    "currency": string;
+    "paymentExpiresAt": date-time;
+    "memo": string;
+  },
+  "signature": string;
+}
+
+````
+```javascript voucher.updated
+{
+  "event": 'voucher.updated';
+  "data": {
+    "id": string;
+    "merchant": string;
+    "fee": number;
+    "currency": string;
+    "expectedAmount": number;
+    "receivedAmount": number;
+    "email": string;
+    "waivedFee": number;
+    "feeBearer": string;
+    "completedAt": 'date-time';
+    "resolvedAmount": number;
+    "voucherCode": string;
+  };
+  "signature": string;
+}
+
+````
+```javascript voucher.redeemed
+{
+  "event": 'voucher.redeemed';
+  "data": {
+    "id": string;
+    "email": string;
+    "fee": number;
+    "wavedFee": number;
+    "amount": number;
+    "voucherCode": string;
+    "reference": string;
+    "merchant": string;
+    "currency": string;
+    "feeBearer": string;
+    "toAmount": number;
+    "fromAmount": number;
+    "fromCurrency": string;
+    "toCurrency": string;
+    "rate": number;
+    "previousBalance": number;
+    "currentBalance": number;
+    "voucherValue": number;
+    "voucherValueCurrency": string;
+  };
+  "signature": string;
+}
+
+````
+```javascript voucher.update.declined
+{
+  "event": "voucher.update.declined";
+  "data": {
+    "id": string;
+    "merchant": string;
+    "amount": number;
+    "fee": number;
+    "currency": string;
+    "expectedAmount": number;
+    "receivedAmount": number;
+    "paymentFailureReason": string | undefined;
+  },
+  "signature": string;
+}
+
+````
+```javascript voucher.cancelled
+{
+  "event": "voucher.cancelled",
+  "data": {
+    "id": string;
+    "email": string;
+    "amount": number;
+    "fullname": string;
+    "fee": number;
+    "wavedFee": number;
+    "feeBearer": string;
+    "merchant": string;
+    "currency": string;
+    "paymentExpiresAt": date-time;
+    "memo": string;
+    "cancelledAt": date-time;
+  },
+  "signature": string;
+}
+
+````
+</CodeGroup>
+
+
+  </Accordion>
+  <Accordion title="Payout & Offramp">
+| Event | Description	                           |
+| -------- | ------------------------------------- |
+| `Payment Created`     | A payment request was successfully initiated and payment is expected                  
+| `Payment Updated`     | Payment was successfully received
+| `Transaction updated`    | A withdrawal request was started and its state is being updated.             
+
+<CodeGroup>
+```javascript Payment Created
+{
+  event: 'Payment created';
+  data: {
+    businessId: string;
+    reference: string;
+    incomingAmount: number;
+    incomingCurrency: string;
+    outgoingAmount: number;
+    outgoingCurrency: string;
+    confirmedAmount: number;
+    unconfirmedAmount: number;
+    expTime: date-time;
+    address: string;
+    customerEmail: string;
+    state: string;
+    paymentType: string;
+    account: string;
+    rate: number;
+    outgoingTransactions: object;
+    threadTS: string;
+    senderUsername: string;
+  };
+}
+
+````
+```javascript Payment Updated
+{
+  event: 'Payment updated';
+  data: {
+    businessId: string;
+    transactions: object;
+    outgoingTransactions: object;
+    expTime: string;
+    reference: string;
+    paymentType: string;
+    confirmedAmount: number;
+    unconfirmedAmount: number;
+    incomingAmount: number;
+    outgoingCurrency: string;
+    incomingCurrency: string;
+    rate: number;
+    address: string;
+    state: string;
+    account: string;
+    customerEmail: string;
+    outgoingAmount: number;
+    threadTS: string;
+  	resolveId?: string;
+  };
+}
+
+````
+```javascript Transaction updated
+{
+  event: "Transaction updated"
+  data:{
+    transactionId: string;
+    sender: string;
+    isFromRegUser: boolean;
+    prevBalance: number;
+    type: string;
+    status: string;
+    date: string;
+    currency: string;
+    amount: number;
+    username: string;
+    businessId: string;
+    fee: number;
+    sessionId: string;
+    reference?: string;
+    failureReason?: string
+  }
+}
+
+````
+</CodeGroup>
+  </Accordion>
+</AccordionGroup>
+
+## Verifying event source
+
+Every event dispatched by Partna includes a signature property within the payload. The value of this property represents an HMAC SHA256 signature of the event payload, which has been signed using our RSA private key.
+
+## Public keys for event data verification
+### Collect & Onramp
+
+<AccordionGroup>
+  <Accordion title="Staging">
+
+```
+-----BEGIN PUBLIC KEY-----
+MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA3huAlrgvx5sXAwH7rD/O
+k3cKWh89qEQ6z0N8EeQQN5aaQQRREH6ptW3+r1aqum+co8urSdyAoO/n+b8OJR3v
+acuX6xdX4Q3VG02FpDeclXKF6hii/WaxKqNg1wo+qEKKqWKO5l3eObYE6bWgEG1E
+NEQ3o5JTpNj28tjUxjfcEzMf0b3OLzKNUKQCef75sTwghFwAVUqrcjqCXlcVihL9
+G3XC98iTstZm/+kpG3krUmbFAYqNgGLOvAjsMViOQVjFBivg2XgeODxfidXn3VPz
+QERvnULoDx05UWyRe+qJjCGgJSKYq0u4V3IuzNEL61zCwb8Nzi4Ng1EORvOTuJNO
+W0nmtCH4ZhoSaPG86u4TWUnIK13A13I38HfguLB4hAMlqhCr8HhTPovsGZXsOOnI
+OmueAe1V1ov/7mYwQ+G1Ccw4D8wIHVNdSKgNcEytkuAlhutzDRwsUVk0GBO75p3M
+F2pQftz9CTgW0wjBLhTnJSDF4Ijn2VnPIYkNGJJ5IkAJJdRQgPkKJfQ5LE9ALkGi
+KOC0e3uxanX9gNVv3DQ3SnlTgW/0KbaBbEF3AbjY4ui4jCq86LyBauGPjLb2lpfI
+b85DkLcX6IyO24Mbe6q6x1SBCun6rPsBdzrm4lwanI95aqu0s9ytNsZbc2pGKDBC
+HfN+y4hyWPZEYUCkZHmxymsCAwEAAQ==
+-----END PUBLIC KEY-----
+
+````
+
+
+  </Accordion>
+
+  <Accordion title="Production">
+
+```
+-----BEGIN PUBLIC KEY-----
+MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAqcdWmUtG8Hc5rljSUnZJ
+XuemsoexEok6srk/aAOikYvjJA2ZGN+J4+Zp1gGtCqkKytue/S5kFkskrjOY+AF/
+yyBm+7ccwAZpnTk0bprYxWXKtHrg3ZoG2UM5BqPMcOK5fZ5evni3eBm4buRFKn17
+apNtgcyhhZKTrtqoWvBt5FMRXITiuw74BpPHAULRyQZc0FmYau1hJ5YmcDK4FT07
+6yOFCVFU3gvTdfTn+93JffgnRoMDgVATelbdRdIDp25qkpS/5TnwugpRL+CTqmaa
+zS6HMtxsSDqJqvuupZxfJ5pr4QZwDhdxnv4PBrjOWkb+UBpjtUnExABAmgxiSAZs
+QSGGXNH+QUCefztT2m6aAZptI4c5n+sLxIRV93n0Th6+FSkOi/WGLUwJ7t0m4nEj
+LUsMKwRbItOyu8P3zY/0ZDBXWzmWuN5mC184Ei4pdFx7TdWrenQmip5SNI5w81Eu
+Mr5ZxN6/JJdioPs6dakocKVKTu7cdFkX0cSFI98J1SAT9GUiRFBzrPva0xtfxWs5
+ZXmwToE22MsQrR3T7NCmQ2tSrpRwXgRsxPzVDGpoB72HhA4D2GgTN8sBab9yDj91
+9MSlMr8CF+3eWXFFmb4eSdTEvZq49OdaJ/hu+qIwTN62mpM1mRllKjTaPwYRKFXs
+XjSSzWoh7TQjlKAS+tYmxVkCAwEAAQ==
+-----END PUBLIC KEY-----
+
+````
+
+  </Accordion>
+</AccordionGroup>
+
+To verify the signature using our RSA public key, follow the steps below:
+
+<CodeGroup>
+```TypeScript TypeScript
+import crypto from 'crypto';
+
+const verfyVentogramEvent = (payload: string, signature: string) => {
+  res.sendStatus(200);
+  const ventogramEventPublicKey = config.ventogramEventPublicKey;
+
+  return crypto.verify(
+    'sha256',
+    Buffer.from(payload),
+    {
+      key: ventogramEventPublicKey,
+      padding: crypto.constants.RSA_PKCS1_PSS_PADDING,
+    },
+    Buffer.from(signature, 'base64')
+  );
+}
+
+const ventogramEventHandler = async (req, res) => {
+  const isSignatureValid = verfyVentogramEvent(JSON.stringify(req.body.data), req.body.signature);
+  if (!isSignatureValid) {
+    return;
+  }
+  // ... other processing goes here
+}
+
+````
+</CodeGroup>
+
+### Payout & Offramp
+
+<AccordionGroup>
+  <Accordion title="Staging">
+
+```
+-----BEGIN PUBLIC KEY-----
+MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAuzfSLqSXbFmRgLGZF9d8
+c4Q4BksUXS8wfFEKZAHJTjFvvlijVc5Csl31/9zOOL2jHmuWelwfe8KN8/kzJ/Jy
+pJg4tQfxT7xxpdRU2YJid/Lncxf5s82/inDz4QgfEH/ehkBcnKOE+strQLfMAwZe
+XbtAOKx+wyJAdL/c6ePLU2o9It3uPKHbkAmyHC67w4PkcF6ctEsB+u8ewlzgR1N3
+j+8aHR31Lufzt/eOcIvHc04dmkx3Ca3k7HzP1SrnGyVVnRudbd2rtzn42lUCP0p3
+HMuDZK+7TWQO1OeXbQ5ZcsDtynLay6pKiQVDlPo1flr5HB2FIrg+9E+lg4qhTYap
+Kx6itHCoIdl5USELgO/wNP6ZuSlfm1lRG3A9n0PZc8orF+jW70hPG12dhLKkDV/h
+8WyfO96WsVaqSmZUdwoTJ73ntxIQ0Aif4bD7Vd189UEMzvoi+tmtY6bFRTy4DCR2
+owgvkONqJ3gfZSgUBFEtXumh4O/2/53YadBR/aXt46lIhiygpAbYUkIdQDjI5KNR
+ZRgts7LdsPACjF7XxaIlkcjoe8bLKUvovkIo70IH7R6E6r9yZ2RogSZVUqsseNeO
+09gW6+eLtSur1uu+zQ3ZWWe3qy1z8kwzSZAHKntD9DSFUCwtGvtb2iYDa/8MqhtF
+lsxTOQ2eqV/prwonm5fRfw8CAwEAAQ==
+-----END PUBLIC KEY-----
+
+````
+
+
+  </Accordion>
+  <Accordion title="Production">
+
+```
+-----BEGIN PUBLIC KEY-----
+MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAo0XDxp0EgedBHmOAalzy
+N+n1bsZbbY71LOzZEPde3u/ookgKCQL6WEyI6Wcg5bIc2SiSMBvQacHTikf9zBVw
+wekSftGNL4//qFWClb30ebdMxx+jlrkh0GQBKvZgXdBNA1fjxpzz7zFEu8lWeKS9
+QVAj3iW+IIYcToVh+OCExyMhsolgZocdmsDjyATXm1jW+gp4rbcHOK8UmaopPG+Z
+yk3ekYyXNlQNXdJ+YYWy252Zhk+e3Hl50+t20gFvpiGR6f6xgaLFq84GmI9XHYns
+IQ8U/c2Ftcu80n+kY0r+o/E91kn6GJuLZYvUI4h9eOInPiLiqw9OZs86vITHioEU
+ZztM3MrX+n3oV6uvYIejtpq+YgWaZda+Bnn+IwgoThDwZjR4YZaE0IXn2VLY9mzJ
+kl+L4qVdBZrHZ5PG7RO5l+rQc0/R6scR1w+pHtbT+2mbYm5IrVpnFShR9WkUelaD
+faYuG8dZQxo9xxu+VAKfXpc/ezB7ArClX5kSB3LfKHLBBCH1UbvFEPAbU+pcJZjG
+T/ukBfFWYm4/oZmh4w324VLs4myejnOuJZTL411p/Y67+PKOcLFznRtoy+UlECfR
+ZB8kLSfB+K9PxwLArIfpSFOSpPkIdhIEdbaBFcwQ57xDt8DhWJQFRNHU7V2KFbYp
+FRci61O4nfsgUtH5Oq1cngkCAwEAAQ==
+-----END PUBLIC KEY-----
+
+````
+
+  </Accordion>
+</AccordionGroup>
+To verify the signature using our RSA public key, follow the steps below:
+
+<CodeGroup>
+```TypeScript TypeScript
+import crypto from 'crypto';
+
+const verfyCoinprofileEvent = (payload: string, signature: string) => {
+  const publicKey = config.coinprofileEventPublicKey;
+
+  return crypto.verify(
+    'sha256',
+    Buffer.from(payload),
+    {
+      key: publicKey,
+      padding: crypto.constants.RSA_PKCS1_PSS_PADDING,
+    },
+    Buffer.from(signature, 'base64')
+  );
+}
+
+const coinprofileEventHandler = async (req, res) => {
+  res.sendStatus(200);
+  const isSignatureValid = verfyCoinprofileEvent(JSON.stringify(req.body.data), req.body.signature);
+  if (!isSignatureValid) {
+    return;
+  }
+  // ... other processing goes here
+}
+
+````
+</CodeGroup>

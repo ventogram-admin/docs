@@ -3,34 +3,27 @@ title: 'Payout'
 description: 'Make instant local currency transfers to your customers'
 ---
 
-<Info>
-  **Prerequisite:** You need to first integrate our [Collect API](/collect) before you can Onramp.
-</Info>
+<Tip>
+  **Helpful tip:** Configure a webhook URL to receive payment updates. [Learn how.](/webhooks)
+</Tip>
 
-## How to payout
+Our Payout API allows you to payout local currency instantly to your customers at anytime. You can store USD, and auto convert to local currency on demand when payout is requested.
 
-Our Payout API allows you to payout instant local currency to your customers at anytime. You can store USD, and auto convert to local currency on demand when payout is requested
+We currenctly support payout with **Bank transfer (NGN)** and **MoMo (GHS)**
 
-Here's how to payout:
+## Payout with Bank transfer (NGN)
 
 <Steps>
-  <Step title="Fund your payout account">
-   To payout, you will need to first fund
+  <Step title="Fund your payout account">   
+   You can fund with:
+   - Bank transfer (USD, NGN)
+   - MoMo (GHS)
+   - Stablecoin (USDC and USDT)
   </Step>
-  <Step title="User account created">
-    After the user has verified their identity, we create a permanent account
-    for the user to make payments to at any time.
+  <Step title="Resolve destination bank account">
+    Use our [resolve-bank-account](/api-reference/endpoint/biz/resolve-bank-account) reference to verify recepient bank account and return the account details
   </Step>
-  <Step title="Create voucher">
-    Anytime the user makes payment to their account, a voucher is instantly
-    created for them.
-  </Step>
-  <Step title="Redeem voucher">
-    Once voucher payment is done, voucher can be redeemed. You either auto
-    redeem the voucher for the user, or allowing them to manually redeem using a
-    code in your app.
-  </Step>
-  <Step title="Withdraw crypto">
-    Once voucher is redeemed, crypto is automatically sent to the wallet address included in the payment
+  <Step title="Send payout">
+    Use our [withdraw-balance](/api-reference/endpoint/biz/withdraw-balance) reference to send the desired NGN amount to the recepient bank account
   </Step>
 </Steps>

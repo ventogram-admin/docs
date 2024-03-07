@@ -42,7 +42,8 @@
       "pages": [
         "introduction",
         "environments",
-        "authentication"
+        "authentication",
+        "webhooks"
       ]
       
     },  
@@ -57,12 +58,7 @@
       ]
       
     },   
-    {
-      "group": "API Documentation",
-      "pages": [
-        "api-reference/introduction"
-      ]
-    },
+    
     {
       "group": "Collect & Onramp",
       "pages": [
