@@ -1122,7 +1122,7 @@ paths:
           ApiKey: []
           UserVersion: []
       description: Transfer crypto from one wallet address to another
-      summary: wallet transfer
+      summary: Wallet transfer
       operationId: wallet-transfer
       requestBody:
         required: true
