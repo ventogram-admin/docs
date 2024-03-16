@@ -1086,9 +1086,7 @@ paths:
                   description: Cryptocurrency to send to the provided wallet details
                 merchantFee:
                   type: string
-                  enum:
-                    - USD
-                  description: In USD (optional). Can be supplied if the merchant want to withdraw a portion of the voucher amount into their Ventogram balance. This must be a fraction or all of voucher value (ie received amount - voucher fee)
+                  description: In USD (optional) with a precision of 2 decimal places (max). Can be supplied if the merchant want to withdraw a portion of the voucher amount into their Ventogram balance. This must be a fraction or all of voucher value (ie received amount - voucher fee)
                 cryptoAddress:
                   type: string
                   description: Must be provided along with newtwork. The crypto wallet address on the provided network, to which crypto equivalent will be sent
