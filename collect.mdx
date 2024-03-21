@@ -148,7 +148,7 @@ fetch('https://staging-vouchers.ventogram.com/api/v1/vouchers', options)
 callback?vouchercode=samplecode
 ```
 
-### Building your redirect URL (Same as method 1)
+### Building your redirect URL
 
 <CodeGroup>
 ```javascript TypeScript
@@ -156,12 +156,7 @@ const redirectURL = "https://staging.ventogram.com/v1/voucher/pay"
 const callback = `${window.location.protocol}//${window.location.host}/redeemvoucher`
   
 const params = new URLSearchParams()  
-params.append('amount', amount)  
 params.append('voucherId', voucherId) 
-params.append('currency', 'NGN')  
-params.append('fullname', fullname)  
-params.append('email', email)  
-params.append('user', merchant)  
 params.append('callback', callback)
 
 const url = `${redirectURL}?${params.toString()}`
