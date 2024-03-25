@@ -1322,10 +1322,10 @@ paths:
                     properties:
                       nextPage:
                         type: string
-                        description: Contanis the URL of the next page to be fetched relative on the URL parameters of the last paged fetched. This is null if there are no more records to fetch.
+                        description: Contanis the URL of the next page to be fetched relative on the URL parameters of the last page fetched. This is null if there are no more records to fetch.
                       prevPage:
                         type: string
-                        description: Contanis the URL of the previous page that was fetched fetched relative on the URL parameters of the current paged
+                        description: Contanis the URL of the previous page that was fetched fetched relative on the URL parameters of the current page
         "400":
           description: Failed operation
           content:
