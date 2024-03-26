@@ -29,8 +29,8 @@ app.post("/my/webhook/url", function(req, res) {
 | `voucher.created`     | A voucher request was successfully created on Ventogram and payment is expected                  
 | `voucher.updated`     | A voucher payment was received on Ventogram
 | `voucher.redeemed`    | Voucher was successfully redeemed               
-| `voucher.update.declined`     | Voucher payment failed due to the reason which will be sent in the webhook as `paymentFailureReason`
-| `voucher.cancelled`     | Available in V2. This event will be raised after a user has cancelled an unpaid voucher
+| `verification.success`     | This event is raised if a user BVN verification is successful
+| `verification.failed`     | This event is raised if a user BVN verification fails
 
 <CodeGroup>
 ```javascript voucher.created
@@ -102,39 +102,32 @@ app.post("/my/webhook/url", function(req, res) {
 }
 
 ````
-```javascript voucher.update.declined
+```javascript verification.success
 {
-  "event": "voucher.update.declined";
+  "event": "verification.success";
   "data": {
     "id": string;
+    "email": string;
+    "firstName": string;
+    "lastName": string;
     "merchant": string;
-    "amount": number;
-    "fee": number;
-    "currency": string;
-    "expectedAmount": number;
-    "receivedAmount": number;
-    "paymentFailureReason": string | undefined;
+    "verificationMethod": string;
   },
   "signature": string;
 }
 
 ````
-```javascript voucher.cancelled
+```javascript verification.failed
 {
-  "event": "voucher.cancelled",
+  "event": "verification.failed",
   "data": {
     "id": string;
     "email": string;
-    "amount": number;
-    "fullname": string;
-    "fee": number;
-    "wavedFee": number;
-    "feeBearer": string;
+    "firstName": string;
+    "lastName": string;
     "merchant": string;
-    "currency": string;
-    "paymentExpiresAt": date-time;
-    "memo": string;
-    "cancelledAt": date-time;
+    "verificationMethod": string;
+    "reason": string;
   },
   "signature": string;
 }
