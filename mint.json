@@ -113,11 +113,19 @@
         "api-reference/endpoint/biz/transfer-funds",
         "api-reference/endpoint/biz/wallet-transfer"
       ]
+    },
+    {
+      "group":"Partna",
+      "pages": [
+        "api-reference/endpoint/v3/account/get-account",
+        "api-reference/endpoint/v3/account/create-account",
+        "api-reference/endpoint/v3/transfer/transfer"
+      ]
     }
   ],
   "footerSocials": {
     "twitter": "https://twitter.com/getpartna",
     "linkedin": "https://www.linkedin.com/company/getpartna"
   },
-  "openapi": ["api-reference/openapi.yml", "api-reference/biz.yml"]
+  "openapi": ["api-reference/openapi.yml", "api-reference/biz.yml", "api-reference/partna.json"]
 }
