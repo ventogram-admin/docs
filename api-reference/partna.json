@@ -1,0 +1,567 @@
+{
+	"openapi": "3.0.3",
+	"info": {
+		"title": "GetPartna Api Documentation",
+		"version": "3.0"
+	},
+	"paths": {
+		"/": {
+			"get": {
+				"description": "home endpoint",
+				"operationId": "home",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"message": "Welcome to Partna api"
+									},
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "ping pong"
+					}
+				},
+				"security": [],
+				"summary": "home",
+				"tags": [
+					"ping"
+				]
+			}
+		},
+		"/account": {
+			"get": {
+				"description": "get account",
+				"operationId": "getAccount",
+				"parameters": [
+					{
+						"example": "john_joe",
+						"in": "query",
+						"name": "reference",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"data": {
+											"btcAddress": "tb1q6zdd464wxlmd9glqefeeqsuxnemcyq73rhzn77",
+											"ethAddress": "0x20B3bE3a0629f30512E8bf6CcaCC1f2FC403b6AC",
+											"reference": "john_joe",
+											"trxAddress": "TCx7wxwFVm9GwnEaKaNckzqRYxrUxgoJDD"
+										},
+										"message": "success"
+									},
+									"properties": {
+										"data": {
+											"properties": {
+												"btcAddress": {
+													"type": "string"
+												},
+												"ethAddress": {
+													"type": "string"
+												},
+												"reference": {
+													"type": "string"
+												},
+												"trxAddress": {
+													"type": "string"
+												}
+											},
+											"type": "object"
+										},
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "get account"
+					},
+					"400": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"message": "error: cannot get account by ref"
+									},
+									"properties": {
+										"message": {
+											"enum": [
+												"error",
+												" cannot get account by ref"
+											],
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "bad request"
+					},
+					"401": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"message": "invalid apikey"
+									},
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "unauthorized access"
+					}
+				},
+				"security": [
+					{
+						"x-api-key": [],
+                        "x-api-user": []
+					}
+				],
+				"summary": "get account",
+				"tags": [
+					"account"
+				]
+			}
+		},
+		"/account/": {
+			"post": {
+				"description": "create account",
+				"operationId": "createAccount",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"example": {
+									"reference": "john_joe",
+									"type": "crypto"
+								},
+								"properties": {
+									"reference": {
+										"type": "string"
+									},
+									"type": {
+										"enum": [
+											"crypto",
+											"dollar",
+											"naira"
+										],
+										"type": "string"
+									}
+								},
+								"type": "object"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"201": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"message": "success"
+									},
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "create account"
+					},
+					"404": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"data": "Field [Type] Expected[oneof(dollar crypto naira)] Value [invalid value]",
+										"message": "validation error"
+									},
+									"properties": {
+										"data": {
+											"type": "string"
+										},
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "create account failed"
+					}
+				},
+				"security": [
+					{
+						"x-api-key": [],
+                        "x-api-user": []
+					}
+				],
+				"summary": "create account",
+				"tags": [
+					"account"
+				]
+			}
+		},
+		"/panic": {
+			"get": {
+				"description": "panic endpoint",
+				"operationId": "panic",
+				"responses": {
+					"500": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"message": "Internal Server Error"
+									},
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "ping panic"
+					}
+				},
+				"security": [],
+				"summary": "panic",
+				"tags": [
+					"ping"
+				]
+			}
+		},
+		"/ping": {
+			"get": {
+				"description": "ping endpoint",
+				"operationId": "ping",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"data": {
+											"version": "v3"
+										},
+										"message": "success"
+									},
+									"properties": {
+										"data": {
+											"properties": {
+												"version": {
+													"type": "string"
+												}
+											},
+											"type": "object"
+										},
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "ping pong"
+					}
+				},
+				"security": [],
+				"summary": "ping",
+				"tags": [
+					"ping"
+				]
+			}
+		},
+		"/transfer": {
+			"post": {
+				"description": "transfer from one account to another",
+				"operationId": "transfer",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"example": {
+									"amount": 7,
+									"currency": "USD",
+									"fromAccount": "user1",
+									"toAccount": "account1"
+								},
+								"properties": {
+									"amount": {
+										"type": "number"
+									},
+									"currency": {
+										"type": "string"
+									},
+									"fromAccount": {
+										"type": "string"
+									},
+									"toAccount": {
+										"type": "string"
+									}
+								},
+								"type": "object"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"message": "success"
+									},
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "transfer successful"
+					},
+					"400": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"message": "error: invalid account"
+									},
+									"properties": {
+										"message": {
+											"enum": [
+												"error",
+												" invalid account"
+											],
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "invalid account"
+					},
+					"403": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"message": "insufficient funds"
+									},
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "insufficient funds"
+					}
+				},
+				"security": [
+					{
+						"x-api-key": [],
+                        "x-api-user": []
+					}
+				],
+				"summary": "transfer from one account to another",
+				"tags": [
+					"transfer"
+				]
+			}
+		},
+		"/transfer/withdraw": {
+			"post": {
+				"description": "withdraw funds",
+				"operationId": "withdraw",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"example": {
+									"address": "0xA0b86991c6218b36c1d19D4a2e9eb0cE3606eB48",
+									"amount": 2,
+									"currency": "USDC",
+									"externalReference": "reference1",
+									"fromAccount": "user1",
+									"network": "ethereum",
+									"type": "crypto"
+								},
+								"properties": {
+									"address": {
+										"type": "string"
+									},
+									"amount": {
+										"type": "number"
+									},
+									"currency": {
+										"type": "string"
+									},
+									"externalReference": {
+										"type": "string"
+									},
+									"fromAccount": {
+										"type": "string"
+									},
+									"network": {
+										"type": "string"
+									},
+									"type": {
+										"enum": [
+											"crypto",
+											"naira",
+											"dollar"
+										],
+										"type": "string"
+									}
+								},
+								"type": "object"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"message": "request completed"
+									},
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "withdrawal request successfully submitted"
+					},
+					"400": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"message": "wrong network address"
+									},
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "invalid address"
+					}
+				},
+				"security": [
+					{
+						"x-api-key": []
+					},
+					{
+						"x-api-user": []
+					}
+				],
+				"summary": "withdraw funds",
+				"tags": [
+					"transfer"
+				]
+			}
+		}
+	},
+	"servers": [
+		{
+			"url": "https://staging-partna-api.getpartna.com/"
+		}
+	],
+	"components": {
+		"schemas": {
+			"BaseResponse": {
+				"properties": {
+					"data": {
+						"type": "object"
+					},
+					"message": {
+						"type": "string"
+					}
+				},
+				"type": "object"
+			}
+		},
+		"securitySchemes": {
+			"x-api-key": {
+				"in": "header",
+				"name": "x-api-key",
+				"type": "apiKey"
+			},
+			"x-api-user": {
+				"in": "header",
+				"name": "x-api-user",
+				"type": "apiKey"
+			}
+		}
+	},
+	"security": [
+		{
+			"x-api-key": []
+		},
+		{
+			"x-api-user": []
+		}
+	],
+	"tags": [
+		{
+			"description": "pinger",
+			"name": "ping"
+		},
+		{
+			"description": "account endpoints",
+			"name": "account"
+		}
+	]
+}
