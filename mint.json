@@ -43,7 +43,8 @@
         "introduction",
         "environments",
         "authentication",
-        "webhooks"
+        "webhooks",
+        "rate-tiers"
       ]
       
     },  
