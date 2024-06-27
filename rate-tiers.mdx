@@ -8,12 +8,12 @@ These discounts aim to provide better rates for customers transacting higher vol
 Here are the rate tiers and applied discounts:
 
 | Amount | Discount |
-| -------- | ----------- |
+| :-------- | :----------- |
 | **\$51 - \$200.99**     |  0.2% |
 | **\$201 - \$1,000.99**      | 0.35% |
 | **\$1,001 - \$5,000.99**   | 0.55% |
 | **\$5,001 - \$15,000.99**      | 0.7% |
-| **\$15,001+**   | 0.9% |
+| **\$15,001+**   | 1% |
 
 These discounts are applied automatically. However, you can calculate the exact discounted rate from the base rate as follows:
 
@@ -22,7 +22,7 @@ These discounts are applied automatically. However, you can calculate the exact 
 function getDiscountedRate(transactionAmount, baseRate) {
     let discount = 0;
     const rateTiers = [
-        { min: 15001, rate: 0.009 },
+        { min: 15001, rate: 0.01 },
         { min: 5001, rate: 0.007 },
         { min: 1001, rate: 0.0055 },
         { min: 201, rate: 0.0035 },
