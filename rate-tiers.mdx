@@ -22,11 +22,11 @@ These discounts are applied automatically. However, you can calculate the exact 
 function getDiscountedRate(transactionAmount, baseRate) {
     let discount = 0;
     const rateTiers = [
-        { min: 15001, rate: 0.01 },
-        { min: 5001, rate: 0.007 },
-        { min: 1001, rate: 0.0055 },
-        { min: 201, rate: 0.0035 },
-        { min: 51, rate: 0.002 },
+        { min: 15001, rate: 1 },
+        { min: 5001, rate: 0.7 },
+        { min: 1001, rate: 0.55 },
+        { min: 201, rate: 0.35 },
+        { min: 51, rate: 0.2 },
         { min: 0, rate: 0.0 }
     ];
     const sortedThresholds = rateTiers.sort((a, b) => b.min - a.min);
