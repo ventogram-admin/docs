@@ -38,7 +38,7 @@
 		},
 		"/account": {
 			"get": {
-				"description": "get account",
+				"description": "Get account details",
 				"operationId": "getAccount",
 				"parameters": [
 					{
@@ -140,7 +140,7 @@
                         "x-api-user": []
 					}
 				],
-				"summary": "get account",
+				"summary": "Get account",
 				"tags": [
 					"account"
 				]
@@ -148,7 +148,7 @@
 		},
 		"/account/": {
 			"post": {
-				"description": "create account",
+				"description": "Create an account (Crypto or Fiat)",
 				"operationId": "createAccount",
 				"requestBody": {
 					"content": {
@@ -225,7 +225,7 @@
                         "x-api-user": []
 					}
 				],
-				"summary": "create account",
+				"summary": "Create account",
 				"tags": [
 					"account"
 				]
@@ -306,7 +306,7 @@
 		},
 		"/transfer": {
 			"post": {
-				"description": "transfer from one account to another",
+				"description": "Transfer funds to an account (Crypto wallet, Bank, ETC)",
 				"operationId": "transfer",
 				"requestBody": {
 					"content": {
@@ -404,7 +404,7 @@
                         "x-api-user": []
 					}
 				],
-				"summary": "transfer from one account to another",
+				"summary": "Transfer from one account to another",
 				"tags": [
 					"transfer"
 				]
