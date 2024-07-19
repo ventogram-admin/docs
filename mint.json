@@ -124,7 +124,9 @@
       "pages": [
         "api-reference/endpoint/v3/account/get-account",
         "api-reference/endpoint/v3/account/create-account",
-        "api-reference/endpoint/v3/transfer/transfer"
+        "api-reference/endpoint/v3/transfer/transfer",
+        "api-reference/endpoint/v3/transfer/withdraw",
+        "api-reference/endpoint/v3/transfer/get-transactions"
       ],
       "version": "v4"
     }

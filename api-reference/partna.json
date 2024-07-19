@@ -412,7 +412,7 @@
 		},
 		"/transfer/withdraw": {
 			"post": {
-				"description": "withdraw funds",
+				"description": "Withdraw funds",
 				"operationId": "withdraw",
 				"requestBody": {
 					"content": {
@@ -422,7 +422,7 @@
 									"address": "0xA0b86991c6218b36c1d19D4a2e9eb0cE3606eB48",
 									"amount": 2,
 									"currency": "USDC",
-									"externalReference": "reference1",
+									"reference": "reference1",
 									"fromAccount": "user1",
 									"network": "ethereum",
 									"type": "crypto"
@@ -435,22 +435,38 @@
 										"type": "number"
 									},
 									"currency": {
+										"enum": [
+											"BNB",
+											"BTC",
+											"ETH",
+											"USDC",
+											"USDT",
+											"CUSD"
+										],
 										"type": "string"
 									},
-									"externalReference": {
+									"reference": {
 										"type": "string"
 									},
 									"fromAccount": {
 										"type": "string"
 									},
 									"network": {
+										"enum": [
+											"avalanche",
+											"binance",
+											"bitcoin",
+											"celo",
+											"ethereum",
+											"polygon",
+											"tron"
+										],
 										"type": "string"
 									},
 									"type": {
 										"enum": [
 											"crypto",
-											"naira",
-											"dollar"
+											"fiat"
 										],
 										"type": "string"
 									}
@@ -501,13 +517,112 @@
 				},
 				"security": [
 					{
-						"x-api-key": []
+						"x-api-key": [],
+                        "x-api-user": []
+					}
+				],
+				"summary": "Withdraw funds",
+				"tags": [
+					"transfer"
+				]
+			}
+		},
+		"/transfer/": {
+			"get": {
+				"description": "Get transactions",
+				"operationId": "Transactions",
+				"parameters": [
+					{
+						"example": "user",
+						"in": "query",
+						"name": "accountname",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
 					},
 					{
+						"example": "2",
+						"in": "query",
+						"name": "limit",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"example": "reference1",
+						"in": "query",
+						"name": "transactionRef",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"data": {
+											"ETH": [
+												{
+													"Amount": 4,
+													"CreditAccount": "account1",
+													"CreditUser": "user3",
+													"Currency": "ETH",
+													"DebitAccount": "user3",
+													"DebitUser": "user3",
+													"Reference": "abcdef1234567890abcdef1234567867",
+													"Status": "completed",
+													"Timestamp": "",
+													"TransactionType": "Internal Transfer"
+												},
+												{
+													"Amount": 10,
+													"CreditAccount": "user3",
+													"CreditUser": "user3",
+													"Currency": "ETH",
+													"DebitAccount": "credit",
+													"DebitUser": "admin",
+													"Reference": "abcdef1234567890abcdef1234567654",
+													"Status": "completed",
+													"Timestamp": "",
+													"TransactionType": "Admin Credit"
+												}
+											]
+										},
+										"message": "request completed"
+									},
+									"properties": {
+										"data": {
+											"properties": {
+												"ETH": {
+													"type": "array"
+												}
+											},
+											"type": "object"
+										},
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "get transactions request successful"
+					}
+				},
+				"security": [
+					{
+						"x-api-key": [],
 						"x-api-user": []
 					}
 				],
-				"summary": "withdraw funds",
+				"summary": "Get transactions",
 				"tags": [
 					"transfer"
 				]
