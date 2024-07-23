@@ -120,13 +120,27 @@
       "version": "v2"
     },
     {
+      "group":"Users",
+      "pages": [
+        "api-reference/endpoint/v3/user/self-activate"
+      ],
+      "version": "v4"
+    },
+    {
       "group":"Accounts",
       "pages": [
         "api-reference/endpoint/v3/account/get-account",
-        "api-reference/endpoint/v3/account/create-account",
+        "api-reference/endpoint/v3/account/create-account"
+      ],
+      "version": "v4"
+    },
+    {
+      "group":"Transfer",
+      "pages": [
         "api-reference/endpoint/v3/transfer/transfer",
         "api-reference/endpoint/v3/transfer/withdraw",
-        "api-reference/endpoint/v3/transfer/get-transactions"
+        "api-reference/endpoint/v3/transfer/get-transactions",
+        "api-reference/endpoint/v3/assets/get-supported-assets"
       ],
       "version": "v4"
     }
