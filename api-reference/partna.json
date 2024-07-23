@@ -1030,7 +1030,7 @@
 	},
 	"servers": [
 		{
-			"url": "https://staging-partna-api.getpartna.com/"
+			"url": "https://staging-api.getpartna.com/v4/"
 		}
 	],
 	"components": {
