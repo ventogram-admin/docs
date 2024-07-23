@@ -36,7 +36,90 @@
 				]
 			}
 		},
-		"/account": {
+		"/account/": {
+			"post": {
+				"description": "Create an account (Crypto or Fiat)",
+				"operationId": "createAccount",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"example": {
+									"reference": "john_joe",
+									"type": "crypto"
+								},
+								"properties": {
+									"reference": {
+										"type": "string"
+									},
+									"type": {
+										"enum": [
+											"crypto",
+											"dollar",
+											"naira"
+										],
+										"type": "string"
+									}
+								},
+								"type": "object"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"201": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"message": "success"
+									},
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "create account"
+					},
+					"404": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"data": "Field [Type] Expected[oneof(dollar crypto naira)] Value [invalid value]",
+										"message": "validation error"
+									},
+									"properties": {
+										"data": {
+											"type": "string"
+										},
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "create account failed"
+					}
+				},
+				"security": [
+					{
+						"x-api-key": [],
+                        "x-api-user": []
+					}
+				],
+				"summary": "Create account",
+				"tags": [
+					"account"
+				]
+			},
 			"get": {
 				"description": "Get account details",
 				"operationId": "getAccount",
@@ -146,91 +229,6 @@
 				]
 			}
 		},
-		"/account/": {
-			"post": {
-				"description": "Create an account (Crypto or Fiat)",
-				"operationId": "createAccount",
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"example": {
-									"reference": "john_joe",
-									"type": "crypto"
-								},
-								"properties": {
-									"reference": {
-										"type": "string"
-									},
-									"type": {
-										"enum": [
-											"crypto",
-											"dollar",
-											"naira"
-										],
-										"type": "string"
-									}
-								},
-								"type": "object"
-							}
-						}
-					},
-					"required": true
-				},
-				"responses": {
-					"201": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"example": {
-										"message": "success"
-									},
-									"properties": {
-										"message": {
-											"type": "string"
-										}
-									},
-									"type": "object"
-								}
-							}
-						},
-						"description": "create account"
-					},
-					"404": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"example": {
-										"data": "Field [Type] Expected[oneof(dollar crypto naira)] Value [invalid value]",
-										"message": "validation error"
-									},
-									"properties": {
-										"data": {
-											"type": "string"
-										},
-										"message": {
-											"type": "string"
-										}
-									},
-									"type": "object"
-								}
-							}
-						},
-						"description": "create account failed"
-					}
-				},
-				"security": [
-					{
-						"x-api-key": [],
-                        "x-api-user": []
-					}
-				],
-				"summary": "Create account",
-				"tags": [
-					"account"
-				]
-			}
-		},
 		"/panic": {
 			"get": {
 				"description": "panic endpoint",
@@ -301,112 +299,6 @@
 				"summary": "ping",
 				"tags": [
 					"ping"
-				]
-			}
-		},
-		"/transfer": {
-			"post": {
-				"description": "Transfer funds to an account (Crypto wallet, Bank, ETC)",
-				"operationId": "transfer",
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"example": {
-									"amount": 7,
-									"currency": "USD",
-									"fromAccount": "user1",
-									"toAccount": "account1"
-								},
-								"properties": {
-									"amount": {
-										"type": "number"
-									},
-									"currency": {
-										"type": "string"
-									},
-									"fromAccount": {
-										"type": "string"
-									},
-									"toAccount": {
-										"type": "string"
-									}
-								},
-								"type": "object"
-							}
-						}
-					},
-					"required": true
-				},
-				"responses": {
-					"200": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"example": {
-										"message": "success"
-									},
-									"properties": {
-										"message": {
-											"type": "string"
-										}
-									},
-									"type": "object"
-								}
-							}
-						},
-						"description": "transfer successful"
-					},
-					"400": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"example": {
-										"message": "error: invalid account"
-									},
-									"properties": {
-										"message": {
-											"enum": [
-												"error",
-												" invalid account"
-											],
-											"type": "string"
-										}
-									},
-									"type": "object"
-								}
-							}
-						},
-						"description": "invalid account"
-					},
-					"403": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"example": {
-										"message": "insufficient funds"
-									},
-									"properties": {
-										"message": {
-											"type": "string"
-										}
-									},
-									"type": "object"
-								}
-							}
-						},
-						"description": "insufficient funds"
-					}
-				},
-				"security": [
-					{
-						"x-api-key": [],
-                        "x-api-user": []
-					}
-				],
-				"summary": "Transfer from one account to another",
-				"tags": [
-					"transfer"
 				]
 			}
 		},
@@ -623,6 +515,110 @@
 					}
 				],
 				"summary": "Get transactions",
+				"tags": [
+					"transfer"
+				]
+			},
+			"post": {
+				"description": "Transfer funds to an account (Crypto wallet, Bank, ETC)",
+				"operationId": "transfer",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"example": {
+									"amount": 7,
+									"currency": "USD",
+									"fromAccount": "user1",
+									"toAccount": "account1"
+								},
+								"properties": {
+									"amount": {
+										"type": "number"
+									},
+									"currency": {
+										"type": "string"
+									},
+									"fromAccount": {
+										"type": "string"
+									},
+									"toAccount": {
+										"type": "string"
+									}
+								},
+								"type": "object"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"message": "success"
+									},
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "transfer successful"
+					},
+					"400": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"message": "error: invalid account"
+									},
+									"properties": {
+										"message": {
+											"enum": [
+												"error",
+												" invalid account"
+											],
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "invalid account"
+					},
+					"403": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"message": "insufficient funds"
+									},
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "insufficient funds"
+					}
+				},
+				"security": [
+					{
+						"x-api-key": [],
+                        "x-api-user": []
+					}
+				],
+				"summary": "Transfer from one account to another",
 				"tags": [
 					"transfer"
 				]
@@ -1030,7 +1026,7 @@
 	},
 	"servers": [
 		{
-			"url": "https://staging-partna-api.getpartna.com/"
+			"url": "https://staging-api.getpartna.com/v4/"
 		}
 	],
 	"components": {
