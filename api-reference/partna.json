@@ -627,6 +627,405 @@
 					"transfer"
 				]
 			}
+		},
+		"/supported/assets": {
+			"get": {
+				"description": "Get supported assets",
+				"operationId": "Get assets",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"data": {
+											"bitcoin": {
+												"BTC": {
+													"contractAddress": "",
+													"decimals": 8,
+													"destinationCurrency": "BTC",
+													"faucets": [
+														"https://coinfaucet.eu/en/btc-testnet/",
+														"https://bitcoinfaucet.uo1.net/"
+													],
+													"name": "BTC",
+													"symbol": "BTC"
+												}
+											},
+											"celo": {
+												"CUSD": {
+													"contractAddress": "0x874069fa1eb16d44d622f2e0ca25eea172369bc1",
+													"decimals": 18,
+													"destinationCurrency": "USD",
+													"faucets": [
+														"https://faucet.celo.org/alfajores"
+													],
+													"name": "CUSD",
+													"symbol": "CUSD"
+												},
+												"USDC": {
+													"contractAddress": "0x2f25deb3848c207fc8e0c34035b3ba7fc157602b",
+													"decimals": 6,
+													"destinationCurrency": "USD",
+													"faucets": [
+														"https://faucet.circle.com/"
+													],
+													"name": "USDC",
+													"symbol": "USDC"
+												}
+											},
+											"ethereum": {
+												"ETH": {
+													"contractAddress": "",
+													"decimals": 18,
+													"destinationCurrency": "ETH",
+													"faucets": [
+														"https://cloud.google.com/application/web3/faucet/ethereum/sepolia",
+														"https://sepolia-faucet.pk910.de/",
+														"https://faucet.quicknode.com/ethereum/sepolia",
+														"https://getblock.io/faucet/eth-sepolia/"
+													],
+													"name": "ETH",
+													"symbol": "ETH"
+												},
+												"USDC": {
+													"contractAddress": "0x1c7d4b196cb0c7b01d743fbc6116a902379c7238",
+													"decimals": 6,
+													"destinationCurrency": "USD",
+													"faucets": [
+														"https://faucet.circle.com/"
+													],
+													"name": "USDC",
+													"symbol": "USDC"
+												}
+											},
+											"tron": {
+												"USDJ": {
+													"contractAddress": "TLBaRhANQoJFTqre9Nf1mjuwNWjCJeYqUL",
+													"decimals": 18,
+													"destinationCurrency": "USD",
+													"faucets": [
+														"https://nileex.io/join/getJoinPage"
+													],
+													"name": "USDJ",
+													"symbol": "USDJ"
+												},
+												"USDT": {
+													"contractAddress": "TXLAQ63Xg1NAzckPwKHvzw7CSEmLMEqcdj",
+													"decimals": 6,
+													"destinationCurrency": "USD",
+													"faucets": [
+														"https://nileex.io/join/getJoinPage"
+													],
+													"name": "USDT",
+													"symbol": "USDT"
+												}
+											}
+										},
+										"message": "success"
+									},
+									"properties": {
+										"data": {
+											"properties": {
+												"bitcoin": {
+													"properties": {
+														"BTC": {
+															"properties": {
+																"contractAddress": {
+																	"type": "string"
+																},
+																"decimals": {
+																	"type": "number"
+																},
+																"destinationCurrency": {
+																	"type": "string"
+																},
+																"faucets": {
+																	"type": "array"
+																},
+																"name": {
+																	"type": "string"
+																},
+																"symbol": {
+																	"type": "string"
+																}
+															},
+															"type": "object"
+														}
+													},
+													"type": "object"
+												},
+												"celo": {
+													"properties": {
+														"CUSD": {
+															"properties": {
+																"contractAddress": {
+																	"type": "string"
+																},
+																"decimals": {
+																	"type": "number"
+																},
+																"destinationCurrency": {
+																	"type": "string"
+																},
+																"faucets": {
+																	"type": "array"
+																},
+																"name": {
+																	"type": "string"
+																},
+																"symbol": {
+																	"type": "string"
+																}
+															},
+															"type": "object"
+														},
+														"USDC": {
+															"properties": {
+																"contractAddress": {
+																	"type": "string"
+																},
+																"decimals": {
+																	"type": "number"
+																},
+																"destinationCurrency": {
+																	"type": "string"
+																},
+																"faucets": {
+																	"type": "array"
+																},
+																"name": {
+																	"type": "string"
+																},
+																"symbol": {
+																	"type": "string"
+																}
+															},
+															"type": "object"
+														}
+													},
+													"type": "object"
+												},
+												"ethereum": {
+													"properties": {
+														"ETH": {
+															"properties": {
+																"contractAddress": {
+																	"type": "string"
+																},
+																"decimals": {
+																	"type": "number"
+																},
+																"destinationCurrency": {
+																	"type": "string"
+																},
+																"faucets": {
+																	"type": "array"
+																},
+																"name": {
+																	"type": "string"
+																},
+																"symbol": {
+																	"type": "string"
+																}
+															},
+															"type": "object"
+														},
+														"USDC": {
+															"properties": {
+																"contractAddress": {
+																	"type": "string"
+																},
+																"decimals": {
+																	"type": "number"
+																},
+																"destinationCurrency": {
+																	"type": "string"
+																},
+																"faucets": {
+																	"type": "array"
+																},
+																"name": {
+																	"type": "string"
+																},
+																"symbol": {
+																	"type": "string"
+																}
+															},
+															"type": "object"
+														}
+													},
+													"type": "object"
+												},
+												"tron": {
+													"properties": {
+														"USDJ": {
+															"properties": {
+																"contractAddress": {
+																	"type": "string"
+																},
+																"decimals": {
+																	"type": "number"
+																},
+																"destinationCurrency": {
+																	"type": "string"
+																},
+																"faucets": {
+																	"type": "array"
+																},
+																"name": {
+																	"type": "string"
+																},
+																"symbol": {
+																	"type": "string"
+																}
+															},
+															"type": "object"
+														},
+														"USDT": {
+															"properties": {
+																"contractAddress": {
+																	"type": "string"
+																},
+																"decimals": {
+																	"type": "number"
+																},
+																"destinationCurrency": {
+																	"type": "string"
+																},
+																"faucets": {
+																	"type": "array"
+																},
+																"name": {
+																	"type": "string"
+																},
+																"symbol": {
+																	"type": "string"
+																}
+															},
+															"type": "object"
+														}
+													},
+													"type": "object"
+												}
+											},
+											"type": "object"
+										},
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "get supported assets request successful"
+					}
+				},
+				"security": [],
+				"summary": "Get supported assets",
+				"tags": [
+					"get assets"
+				]
+			}
+		},
+		"/user/activate": {
+			"post": {
+				"description": "Self activate users",
+				"operationId": "Self activate",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"example": {
+									"email": "newuser@email.com",
+									"username": "newUser"
+								},
+								"properties": {
+									"email": {
+										"type": "string"
+									},
+									"username": {
+										"type": "string"
+									}
+								},
+								"type": "object"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"message": "request completed"
+									},
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "self activation request successful"
+					},
+					"400": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"message": "error: cannot create user"
+									},
+									"properties": {
+										"message": {
+											"enum": [
+												"error",
+												" cannot create user"
+											],
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "self activation attempt for existing user"
+					},
+					"401": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"message": "unauthorised self registration"
+									},
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "unauthorized self activation request"
+					}
+				},
+				"security": [
+					{
+						"x-api-key": [],
+						"x-api-user": []
+					}
+				],
+				"summary": "Self activate",
+				"tags": [
+					"activate"
+				]
+			}
 		}
 	},
 	"servers": [
