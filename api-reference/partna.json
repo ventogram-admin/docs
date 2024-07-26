@@ -36,7 +36,7 @@
 				]
 			}
 		},
-		"/account/": {
+		"/account": {
 			"post": {
 				"description": "Create an account (Crypto or Fiat)",
 				"operationId": "createAccount",
@@ -419,7 +419,7 @@
 				]
 			}
 		},
-		"/transfer/": {
+		"/transfer": {
 			"get": {
 				"description": "Get transactions",
 				"operationId": "Transactions",
@@ -1026,7 +1026,8 @@
 	},
 	"servers": [
 		{
-			"url": "https://staging-api.getpartna.com/v4/"
+			"url": "https://staging-api.getpartna.com/v4/",
+			"description": "staging"
 		}
 	],
 	"components": {
