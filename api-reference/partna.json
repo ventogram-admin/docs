@@ -45,11 +45,11 @@
 						"application/json": {
 							"schema": {
 								"example": {
-									"reference": "john_joe",
+									"accountName": "john_joe",
 									"type": "crypto"
 								},
 								"properties": {
-									"reference": {
+									"accountName": {
 										"type": "string"
 									},
 									"type": {
@@ -73,9 +73,169 @@
 							"application/json": {
 								"schema": {
 									"example": {
-										"message": "success"
+										"message":"success",
+										"data":{
+											"BNB":{
+												"balance":0,
+												"pendingDebit":0,
+												"accountName":"account11",
+												"asset":[{
+													"id":"0xF35DfBc358cb8A81E2Be209f46eF6d277154280D",
+													"type":"crypto",
+													"meta":null
+												}]
+											},
+											"BTC":{
+												"balance":0,
+												"pendingDebit":0,
+												"accountName":"account11",
+												"asset":[{
+													"id":"tb1qehhmedtvzt00et5juvlytzfkn90a4ryvfffmv0",
+													"type":"crypto",
+													"meta":null
+												}]
+											},
+											"ETH":{
+												"balance":0,
+												"pendingDebit":0,
+												"accountName":"account11",
+												"asset":[{
+													"id":"0xF35DfBc358cb8A81E2Be209f46eF6d277154280D",
+													"type":"crypto",
+													"meta":null
+												}]
+											},"USD":{
+												"balance":0,
+												"pendingDebit":0,
+												"accountName":"account11",
+												"asset":[{
+														"id":"0xF35DfBc358cb8A81E2Be209f46eF6d277154280D",
+														"type":"crypto",
+														"meta":null
+													},
+													{
+														"id":"TYA1nkwKWWak1qE6V7zcnrQVUfJHWaL1Yh",
+														"type":"crypto",
+														"meta":null
+												}]
+													
+											}
+										}
 									},
 									"properties": {
+										"data": {
+											"properties": {
+												"BNB": {
+													"properties": {
+														"balance": {
+															"type": "number"
+														},
+														"pendingDebit": {
+															"type": "number"
+														},
+														"accountName": {
+															"type": "string"
+														},
+														"asset": {
+															"type": "array",
+															"properties": {
+																"id": {
+																	"type": "string"
+																},
+																"type": {
+																	"type": "string"
+																},
+																"meta": {
+																	"type": "string"
+																}
+															}
+														}
+													}
+												},
+												"BTC": {
+													"properties": {
+														"balance": {
+															"type": "number"
+														},
+														"pendingDebit": {
+															"type": "number"
+														},
+														"accountName": {
+															"type": "string"
+														},
+														"asset": {
+															"type": "array",
+															"properties": {
+																"id": {
+																	"type": "string"
+																},
+																"type": {
+																	"type": "string"
+																},
+																"meta": {
+																	"type": "string"
+																}
+															}
+														}
+													}
+												},
+												"ETH": {
+													"properties": {
+														"balance": {
+															"type": "number"
+														},
+														"pendingDebit": {
+															"type": "number"
+														},
+														"accountName": {
+															"type": "string"
+														},
+														"asset": {
+															"type": "array",
+															"properties": {
+																"id": {
+																	"type": "string"
+																},
+																"type": {
+																	"type": "string"
+																},
+																"meta": {
+																	"type": "string"
+																}
+															}
+														}
+													}
+												},
+												"USD": {
+													"properties": {
+														"balance": {
+															"type": "number"
+														},
+														"pendingDebit": {
+															"type": "number"
+														},
+														"accountName": {
+															"type": "string"
+														},
+														"asset": {
+															"type":"array",
+															"properties": {
+																"id": {
+																	"type": "string"
+																},
+																"type": {
+																	"type": "string"
+																},
+																"meta": {
+																	"type": "string"
+																}
+															}
+														}
+													}
+												}
+											},
+											"type": "object"
+										},
 										"message": {
 											"type": "string"
 										}
@@ -127,7 +287,7 @@
 					{
 						"example": "john_joe",
 						"in": "query",
-						"name": "reference",
+						"name": "accountName",
 						"required": true,
 						"schema": {
 							"type": "string"
@@ -140,28 +300,165 @@
 							"application/json": {
 								"schema": {
 									"example": {
-										"data": {
-											"btcAddress": "tb1q6zdd464wxlmd9glqefeeqsuxnemcyq73rhzn77",
-											"ethAddress": "0x20B3bE3a0629f30512E8bf6CcaCC1f2FC403b6AC",
-											"reference": "john_joe",
-											"trxAddress": "TCx7wxwFVm9GwnEaKaNckzqRYxrUxgoJDD"
-										},
-										"message": "success"
+										"message":"success",
+										"data":{
+											"BNB":{
+												"balance":0,
+												"pendingDebit":0,
+												"accountName":"account11",
+												"asset":[{
+													"id":"0xF35DfBc358cb8A81E2Be209f46eF6d277154280D",
+													"type":"crypto",
+													"meta":null
+												}]
+											},
+											"BTC":{
+												"balance":0,
+												"pendingDebit":0,
+												"accountName":"account11",
+												"asset":[{
+													"id":"tb1qehhmedtvzt00et5juvlytzfkn90a4ryvfffmv0",
+													"type":"crypto",
+													"meta":null
+												}]
+											},
+											"ETH":{
+												"balance":0,
+												"pendingDebit":0,
+												"accountName":"account11",
+												"asset":[{
+													"id":"0xF35DfBc358cb8A81E2Be209f46eF6d277154280D",
+													"type":"crypto",
+													"meta":null
+												}]
+											},"USD":{
+												"balance":0,
+												"pendingDebit":0,
+												"accountName":"account11",
+												"asset":[{
+														"id":"0xF35DfBc358cb8A81E2Be209f46eF6d277154280D",
+														"type":"crypto",
+														"meta":null
+													},
+													{
+														"id":"TYA1nkwKWWak1qE6V7zcnrQVUfJHWaL1Yh",
+														"type":"crypto",
+														"meta":null
+												}]
+													
+											}
+										}
 									},
 									"properties": {
 										"data": {
 											"properties": {
-												"btcAddress": {
-													"type": "string"
+												"BNB": {
+													"properties": {
+														"balance": {
+															"type": "number"
+														},
+														"pendingDebit": {
+															"type": "number"
+														},
+														"accountName": {
+															"type": "string"
+														},
+														"asset": {
+															"type": "array",
+															"properties": {
+																"id": {
+																	"type": "string"
+																},
+																"type": {
+																	"type": "string"
+																},
+																"meta": {
+																	"type": "string"
+																}
+															}
+														}
+													}
 												},
-												"ethAddress": {
-													"type": "string"
+												"BTC": {
+													"properties": {
+														"balance": {
+															"type": "number"
+														},
+														"pendingDebit": {
+															"type": "number"
+														},
+														"accountName": {
+															"type": "string"
+														},
+														"asset": {
+															"type": "array",
+															"properties": {
+																"id": {
+																	"type": "string"
+																},
+																"type": {
+																	"type": "string"
+																},
+																"meta": {
+																	"type": "string"
+																}
+															}
+														}
+													}
 												},
-												"reference": {
-													"type": "string"
+												"ETH": {
+													"properties": {
+														"balance": {
+															"type": "number"
+														},
+														"pendingDebit": {
+															"type": "number"
+														},
+														"accountName": {
+															"type": "string"
+														},
+														"asset": {
+															"type": "array",
+															"properties": {
+																"id": {
+																	"type": "string"
+																},
+																"type": {
+																	"type": "string"
+																},
+																"meta": {
+																	"type": "string"
+																}
+															}
+														}
+													}
 												},
-												"trxAddress": {
-													"type": "string"
+												"USD": {
+													"properties": {
+														"balance": {
+															"type": "number"
+														},
+														"pendingDebit": {
+															"type": "number"
+														},
+														"accountName": {
+															"type": "string"
+														},
+														"asset": {
+															"type":"array",
+															"properties": {
+																"id": {
+																	"type": "string"
+																},
+																"type": {
+																	"type": "string"
+																},
+																"meta": {
+																	"type": "string"
+																}
+															}
+														}
+													}
 												}
 											},
 											"type": "object"
@@ -314,7 +611,7 @@
 									"address": "0xA0b86991c6218b36c1d19D4a2e9eb0cE3606eB48",
 									"amount": 2,
 									"currency": "USDC",
-									"reference": "reference1",
+									"transactionReference": "reference1",
 									"fromAccount": "user1",
 									"network": "ethereum",
 									"type": "crypto"
@@ -337,7 +634,7 @@
 										],
 										"type": "string"
 									},
-									"reference": {
+									"transactionReference": {
 										"type": "string"
 									},
 									"fromAccount": {
@@ -427,7 +724,7 @@
 					{
 						"example": "user",
 						"in": "query",
-						"name": "accountname",
+						"name": "accountName",
 						"required": true,
 						"schema": {
 							"type": "string"
@@ -467,7 +764,7 @@
 													"Currency": "ETH",
 													"DebitAccount": "user3",
 													"DebitUser": "user3",
-													"Reference": "abcdef1234567890abcdef1234567867",
+													"TransactionReference": "abcdef1234567890abcdef1234567867",
 													"Status": "completed",
 													"Timestamp": "",
 													"TransactionType": "Internal Transfer"
@@ -479,7 +776,7 @@
 													"Currency": "ETH",
 													"DebitAccount": "credit",
 													"DebitUser": "admin",
-													"Reference": "abcdef1234567890abcdef1234567654",
+													"TransactionReference": "abcdef1234567890abcdef1234567654",
 													"Status": "completed",
 													"Timestamp": "",
 													"TransactionType": "Admin Credit"
@@ -645,7 +942,8 @@
 														"https://bitcoinfaucet.uo1.net/"
 													],
 													"name": "BTC",
-													"symbol": "BTC"
+													"symbol": "BTC",
+													"withdrawalFee": 0.01
 												}
 											},
 											"celo": {
@@ -657,7 +955,8 @@
 														"https://faucet.celo.org/alfajores"
 													],
 													"name": "CUSD",
-													"symbol": "CUSD"
+													"symbol": "CUSD",
+													"withdrawalFee": 0.01
 												},
 												"USDC": {
 													"contractAddress": "0x2f25deb3848c207fc8e0c34035b3ba7fc157602b",
@@ -667,7 +966,8 @@
 														"https://faucet.circle.com/"
 													],
 													"name": "USDC",
-													"symbol": "USDC"
+													"symbol": "USDC",
+													"withdrawalFee": 0.01
 												}
 											},
 											"ethereum": {
@@ -682,7 +982,8 @@
 														"https://getblock.io/faucet/eth-sepolia/"
 													],
 													"name": "ETH",
-													"symbol": "ETH"
+													"symbol": "ETH",
+													"withdrawalFee": 0.01
 												},
 												"USDC": {
 													"contractAddress": "0x1c7d4b196cb0c7b01d743fbc6116a902379c7238",
@@ -692,7 +993,8 @@
 														"https://faucet.circle.com/"
 													],
 													"name": "USDC",
-													"symbol": "USDC"
+													"symbol": "USDC",
+													"withdrawalFee": 0.01
 												}
 											},
 											"tron": {
@@ -704,7 +1006,8 @@
 														"https://nileex.io/join/getJoinPage"
 													],
 													"name": "USDJ",
-													"symbol": "USDJ"
+													"symbol": "USDJ",
+													"withdrawalFee": 0.01
 												},
 												"USDT": {
 													"contractAddress": "TXLAQ63Xg1NAzckPwKHvzw7CSEmLMEqcdj",
@@ -714,7 +1017,8 @@
 														"https://nileex.io/join/getJoinPage"
 													],
 													"name": "USDT",
-													"symbol": "USDT"
+													"symbol": "USDT",
+													"withdrawalFee": 0.01
 												}
 											}
 										},
@@ -744,6 +1048,9 @@
 																},
 																"symbol": {
 																	"type": "string"
+																},
+																"withdrawalFee": {
+																	"type": "number"
 																}
 															},
 															"type": "object"
