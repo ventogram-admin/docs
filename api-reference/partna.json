@@ -742,7 +742,7 @@
 					{
 						"example": "reference1",
 						"in": "query",
-						"name": "transactionRef",
+						"name": "transactionReference",
 						"required": false,
 						"schema": {
 							"type": "string"
@@ -827,7 +827,8 @@
 									"amount": 7,
 									"currency": "USD",
 									"fromAccount": "user1",
-									"toAccount": "account1"
+									"toAccount": "account1",
+									"transactionReference": "a1"
 								},
 								"properties": {
 									"amount": {
@@ -840,6 +841,9 @@
 										"type": "string"
 									},
 									"toAccount": {
+										"type": "string"
+									},
+									"transactionReference": {
 										"type": "string"
 									}
 								},
