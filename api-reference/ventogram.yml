@@ -341,7 +341,7 @@ paths:
                   description: Required voucher currency
                   enum:
                     - NGN
-                    - USD
+                    - GHS
                 rateKey:
                   type: string
                   description: This is a Ventogram-signed rate key. If provided when a voucher is created, the conversion will use the rate signed with this key if it is valid at the time of redeeming a voucher. Conversion will use the current rate if key has expired.
@@ -473,9 +473,6 @@ paths:
                           description: Timestamp of when the voucher was redeemed. If voucher has not been redeemed, this field is undefined.
                         accountType:
                           type: string
-                          enum:
-                            - dynamic
-                            - static
                           description: Type of created bank account. Note that this property is only available in v2.
                         cancelledAt:
                           type: string
