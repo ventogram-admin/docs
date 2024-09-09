@@ -341,7 +341,7 @@ paths:
                   description: Required voucher currency
                   enum:
                     - NGN
-                    - USD
+                    - GHS
                 rateKey:
                   type: string
                   description: This is a Ventogram-signed rate key. If provided when a voucher is created, the conversion will use the rate signed with this key if it is valid at the time of redeeming a voucher. Conversion will use the current rate if key has expired.
