@@ -473,9 +473,6 @@ paths:
                           description: Timestamp of when the voucher was redeemed. If voucher has not been redeemed, this field is undefined.
                         accountType:
                           type: string
-                          enum:
-                            - dynamic
-                            - static
                           description: Type of created bank account. Note that this property is only available in v2.
                         cancelledAt:
                           type: string
