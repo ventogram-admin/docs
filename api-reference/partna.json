@@ -5,19 +5,313 @@
 		"version": "3.0"
 	},
 	"paths": {
-		"/": {
+		"/account": {
 			"get": {
-				"description": "home endpoint",
-				"operationId": "home",
+				"description": "Get Account",
+				"operationId": "get account",
+				"parameters": [
+					{
+						"example": "user1",
+						"in": "query",
+						"name": "accountName",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
 				"responses": {
 					"200": {
 						"content": {
 							"application/json": {
 								"schema": {
 									"example": {
-										"message": "Welcome to Partna api"
+										"data": [
+											{
+												"BNB": {
+													"accountName": "user1",
+													"asset": [
+														{
+															"id": "0x20B3bE3a0629f30512E8bf6CcaCC1f2FC403b6AC",
+															"meta": null,
+															"type": "crypto"
+														}
+													],
+													"balance": 0,
+													"pendingDebit": 0
+												},
+												"BTC": {
+													"accountName": "user1",
+													"asset": [
+														{
+															"id": "tb1q6zdd464wxlmd9glqefeeqsuxnemcyq73rhzn77",
+															"meta": null,
+															"type": "crypto"
+														}
+													],
+													"balance": 0,
+													"pendingDebit": 0
+												},
+												"ETH": {
+													"accountName": "user1",
+													"asset": [
+														{
+															"id": "0x20B3bE3a0629f30512E8bf6CcaCC1f2FC403b6AC",
+															"meta": null,
+															"type": "crypto"
+														}
+													],
+													"balance": 0,
+													"pendingDebit": 0
+												},
+												"GHS": {
+													"accountName": "user1",
+													"asset": [
+														{
+															"id": "",
+															"meta": {},
+															"type": "ghanaiancedis"
+														}
+													],
+													"balance": 0,
+													"pendingDebit": 0
+												},
+												"NGN": {
+													"accountName": "user1",
+													"asset": [
+														{
+															"id": "",
+															"meta": {},
+															"type": "naira"
+														}
+													],
+													"balance": 0,
+													"pendingDebit": 0
+												},
+												"USD": {
+													"accountName": "user1",
+													"asset": [
+														{
+															"id": "0x20B3bE3a0629f30512E8bf6CcaCC1f2FC403b6AC",
+															"meta": {},
+															"type": "crypto"
+														},
+														{
+															"id": "TCx7wxwFVm9GwnEaKaNckzqRYxrUxgoJDD",
+															"meta": {},
+															"type": "crypto"
+														},
+														{
+															"id": "EXq68wLDiXvPppv6VVJKyECcAC1oz25rHk8BgeorRvUe",
+															"meta": {},
+															"type": "crypto"
+														}
+													],
+													"balance": 0,
+													"pendingDebit": 0
+												}
+											}
+										],
+										"message": "success"
 									},
 									"properties": {
+										"data": {
+											"items": {
+												"properties": {
+													"BNB": {
+														"properties": {
+															"accountName": {
+																"type": "string"
+															},
+															"asset": {
+																"items": {
+																	"properties": {
+																		"id": {
+																			"type": "string"
+																		},
+																		"meta": {
+																			"type": "string"
+																		},
+																		"type": {
+																			"type": "string"
+																		}
+																	},
+																	"type": "object"
+																},
+																"type": "array"
+															},
+															"balance": {
+																"type": "number"
+															},
+															"pendingDebit": {
+																"type": "number"
+															}
+														},
+														"type": "object"
+													},
+													"BTC": {
+														"properties": {
+															"accountName": {
+																"type": "string"
+															},
+															"asset": {
+																"items": {
+																	"properties": {
+																		"id": {
+																			"type": "string"
+																		},
+																		"meta": {
+																			"type": "string"
+																		},
+																		"type": {
+																			"type": "string"
+																		}
+																	},
+																	"type": "object"
+																},
+																"type": "array"
+															},
+															"balance": {
+																"type": "number"
+															},
+															"pendingDebit": {
+																"type": "number"
+															}
+														},
+														"type": "object"
+													},
+													"ETH": {
+														"properties": {
+															"accountName": {
+																"type": "string"
+															},
+															"asset": {
+																"items": {
+																	"properties": {
+																		"id": {
+																			"type": "string"
+																		},
+																		"meta": {
+																			"type": "string"
+																		},
+																		"type": {
+																			"type": "string"
+																		}
+																	},
+																	"type": "object"
+																},
+																"type": "array"
+															},
+															"balance": {
+																"type": "number"
+															},
+															"pendingDebit": {
+																"type": "number"
+															}
+														},
+														"type": "object"
+													},
+													"GHS": {
+														"properties": {
+															"accountName": {
+																"type": "string"
+															},
+															"asset": {
+																"items": {
+																	"properties": {
+																		"id": {
+																			"type": "string"
+																		},
+																		"meta": {
+																			"properties": {},
+																			"type": "object"
+																		},
+																		"type": {
+																			"type": "string"
+																		}
+																	},
+																	"type": "object"
+																},
+																"type": "array"
+															},
+															"balance": {
+																"type": "number"
+															},
+															"pendingDebit": {
+																"type": "number"
+															}
+														},
+														"type": "object"
+													},
+													"NGN": {
+														"properties": {
+															"accountName": {
+																"type": "string"
+															},
+															"asset": {
+																"items": {
+																	"properties": {
+																		"id": {
+																			"type": "string"
+																		},
+																		"meta": {
+																			"properties": {},
+																			"type": "object"
+																		},
+																		"type": {
+																			"type": "string"
+																		}
+																	},
+																	"type": "object"
+																},
+																"type": "array"
+															},
+															"balance": {
+																"type": "number"
+															},
+															"pendingDebit": {
+																"type": "number"
+															}
+														},
+														"type": "object"
+													},
+													"USD": {
+														"properties": {
+															"accountName": {
+																"type": "string"
+															},
+															"asset": {
+																"items": {
+																	"properties": {
+																		"id": {
+																			"type": "string"
+																		},
+																		"meta": {
+																			"properties": {},
+																			"type": "object"
+																		},
+																		"type": {
+																			"type": "string"
+																		}
+																	},
+																	"type": "object"
+																},
+																"type": "array"
+															},
+															"balance": {
+																"type": "number"
+															},
+															"pendingDebit": {
+																"type": "number"
+															}
+														},
+														"type": "object"
+													}
+												},
+												"type": "object"
+											},
+											"type": "array"
+										},
 										"message": {
 											"type": "string"
 										}
@@ -26,26 +320,75 @@
 								}
 							}
 						},
-						"description": "ping pong"
+						"description": "GET /account success"
+					},
+					"401": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"data": {},
+										"message": "invalid apikey"
+									},
+									"properties": {
+										"data": {
+											"properties": {},
+											"type": "object"
+										},
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "GET /account failed"
+					},
+					"404": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"data": {},
+										"message": "account not found"
+									},
+									"properties": {
+										"data": {
+											"properties": {},
+											"type": "object"
+										},
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "GET /account failed"
 					}
 				},
-				"security": [],
-				"summary": "home",
+				"security": [
+					{
+						"x-api-key": [],
+						"x-api-user": []
+					}
+				],
+				"summary": "Get Account",
 				"tags": [
-					"ping"
+					"account"
 				]
-			}
-		},
-		"/account": {
+			},
 			"post": {
-				"description": "Create an account (Crypto or Fiat)",
-				"operationId": "createAccount",
+				"description": "Create Account",
+				"operationId": "create account",
 				"requestBody": {
 					"content": {
 						"application/json": {
 							"schema": {
 								"example": {
-									"accountName": "john_joe",
+									"accountName": "user1",
 									"type": "crypto"
 								},
 								"properties": {
@@ -73,165 +416,280 @@
 							"application/json": {
 								"schema": {
 									"example": {
-										"message":"success",
-										"data":{
-											"BNB":{
-												"balance":0,
-												"pendingDebit":0,
-												"accountName":"account11",
-												"asset":[{
-													"id":"0xF35DfBc358cb8A81E2Be209f46eF6d277154280D",
-													"type":"crypto",
-													"meta":null
-												}]
+										"data": {
+											"BNB": {
+												"accountName": "account1",
+												"asset": [
+													{
+														"id": "0x2eea5A634DB062E0e47Ec9fD37F3cab7Ee8FfD92",
+														"meta": null,
+														"type": "crypto"
+													}
+												],
+												"balance": 0,
+												"pendingDebit": 0
 											},
-											"BTC":{
-												"balance":0,
-												"pendingDebit":0,
-												"accountName":"account11",
-												"asset":[{
-													"id":"tb1qehhmedtvzt00et5juvlytzfkn90a4ryvfffmv0",
-													"type":"crypto",
-													"meta":null
-												}]
+											"BTC": {
+												"accountName": "account1",
+												"asset": [
+													{
+														"id": "tb1qp74ye524mlma5l77e5pxkdfjkeahq27ftjr2tr",
+														"meta": null,
+														"type": "crypto"
+													}
+												],
+												"balance": 0,
+												"pendingDebit": 0
 											},
-											"ETH":{
-												"balance":0,
-												"pendingDebit":0,
-												"accountName":"account11",
-												"asset":[{
-													"id":"0xF35DfBc358cb8A81E2Be209f46eF6d277154280D",
-													"type":"crypto",
-													"meta":null
-												}]
-											},"USD":{
-												"balance":0,
-												"pendingDebit":0,
-												"accountName":"account11",
-												"asset":[{
-														"id":"0xF35DfBc358cb8A81E2Be209f46eF6d277154280D",
-														"type":"crypto",
-														"meta":null
+											"ETH": {
+												"accountName": "account1",
+												"asset": [
+													{
+														"id": "0x2eea5A634DB062E0e47Ec9fD37F3cab7Ee8FfD92",
+														"meta": null,
+														"type": "crypto"
+													}
+												],
+												"balance": 0,
+												"pendingDebit": 0
+											},
+											"GHS": {
+												"accountName": "account1",
+												"asset": [
+													{
+														"id": "",
+														"meta": null,
+														"type": "ghanaiancedis"
+													}
+												],
+												"balance": 0,
+												"pendingDebit": 0
+											},
+											"NGN": {
+												"accountName": "account1",
+												"asset": [
+													{
+														"id": "",
+														"meta": null,
+														"type": "naira"
+													}
+												],
+												"balance": 0,
+												"pendingDebit": 0
+											},
+											"USD": {
+												"accountName": "account1",
+												"asset": [
+													{
+														"id": "0x2eea5A634DB062E0e47Ec9fD37F3cab7Ee8FfD92",
+														"meta": null,
+														"type": "crypto"
 													},
 													{
-														"id":"TYA1nkwKWWak1qE6V7zcnrQVUfJHWaL1Yh",
-														"type":"crypto",
-														"meta":null
-												}]
-													
+														"id": "TEFGq29E7sJ6CkdH7xsgosBcarcjmKe2VB",
+														"meta": null,
+														"type": "crypto"
+													},
+													{
+														"id": "8aLT3BAeRhspwVYj19xM7LELLHriV3TH4RBm28DiJvuE",
+														"meta": null,
+														"type": "crypto"
+													}
+												],
+												"balance": 0,
+												"pendingDebit": 0
 											}
-										}
+										},
+										"message": "success"
 									},
 									"properties": {
 										"data": {
 											"properties": {
 												"BNB": {
 													"properties": {
+														"accountName": {
+															"type": "string"
+														},
+														"asset": {
+															"items": {
+																"properties": {
+																	"id": {
+																		"type": "string"
+																	},
+																	"meta": {
+																		"type": "string"
+																	},
+																	"type": {
+																		"type": "string"
+																	}
+																},
+																"type": "object"
+															},
+															"type": "array"
+														},
 														"balance": {
 															"type": "number"
 														},
 														"pendingDebit": {
 															"type": "number"
-														},
-														"accountName": {
-															"type": "string"
-														},
-														"asset": {
-															"type": "array",
-															"properties": {
-																"id": {
-																	"type": "string"
-																},
-																"type": {
-																	"type": "string"
-																},
-																"meta": {
-																	"type": "string"
-																}
-															}
 														}
-													}
+													},
+													"type": "object"
 												},
 												"BTC": {
 													"properties": {
+														"accountName": {
+															"type": "string"
+														},
+														"asset": {
+															"items": {
+																"properties": {
+																	"id": {
+																		"type": "string"
+																	},
+																	"meta": {
+																		"type": "string"
+																	},
+																	"type": {
+																		"type": "string"
+																	}
+																},
+																"type": "object"
+															},
+															"type": "array"
+														},
 														"balance": {
 															"type": "number"
 														},
 														"pendingDebit": {
 															"type": "number"
-														},
-														"accountName": {
-															"type": "string"
-														},
-														"asset": {
-															"type": "array",
-															"properties": {
-																"id": {
-																	"type": "string"
-																},
-																"type": {
-																	"type": "string"
-																},
-																"meta": {
-																	"type": "string"
-																}
-															}
 														}
-													}
+													},
+													"type": "object"
 												},
 												"ETH": {
 													"properties": {
+														"accountName": {
+															"type": "string"
+														},
+														"asset": {
+															"items": {
+																"properties": {
+																	"id": {
+																		"type": "string"
+																	},
+																	"meta": {
+																		"type": "string"
+																	},
+																	"type": {
+																		"type": "string"
+																	}
+																},
+																"type": "object"
+															},
+															"type": "array"
+														},
 														"balance": {
 															"type": "number"
 														},
 														"pendingDebit": {
 															"type": "number"
-														},
+														}
+													},
+													"type": "object"
+												},
+												"GHS": {
+													"properties": {
 														"accountName": {
 															"type": "string"
 														},
 														"asset": {
-															"type": "array",
-															"properties": {
-																"id": {
-																	"type": "string"
+															"items": {
+																"properties": {
+																	"id": {
+																		"type": "string"
+																	},
+																	"meta": {
+																		"type": "string"
+																	},
+																	"type": {
+																		"type": "string"
+																	}
 																},
-																"type": {
-																	"type": "string"
-																},
-																"meta": {
-																	"type": "string"
-																}
-															}
+																"type": "object"
+															},
+															"type": "array"
+														},
+														"balance": {
+															"type": "number"
+														},
+														"pendingDebit": {
+															"type": "number"
 														}
-													}
+													},
+													"type": "object"
+												},
+												"NGN": {
+													"properties": {
+														"accountName": {
+															"type": "string"
+														},
+														"asset": {
+															"items": {
+																"properties": {
+																	"id": {
+																		"type": "string"
+																	},
+																	"meta": {
+																		"type": "string"
+																	},
+																	"type": {
+																		"type": "string"
+																	}
+																},
+																"type": "object"
+															},
+															"type": "array"
+														},
+														"balance": {
+															"type": "number"
+														},
+														"pendingDebit": {
+															"type": "number"
+														}
+													},
+													"type": "object"
 												},
 												"USD": {
 													"properties": {
+														"accountName": {
+															"type": "string"
+														},
+														"asset": {
+															"items": {
+																"properties": {
+																	"id": {
+																		"type": "string"
+																	},
+																	"meta": {
+																		"type": "string"
+																	},
+																	"type": {
+																		"type": "string"
+																	}
+																},
+																"type": "object"
+															},
+															"type": "array"
+														},
 														"balance": {
 															"type": "number"
 														},
 														"pendingDebit": {
 															"type": "number"
-														},
-														"accountName": {
-															"type": "string"
-														},
-														"asset": {
-															"type":"array",
-															"properties": {
-																"id": {
-																	"type": "string"
-																},
-																"type": {
-																	"type": "string"
-																},
-																"meta": {
-																	"type": "string"
-																}
-															}
 														}
-													}
+													},
+													"type": "object"
 												}
 											},
 											"type": "object"
@@ -244,19 +702,24 @@
 								}
 							}
 						},
-						"description": "create account"
+						"description": "POST /account success"
 					},
-					"404": {
+					"400": {
 						"content": {
 							"application/json": {
 								"schema": {
 									"example": {
-										"data": "Field [Type] Expected[oneof(dollar crypto naira)] Value [invalid value]",
+										"data": [
+											"Field type Expected oneof(dollar crypto naira) Value crypt"
+										],
 										"message": "validation error"
 									},
 									"properties": {
 										"data": {
-											"type": "string"
+											"items": {
+												"type": "string"
+											},
+											"type": "array"
 										},
 										"message": {
 											"type": "string"
@@ -266,29 +729,167 @@
 								}
 							}
 						},
-						"description": "create account failed"
+						"description": "POST /account failed"
+					},
+					"409": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"data": {},
+										"message": "account already exists"
+									},
+									"properties": {
+										"data": {
+											"properties": {},
+											"type": "object"
+										},
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "POST /account failed"
 					}
 				},
 				"security": [
 					{
 						"x-api-key": [],
-                        "x-api-user": []
+						"x-api-user": []
 					}
 				],
-				"summary": "Create account",
+				"summary": "Create Account",
 				"tags": [
 					"account"
 				]
 			},
+			"put": {
+				"description": "Upgrade Account",
+				"operationId": "Upgrade account",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"example": {
+									"accountName": "account1",
+									"currency": "NGN"
+								},
+								"properties": {
+									"accountName": {
+										"type": "string"
+									},
+									"currency": {
+										"enum": [
+											"NGN"
+										],
+										"type": "string"
+									}
+								},
+								"type": "object"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"data": [
+											{
+												"account_name": "Mr. Dalton Stoltenberg",
+												"account_number": "4215326300",
+												"bank_code": "251",
+												"bank_name": "Maplerad",
+												"currency": "NGN",
+												"status": "ACTIVE"
+											}
+										],
+										"message": "bank account successful"
+									},
+									"properties": {
+										"data": {
+											"items": {
+												"properties": {
+													"account_name": {
+														"type": "string"
+													},
+													"account_number": {
+														"type": "string"
+													},
+													"bank_code": {
+														"type": "string"
+													},
+													"bank_name": {
+														"type": "string"
+													},
+													"currency": {
+														"type": "string"
+													},
+													"status": {
+														"type": "string"
+													}
+												},
+												"type": "object"
+											},
+											"type": "array"
+										},
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "PUT /account success"
+					},
+					"500": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"message": "bank account could not be completed"
+									},
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "PUT /account failed"
+					}
+				},
+				"security": [
+					{
+						"x-api-key": [],
+						"x-api-user": []
+					}
+				],
+				"summary": "Upgrade Account",
+				"tags": [
+					"account"
+				]
+			}
+		},
+		"/banks": {
 			"get": {
-				"description": "Get account details",
-				"operationId": "getAccount",
+				"description": "GET /banks",
+				"operationId": "banks",
 				"parameters": [
 					{
-						"example": "john_joe",
+						"example": "NGN",
 						"in": "query",
-						"name": "accountName",
-						"required": true,
+						"name": "currency",
+						"required": false,
 						"schema": {
 							"type": "string"
 						}
@@ -300,165 +901,742 @@
 							"application/json": {
 								"schema": {
 									"example": {
-										"message":"success",
-										"data":{
-											"BNB":{
-												"balance":0,
-												"pendingDebit":0,
-												"accountName":"account11",
-												"asset":[{
-													"id":"0xF35DfBc358cb8A81E2Be209f46eF6d277154280D",
-													"type":"crypto",
-													"meta":null
-												}]
+										"data": [
+											{
+												"code": "120001",
+												"name": "9mobile 9Payment Service Bank"
 											},
-											"BTC":{
-												"balance":0,
-												"pendingDebit":0,
-												"accountName":"account11",
-												"asset":[{
-													"id":"tb1qehhmedtvzt00et5juvlytzfkn90a4ryvfffmv0",
-													"type":"crypto",
-													"meta":null
-												}]
+											{
+												"code": "404",
+												"name": "Abbey Mortgage Bank"
 											},
-											"ETH":{
-												"balance":0,
-												"pendingDebit":0,
-												"accountName":"account11",
-												"asset":[{
-													"id":"0xF35DfBc358cb8A81E2Be209f46eF6d277154280D",
-													"type":"crypto",
-													"meta":null
-												}]
-											},"USD":{
-												"balance":0,
-												"pendingDebit":0,
-												"accountName":"account11",
-												"asset":[{
-														"id":"0xF35DfBc358cb8A81E2Be209f46eF6d277154280D",
-														"type":"crypto",
-														"meta":null
-													},
-													{
-														"id":"TYA1nkwKWWak1qE6V7zcnrQVUfJHWaL1Yh",
-														"type":"crypto",
-														"meta":null
-												}]
-													
+											{
+												"code": "51204",
+												"name": "Above Only MFB"
+											},
+											{
+												"code": "51312",
+												"name": "Abulesoro MFB"
+											},
+											{
+												"code": "044",
+												"name": "Access Bank"
+											},
+											{
+												"code": "063",
+												"name": "Access Bank (Diamond)"
+											},
+											{
+												"code": "602",
+												"name": "Accion Microfinance Bank"
+											},
+											{
+												"code": "50036",
+												"name": "Ahmadu Bello University Microfinance Bank"
+											},
+											{
+												"code": "120004",
+												"name": "Airtel Smartcash PSB"
+											},
+											{
+												"code": "51336",
+												"name": "AKU Microfinance Bank"
+											},
+											{
+												"code": "090561",
+												"name": "Akuchukwu Microfinance Bank Limited"
+											},
+											{
+												"code": "035A",
+												"name": "ALAT by WEMA"
+											},
+											{
+												"code": "090629",
+												"name": "Amegy Microfinance Bank"
+											},
+											{
+												"code": "50926",
+												"name": "Amju Unique MFB"
+											},
+											{
+												"code": "51341",
+												"name": "AMPERSAND MICROFINANCE BANK"
+											},
+											{
+												"code": "50083",
+												"name": "Aramoko MFB"
+											},
+											{
+												"code": "401",
+												"name": "ASO Savings and Loans"
+											},
+											{
+												"code": "MFB50094",
+												"name": "Astrapolaris MFB LTD"
+											},
+											{
+												"code": "090478",
+												"name": "AVUENEGBE MICROFINANCE BANK"
+											},
+											{
+												"code": "51229",
+												"name": "Bainescredit MFB"
+											},
+											{
+												"code": "50117",
+												"name": "Banc Corp Microfinance Bank"
+											},
+											{
+												"code": "50123",
+												"name": "Beststar Microfinance Bank"
+											},
+											{
+												"code": "50931",
+												"name": "Bowen Microfinance Bank"
+											},
+											{
+												"code": "FC40163",
+												"name": "Branch International Financial Services Limited"
+											},
+											{
+												"code": "565",
+												"name": "Carbon"
+											},
+											{
+												"code": "865",
+												"name": "CASHCONNECT MFB"
+											},
+											{
+												"code": "50823",
+												"name": "CEMCS Microfinance Bank"
+											},
+											{
+												"code": "50171",
+												"name": "Chanelle Microfinance Bank Limited"
+											},
+											{
+												"code": "312",
+												"name": "Chikum Microfinance bank"
+											},
+											{
+												"code": "023",
+												"name": "Citibank Nigeria"
+											},
+											{
+												"code": "070027",
+												"name": "CITYCODE MORTAGE BANK"
+											},
+											{
+												"code": "50910",
+												"name": "Consumer Microfinance Bank"
+											},
+											{
+												"code": "50204",
+												"name": "Corestep MFB"
+											},
+											{
+												"code": "559",
+												"name": "Coronation Merchant Bank"
+											},
+											{
+												"code": "FC40128",
+												"name": "County Finance Limited"
+											},
+											{
+												"code": "51297",
+												"name": "Crescent MFB"
+											},
+											{
+												"code": "090560",
+												"name": "Crust Microfinance Bank"
+											},
+											{
+												"code": "51334",
+												"name": "Davenport MICROFINANCE BANK"
+											},
+											{
+												"code": "50162",
+												"name": "Dot Microfinance Bank"
+											},
+											{
+												"code": "050",
+												"name": "Ecobank Nigeria"
+											},
+											{
+												"code": "50263",
+												"name": "Ekimogun MFB"
+											},
+											{
+												"code": "098",
+												"name": "Ekondo Microfinance Bank"
+											},
+											{
+												"code": "090678",
+												"name": "EXCEL FINANCE BANK"
+											},
+											{
+												"code": "50126",
+												"name": "Eyowo"
+											},
+											{
+												"code": "51318",
+												"name": "Fairmoney Microfinance Bank"
+											},
+											{
+												"code": "50298",
+												"name": "Fedeth MFB"
+											},
+											{
+												"code": "070",
+												"name": "Fidelity Bank"
+											},
+											{
+												"code": "51314",
+												"name": "Firmus MFB"
+											},
+											{
+												"code": "011",
+												"name": "First Bank of Nigeria"
+											},
+											{
+												"code": "214",
+												"name": "First City Monument Bank"
+											},
+											{
+												"code": "090164",
+												"name": "FIRST ROYAL MICROFINANCE BANK"
+											},
+											{
+												"code": "413",
+												"name": "FirstTrust Mortgage Bank Nigeria"
+											},
+											{
+												"code": "50315",
+												"name": "FLOURISH MFB"
+											},
+											{
+												"code": "501",
+												"name": "FSDH Merchant Bank Limited"
+											},
+											{
+												"code": "832",
+												"name": "FUTMINNA MICROFINANCE BANK"
+											},
+											{
+												"code": "812",
+												"name": "Gateway Mortgage Bank LTD"
+											},
+											{
+												"code": "00103",
+												"name": "Globus Bank"
+											},
+											{
+												"code": "090574",
+												"name": "Goldman MFB"
+											},
+											{
+												"code": "100022",
+												"name": "GoMoney"
+											},
+											{
+												"code": "090664",
+												"name": "GOOD SHEPHERD MICROFINANCE BANK"
+											},
+											{
+												"code": "50739",
+												"name": "Goodnews Microfinance Bank"
+											},
+											{
+												"code": "562",
+												"name": "Greenwich Merchant Bank"
+											},
+											{
+												"code": "058",
+												"name": "Guaranty Trust Bank"
+											},
+											{
+												"code": "51251",
+												"name": "Hackman Microfinance Bank"
+											},
+											{
+												"code": "50383",
+												"name": "Hasal Microfinance Bank"
+											},
+											{
+												"code": "030",
+												"name": "Heritage Bank"
+											},
+											{
+												"code": "120002",
+												"name": "HopePSB"
+											},
+											{
+												"code": "51244",
+												"name": "Ibile Microfinance Bank"
+											},
+											{
+												"code": "50439",
+												"name": "Ikoyi Osun MFB"
+											},
+											{
+												"code": "50442",
+												"name": "Ilaro Poly Microfinance Bank"
+											},
+											{
+												"code": "50453",
+												"name": "Imowo MFB"
+											},
+											{
+												"code": "415",
+												"name": "IMPERIAL HOMES MORTAGE BANK"
+											},
+											{
+												"code": "50457",
+												"name": "Infinity MFB"
+											},
+											{
+												"code": "301",
+												"name": "Jaiz Bank"
+											},
+											{
+												"code": "50502",
+												"name": "Kadpoly MFB"
+											},
+											{
+												"code": "51308",
+												"name": "KANOPOLY MFB"
+											},
+											{
+												"code": "082",
+												"name": "Keystone Bank"
+											},
+											{
+												"code": "50200",
+												"name": "Kredi Money MFB LTD"
+											},
+											{
+												"code": "50211",
+												"name": "Kuda Bank"
+											},
+											{
+												"code": "90052",
+												"name": "Lagos Building Investment Company Plc."
+											},
+											{
+												"code": "50549",
+												"name": "Links MFB"
+											},
+											{
+												"code": "031",
+												"name": "Living Trust Mortgage Bank"
+											},
+											{
+												"code": "50491",
+												"name": "LOMA MFB"
+											},
+											{
+												"code": "303",
+												"name": "Lotus Bank"
+											},
+											{
+												"code": "090171",
+												"name": "MAINSTREET MICROFINANCE BANK"
+											},
+											{
+												"code": "50563",
+												"name": "Mayfair MFB"
+											},
+											{
+												"code": "50304",
+												"name": "Mint MFB"
+											},
+											{
+												"code": "946",
+												"name": "Money Master PSB"
+											},
+											{
+												"code": "50515",
+												"name": "Moniepoint MFB"
+											},
+											{
+												"code": "120003",
+												"name": "MTN Momo PSB"
+											},
+											{
+												"code": "090190",
+												"name": "MUTUAL BENEFITS MICROFINANCE BANK"
+											},
+											{
+												"code": "090679",
+												"name": "NDCC MICROFINANCE BANK"
+											},
+											{
+												"code": "50629",
+												"name": "NPF MICROFINANCE BANK"
+											},
+											{
+												"code": "999992",
+												"name": "OPay Digital Services Limited (OPay)"
+											},
+											{
+												"code": "107",
+												"name": "Optimus Bank Limited"
+											},
+											{
+												"code": "100002",
+												"name": "Paga"
+											},
+											{
+												"code": "999991",
+												"name": "PalmPay"
+											},
+											{
+												"code": "104",
+												"name": "Parallex Bank"
+											},
+											{
+												"code": "311",
+												"name": "Parkway - ReadyCash"
+											},
+											{
+												"code": "090680",
+												"name": "PATHFINDER MICROFINANCE BANK LIMITED"
+											},
+											{
+												"code": "100039",
+												"name": "Paystack-Titan"
+											},
+											{
+												"code": "50743",
+												"name": "Peace Microfinance Bank"
+											},
+											{
+												"code": "51146",
+												"name": "Personal Trust MFB"
+											},
+											{
+												"code": "50746",
+												"name": "Petra Mircofinance Bank Plc"
+											},
+											{
+												"code": "050021",
+												"name": "PFI FINANCE COMPANY LIMITED"
+											},
+											{
+												"code": "268",
+												"name": "Platinum Mortgage Bank"
+											},
+											{
+												"code": "00716",
+												"name": "Pocket App"
+											},
+											{
+												"code": "076",
+												"name": "Polaris Bank"
+											},
+											{
+												"code": "50864",
+												"name": "Polyunwana MFB"
+											},
+											{
+												"code": "105",
+												"name": "PremiumTrust Bank"
+											},
+											{
+												"code": "050023",
+												"name": "PROSPERIS FINANCE LIMITED"
+											},
+											{
+												"code": "101",
+												"name": "Providus Bank"
+											},
+											{
+												"code": "51293",
+												"name": "QuickFund MFB"
+											},
+											{
+												"code": "502",
+												"name": "Rand Merchant Bank"
+											},
+											{
+												"code": "090496",
+												"name": "RANDALPHA MICROFINANCE BANK"
+											},
+											{
+												"code": "90067",
+												"name": "Refuge Mortgage Bank"
+											},
+											{
+												"code": "50761",
+												"name": "REHOBOTH MICROFINANCE BANK"
+											},
+											{
+												"code": "50994",
+												"name": "Rephidim Microfinance Bank"
+											},
+											{
+												"code": "51286",
+												"name": "Rigo Microfinance Bank Limited"
+											},
+											{
+												"code": "50767",
+												"name": "ROCKSHIELD MICROFINANCE BANK"
+											},
+											{
+												"code": "125",
+												"name": "Rubies MFB"
+											},
+											{
+												"code": "51113",
+												"name": "Safe Haven MFB"
+											},
+											{
+												"code": "951113",
+												"name": "Safe Haven Microfinance Bank Limited"
+											},
+											{
+												"code": "40165",
+												"name": "SAGE GREY FINANCE LIMITED"
+											},
+											{
+												"code": "50582",
+												"name": "Shield MFB"
+											},
+											{
+												"code": "106",
+												"name": "Signature Bank Ltd"
+											},
+											{
+												"code": "51062",
+												"name": "Solid Allianze MFB"
+											},
+											{
+												"code": "50800",
+												"name": "Solid Rock MFB"
+											},
+											{
+												"code": "51310",
+												"name": "Sparkle Microfinance Bank"
+											},
+											{
+												"code": "221",
+												"name": "Stanbic IBTC Bank"
+											},
+											{
+												"code": "068",
+												"name": "Standard Chartered Bank"
+											},
+											{
+												"code": "090162",
+												"name": "STANFORD MICROFINANCE BANK"
+											},
+											{
+												"code": "51253",
+												"name": "Stellas MFB"
+											},
+											{
+												"code": "232",
+												"name": "Sterling Bank"
+											},
+											{
+												"code": "100",
+												"name": "Suntrust Bank"
+											},
+											{
+												"code": "50968",
+												"name": "Supreme MFB"
+											},
+											{
+												"code": "302",
+												"name": "TAJ Bank"
+											},
+											{
+												"code": "51269",
+												"name": "Tangerine Money"
+											},
+											{
+												"code": "51211",
+												"name": "TCF MFB"
+											},
+											{
+												"code": "102",
+												"name": "Titan Bank"
+											},
+											{
+												"code": "50840",
+												"name": "U&C Microfinance Bank Ltd (U AND C MFB)"
+											},
+											{
+												"code": "51322",
+												"name": "Uhuru MFB"
+											},
+											{
+												"code": "50870",
+												"name": "Unaab Microfinance Bank Limited"
+											},
+											{
+												"code": "50871",
+												"name": "Unical MFB"
+											},
+											{
+												"code": "51316",
+												"name": "Unilag Microfinance Bank"
+											},
+											{
+												"code": "032",
+												"name": "Union Bank of Nigeria"
+											},
+											{
+												"code": "033",
+												"name": "United Bank For Africa"
+											},
+											{
+												"code": "215",
+												"name": "Unity Bank"
+											},
+											{
+												"code": "50894",
+												"name": "Uzondu Microfinance Bank Awka Anambra State"
+											},
+											{
+												"code": "050020",
+												"name": "Vale Finance Limited"
+											},
+											{
+												"code": "566",
+												"name": "VFD Microfinance Bank Limited"
+											},
+											{
+												"code": "51355",
+												"name": "Waya Microfinance Bank"
+											},
+											{
+												"code": "035",
+												"name": "Wema Bank"
+											},
+											{
+												"code": "057",
+												"name": "Zenith Bank"
 											}
+										],
+										"message": "success"
+									},
+									"properties": {
+										"data": {
+											"items": {
+												"properties": {
+													"code": {
+														"type": "string"
+													},
+													"name": {
+														"type": "string"
+													}
+												},
+												"type": "object"
+											},
+											"type": "array"
+										},
+										"message": {
+											"type": "string"
 										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "POST /kyc/resolve-account success"
+					}
+				},
+				"security": [
+					{
+						"x-api-key": [],
+						"x-api-user": []
+					}
+				],
+				"summary": "GET /banks",
+				"tags": [
+					"bank"
+				]
+			}
+		},
+		"/convert": {
+			"post": {
+				"description": "POST /convert",
+				"operationId": "convert",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"example": {
+									"accountName": "convertcurrencyuser",
+									"fromAmount": 1,
+									"fromCurrency": "ETH",
+									"toCurrency": "USD",
+									"transactionReference": "bbcdef2234567890abcdef1234568880"
+								},
+								"properties": {
+									"accountName": {
+										"type": "string"
+									},
+									"fromAmount": {
+										"type": "number"
+									},
+									"fromCurrency": {
+										"type": "string"
+									},
+									"toCurrency": {
+										"type": "string"
+									},
+									"transactionReference": {
+										"type": "string"
+									}
+								},
+								"type": "object"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"data": {
+											"accountName": "convertcurrencyuser",
+											"fromAmount": 2,
+											"fromCurrency": "ETH",
+											"rate": 2640,
+											"toAmount": 5280,
+											"toCurrency": "USD",
+											"transactionReference": "bbcdef2234567890abcdef1234568880"
+										},
+										"message": "success"
 									},
 									"properties": {
 										"data": {
 											"properties": {
-												"BNB": {
-													"properties": {
-														"balance": {
-															"type": "number"
-														},
-														"pendingDebit": {
-															"type": "number"
-														},
-														"accountName": {
-															"type": "string"
-														},
-														"asset": {
-															"type": "array",
-															"properties": {
-																"id": {
-																	"type": "string"
-																},
-																"type": {
-																	"type": "string"
-																},
-																"meta": {
-																	"type": "string"
-																}
-															}
-														}
-													}
+												"accountName": {
+													"type": "string"
 												},
-												"BTC": {
-													"properties": {
-														"balance": {
-															"type": "number"
-														},
-														"pendingDebit": {
-															"type": "number"
-														},
-														"accountName": {
-															"type": "string"
-														},
-														"asset": {
-															"type": "array",
-															"properties": {
-																"id": {
-																	"type": "string"
-																},
-																"type": {
-																	"type": "string"
-																},
-																"meta": {
-																	"type": "string"
-																}
-															}
-														}
-													}
+												"fromAmount": {
+													"type": "number"
 												},
-												"ETH": {
-													"properties": {
-														"balance": {
-															"type": "number"
-														},
-														"pendingDebit": {
-															"type": "number"
-														},
-														"accountName": {
-															"type": "string"
-														},
-														"asset": {
-															"type": "array",
-															"properties": {
-																"id": {
-																	"type": "string"
-																},
-																"type": {
-																	"type": "string"
-																},
-																"meta": {
-																	"type": "string"
-																}
-															}
-														}
-													}
+												"fromCurrency": {
+													"type": "string"
 												},
-												"USD": {
-													"properties": {
-														"balance": {
-															"type": "number"
-														},
-														"pendingDebit": {
-															"type": "number"
-														},
-														"accountName": {
-															"type": "string"
-														},
-														"asset": {
-															"type":"array",
-															"properties": {
-																"id": {
-																	"type": "string"
-																},
-																"type": {
-																	"type": "string"
-																},
-																"meta": {
-																	"type": "string"
-																}
-															}
-														}
-													}
+												"rate": {
+													"type": "number"
+												},
+												"toAmount": {
+													"type": "number"
+												},
+												"toCurrency": {
+													"type": "string"
+												},
+												"transactionReference": {
+													"type": "string"
 												}
 											},
 											"type": "object"
@@ -471,38 +1649,21 @@
 								}
 							}
 						},
-						"description": "get account"
+						"description": "POST /convert success"
 					},
 					"400": {
 						"content": {
 							"application/json": {
 								"schema": {
 									"example": {
-										"message": "error: cannot get account by ref"
+										"data": {},
+										"message": "insufficient funds"
 									},
 									"properties": {
-										"message": {
-											"enum": [
-												"error",
-												" cannot get account by ref"
-											],
-											"type": "string"
-										}
-									},
-									"type": "object"
-								}
-							}
-						},
-						"description": "bad request"
-					},
-					"401": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"example": {
-										"message": "invalid apikey"
-									},
-									"properties": {
+										"data": {
+											"properties": {},
+											"type": "object"
+										},
 										"message": {
 											"type": "string"
 										}
@@ -511,32 +1672,162 @@
 								}
 							}
 						},
-						"description": "unauthorized access"
+						"description": "POST /convert failed"
 					}
 				},
 				"security": [
 					{
 						"x-api-key": [],
-                        "x-api-user": []
+						"x-api-user": []
 					}
 				],
-				"summary": "Get account",
+				"summary": "POST /convert",
 				"tags": [
-					"account"
+					"convert"
 				]
 			}
 		},
-		"/panic": {
+		"/discount": {
 			"get": {
-				"description": "panic endpoint",
-				"operationId": "panic",
+				"description": "Get Discount",
+				"operationId": "get discount",
 				"responses": {
-					"500": {
+					"200": {
 						"content": {
 							"application/json": {
 								"schema": {
 									"example": {
-										"message": "Internal Server Error"
+										"data": [
+											{
+												"discount": "10%",
+												"minimumAssetValueInUSD": "1000"
+											},
+											{
+												"discount": "5%",
+												"minimumAssetValueInUSD": "500"
+											},
+											{
+												"discount": "1%",
+												"minimumAssetValueInUSD": "100"
+											}
+										],
+										"message": "success"
+									},
+									"properties": {
+										"data": {
+											"items": {
+												"properties": {
+													"discount": {
+														"type": "string"
+													},
+													"minimumAssetValueInUSD": {
+														"type": "string"
+													}
+												},
+												"type": "object"
+											},
+											"type": "array"
+										},
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "GET /discount success"
+					}
+				},
+				"security": [],
+				"summary": "Get Discount",
+				"tags": [
+					"discount"
+				]
+			}
+		},
+		"/kyc": {
+			"post": {
+				"description": "POST /kyc",
+				"operationId": "create kyc",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"example": {
+									"accountName": "kycaccount",
+									"bvn": "01234567891"
+								},
+								"properties": {
+									"accountName": {
+										"type": "string"
+									},
+									"bvn": {
+										"type": "string"
+									}
+								},
+								"type": "object"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"data": {
+											"maskedPhone": "+234800****000",
+											"methods": [
+												{
+													"hint": "Complete phone verification by providing the phone number associated with your bvn",
+													"method": "phone verification"
+												}
+											]
+										},
+										"message": "success"
+									},
+									"properties": {
+										"data": {
+											"properties": {
+												"maskedPhone": {
+													"type": "string"
+												},
+												"methods": {
+													"items": {
+														"properties": {
+															"hint": {
+																"type": "string"
+															},
+															"method": {
+																"type": "string"
+															}
+														},
+														"type": "object"
+													},
+													"type": "array"
+												}
+											},
+											"type": "object"
+										},
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "POST /kyc success"
+					},
+					"404": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"message": "Account not found"
 									},
 									"properties": {
 										"message": {
@@ -547,19 +1838,479 @@
 								}
 							}
 						},
-						"description": "ping panic"
+						"description": "POST /kyc failed"
 					}
 				},
-				"security": [],
-				"summary": "panic",
+				"security": [
+					{
+						"x-api-key": [],
+						"x-api-user": []
+					}
+				],
+				"summary": "POST /kyc",
 				"tags": [
-					"ping"
+					"kyc"
+				]
+			}
+		},
+		"/kyc/confirm-otp": {
+			"put": {
+				"description": "PUT /kyc/confirm-otp",
+				"operationId": "confirm otp",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"example": {
+									"accountName": "kycaccount",
+									"otp": "123456"
+								},
+								"properties": {
+									"accountName": {
+										"type": "string"
+									},
+									"otp": {
+										"type": "string"
+									}
+								},
+								"type": "object"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"message": "KYC verification successful!"
+									},
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "PUT /kyc/confirm-otp success"
+					},
+					"400": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"message": "Invalid otp or expired session. Re-initiate bvn lookup."
+									},
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "PUT /kyc/confirm-otp failed"
+					}
+				},
+				"security": [
+					{
+						"x-api-key": [],
+						"x-api-user": []
+					}
+				],
+				"summary": "PUT /confirm-otp",
+				"tags": [
+					"kyc"
+				]
+			}
+		},
+		"/kyc/confirm-phone": {
+			"put": {
+				"description": "PUT /kyc/confirm-phone",
+				"operationId": "confirm phone",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"example": {
+									"accountName": "kycaccount",
+									"phone": "08000000000"
+								},
+								"properties": {
+									"accountName": {
+										"type": "string"
+									},
+									"phone": {
+										"type": "string"
+									}
+								},
+								"type": "object"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"message": "confirm phone success"
+									},
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "PUT /kyc/confirm-phone success"
+					},
+					"400": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"message": "Phone number does not match BVN record"
+									},
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "PUT /kyc/confirm-phone failed"
+					}
+				},
+				"security": [
+					{
+						"x-api-key": [],
+						"x-api-user": []
+					}
+				],
+				"summary": "PUT /confirm-phone",
+				"tags": [
+					"kyc"
+				]
+			}
+		},
+		"/kyc/handle-otp": {
+			"put": {
+				"description": "PUT /kyc/handle-otp",
+				"operationId": "handle otp",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"example": {
+									"accountName": "kycaccount",
+									"accountNumber": "0720913512",
+									"bankCode": "044",
+									"verificationMethod": "bankdetails"
+								},
+								"properties": {
+									"accountName": {
+										"type": "string"
+									},
+									"accountNumber": {
+										"type": "string"
+									},
+									"bankCode": {
+										"type": "string"
+									},
+									"verificationMethod": {
+										"enum": [
+											"bankdetails",
+											"sendotp",
+											"receiveotp",
+											"phone",
+											"phone_1",
+											"email"
+										],
+										"type": "string"
+									}
+								},
+								"type": "object"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"data": {
+											"subscriptionId": "dev00user00kycaccount"
+										},
+										"message": "verification method set successfully"
+									},
+									"properties": {
+										"data": {
+											"properties": {
+												"subscriptionId": {
+													"type": "string"
+												}
+											},
+											"type": "object"
+										},
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "PUT /kyc/handle-otp success"
+					},
+					"400": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"message": "Invalid bank account details"
+									},
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "PUT /kyc/handle-otp failed"
+					}
+				},
+				"security": [
+					{
+						"x-api-key": [],
+						"x-api-user": []
+					}
+				],
+				"summary": "PUT /handle-otp",
+				"tags": [
+					"kyc"
+				]
+			}
+		},
+		"/kyc/resolve-account": {
+			"post": {
+				"description": "POST /kyc/resolve-account",
+				"operationId": "resolve account",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"example": {
+									"accountNumber": "0153789199",
+									"bankCode": "044",
+									"currency": "NGN"
+								},
+								"properties": {
+									"accountNumber": {
+										"type": "string"
+									},
+									"bankCode": {
+										"type": "string"
+									},
+									"currency": {
+										"enum": [
+											"NGN",
+											"GHS"
+										],
+										"type": "string"
+									}
+								},
+								"type": "object"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"data": {
+											"accountName": "John Weak",
+											"accountNumber": "0153789199"
+										},
+										"message": "success"
+									},
+									"properties": {
+										"data": {
+											"properties": {
+												"accountName": {
+													"type": "string"
+												},
+												"accountNumber": {
+													"type": "string"
+												}
+											},
+											"type": "object"
+										},
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "POST /kyc/resolve-account success"
+					},
+					"400": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"message": "Invalid bank account details"
+									},
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "POST /kyc/resolve-account failed"
+					}
+				},
+				"security": [
+					{
+						"x-api-key": [],
+						"x-api-user": []
+					}
+				],
+				"summary": "POST /resolve-account",
+				"tags": [
+					"kyc"
+				]
+			}
+		},
+		"/mock/fiat-deposit": {
+			"post": {
+				"description": "POST /mock/fiat-deposit",
+				"operationId": "mock fiat deposit",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"example": {
+									"accountName": "account1",
+									"amount": "123",
+									"currency": "NGN"
+								},
+								"properties": {
+									"accountName": {
+										"type": "string"
+									},
+									"amount": {
+										"type": "string"
+									},
+									"currency": {
+										"enum": [
+											"NGN"
+										],
+										"type": "string"
+									}
+								},
+								"type": "object"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"message": "mock deposit request successful"
+									},
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "POST /mock/fiat-deposit success"
+					},
+					"404": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"message": "no bank account found for this account_name and currency"
+									},
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "POST /mock/fiat-deposit failed"
+					},
+					"422": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"message": "request could not be completed"
+									},
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "POST /mock/fiat-deposit failed"
+					}
+				},
+				"security": [
+					{
+						"x-api-key": [],
+						"x-api-user": []
+					}
+				],
+				"summary": "POST /mock/fiat-deposit",
+				"tags": [
+					"mock"
 				]
 			}
 		},
 		"/ping": {
 			"get": {
-				"description": "ping endpoint",
+				"description": "GET /ping",
 				"operationId": "ping",
 				"responses": {
 					"200": {
@@ -568,7 +2319,7 @@
 								"schema": {
 									"example": {
 										"data": {
-											"version": "v3"
+											"version": "test"
 										},
 										"message": "success"
 									},
@@ -589,160 +2340,25 @@
 								}
 							}
 						},
-						"description": "ping pong"
+						"description": "GET /ping success"
 					}
 				},
 				"security": [],
-				"summary": "ping",
+				"summary": "GET /ping",
 				"tags": [
 					"ping"
 				]
 			}
 		},
-		"/transfer/withdraw": {
-			"post": {
-				"description": "Withdraw funds",
-				"operationId": "withdraw",
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"example": {
-									"address": "0xA0b86991c6218b36c1d19D4a2e9eb0cE3606eB48",
-									"amount": 2,
-									"currency": "USDC",
-									"transactionReference": "reference1",
-									"fromAccount": "user1",
-									"network": "ethereum",
-									"type": "crypto"
-								},
-								"properties": {
-									"address": {
-										"type": "string"
-									},
-									"amount": {
-										"type": "number"
-									},
-									"currency": {
-										"enum": [
-											"BNB",
-											"BTC",
-											"ETH",
-											"USDC",
-											"USDT",
-											"CUSD"
-										],
-										"type": "string"
-									},
-									"transactionReference": {
-										"type": "string"
-									},
-									"fromAccount": {
-										"type": "string"
-									},
-									"network": {
-										"enum": [
-											"avalanche",
-											"binance",
-											"bitcoin",
-											"celo",
-											"ethereum",
-											"polygon",
-											"tron"
-										],
-										"type": "string"
-									},
-									"type": {
-										"enum": [
-											"crypto",
-											"fiat"
-										],
-										"type": "string"
-									}
-								},
-								"type": "object"
-							}
-						}
-					},
-					"required": true
-				},
-				"responses": {
-					"200": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"example": {
-										"message": "request completed"
-									},
-									"properties": {
-										"message": {
-											"type": "string"
-										}
-									},
-									"type": "object"
-								}
-							}
-						},
-						"description": "withdrawal request successfully submitted"
-					},
-					"400": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"example": {
-										"message": "wrong network address"
-									},
-									"properties": {
-										"message": {
-											"type": "string"
-										}
-									},
-									"type": "object"
-								}
-							}
-						},
-						"description": "invalid address"
-					}
-				},
-				"security": [
-					{
-						"x-api-key": [],
-                        "x-api-user": []
-					}
-				],
-				"summary": "Withdraw funds",
-				"tags": [
-					"transfer"
-				]
-			}
-		},
-		"/transfer": {
+		"/pricing/pending": {
 			"get": {
-				"description": "Get transactions",
-				"operationId": "Transactions",
+				"description": "GET /pricing/pending",
+				"operationId": "pricing pending",
 				"parameters": [
 					{
-						"example": "user",
+						"example": "priceuser",
 						"in": "query",
-						"name": "accountName",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"example": "2",
-						"in": "query",
-						"name": "limit",
-						"required": false,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"example": "reference1",
-						"in": "query",
-						"name": "transactionReference",
+						"name": "username",
 						"required": false,
 						"schema": {
 							"type": "string"
@@ -756,40 +2372,19 @@
 								"schema": {
 									"example": {
 										"data": {
-											"ETH": [
-												{
-													"Amount": 4,
-													"CreditAccount": "account1",
-													"CreditUser": "user3",
-													"Currency": "ETH",
-													"DebitAccount": "user3",
-													"DebitUser": "user3",
-													"TransactionReference": "abcdef1234567890abcdef1234567867",
-													"Status": "completed",
-													"Timestamp": "",
-													"TransactionType": "Internal Transfer"
-												},
-												{
-													"Amount": 10,
-													"CreditAccount": "user3",
-													"CreditUser": "user3",
-													"Currency": "ETH",
-													"DebitAccount": "credit",
-													"DebitUser": "admin",
-													"TransactionReference": "abcdef1234567890abcdef1234567654",
-													"Status": "completed",
-													"Timestamp": "",
-													"TransactionType": "Admin Credit"
-												}
-											]
+											"amount": 0.01,
+											"username": "priceuser"
 										},
-										"message": "request completed"
+										"message": "success"
 									},
 									"properties": {
 										"data": {
 											"properties": {
-												"ETH": {
-													"type": "array"
+												"amount": {
+													"type": "number"
+												},
+												"username": {
+													"type": "string"
 												}
 											},
 											"type": "object"
@@ -802,7 +2397,30 @@
 								}
 							}
 						},
-						"description": "get transactions request successful"
+						"description": "GET /pricing/pending success"
+					},
+					"401": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"data": {},
+										"message": "unauthorised self trigger"
+									},
+									"properties": {
+										"data": {
+											"properties": {},
+											"type": "object"
+										},
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "GET /pricing/pending failed"
 					}
 				},
 				"security": [
@@ -811,57 +2429,131 @@
 						"x-api-user": []
 					}
 				],
-				"summary": "Get transactions",
+				"summary": "GET /pricing/pending",
 				"tags": [
-					"transfer"
+					"pricing"
 				]
-			},
-			"post": {
-				"description": "Transfer funds to an account (Crypto wallet, Bank, ETC)",
-				"operationId": "transfer",
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"example": {
-									"amount": 7,
-									"currency": "USD",
-									"fromAccount": "user1",
-									"toAccount": "account1",
-									"transactionReference": "a1"
-								},
-								"properties": {
-									"amount": {
-										"type": "number"
-									},
-									"currency": {
-										"type": "string"
-									},
-									"fromAccount": {
-										"type": "string"
-									},
-									"toAccount": {
-										"type": "string"
-									},
-									"transactionReference": {
-										"type": "string"
-									}
-								},
-								"type": "object"
-							}
+			}
+		},
+		"/pricing/trigger": {
+			"get": {
+				"description": "GET /pricing/trigger",
+				"operationId": "pricing trigger",
+				"parameters": [
+					{
+						"example": "charge",
+						"in": "query",
+						"name": "action",
+						"required": false,
+						"schema": {
+							"type": "string"
 						}
 					},
-					"required": true
+					{
+						"example": "priceuser",
+						"in": "query",
+						"name": "username",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"401": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"data": {},
+										"message": "unauthorised self trigger"
+									},
+									"properties": {
+										"data": {
+											"properties": {},
+											"type": "object"
+										},
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "GET /pricing/trigger failed"
+					}
 				},
+				"security": [
+					{
+						"x-api-key": [],
+						"x-api-user": []
+					}
+				],
+				"summary": "GET /pricing/trigger",
+				"tags": [
+					"pricing"
+				]
+			}
+		},
+		"/rate": {
+			"get": {
+				"description": "Get Rate",
+				"operationId": "get rate",
 				"responses": {
 					"200": {
 						"content": {
 							"application/json": {
 								"schema": {
 									"example": {
+										"data": {
+											"rate": {
+												"ETH_to_USD": {
+													"fromAmount": 1,
+													"fromCurrency": "ETH",
+													"key": "2400-ETH_to_USD-691d259d-1734355986",
+													"rate": 2400,
+													"toAmount": 2400,
+													"toCurrency": "USD"
+												}
+											}
+										},
 										"message": "success"
 									},
 									"properties": {
+										"data": {
+											"properties": {
+												"rate": {
+													"properties": {
+														"ETH_to_USD": {
+															"properties": {
+																"fromAmount": {
+																	"type": "number"
+																},
+																"fromCurrency": {
+																	"type": "string"
+																},
+																"key": {
+																	"type": "string"
+																},
+																"rate": {
+																	"type": "number"
+																},
+																"toAmount": {
+																	"type": "number"
+																},
+																"toCurrency": {
+																	"type": "string"
+																}
+															},
+															"type": "object"
+														}
+													},
+													"type": "object"
+												}
+											},
+											"type": "object"
+										},
 										"message": {
 											"type": "string"
 										}
@@ -870,38 +2562,101 @@
 								}
 							}
 						},
-						"description": "transfer successful"
+						"description": "GET /rate success"
+					},
+					"503": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"data": {},
+										"message": "Rates not available, please try again later"
+									},
+									"properties": {
+										"data": {
+											"properties": {},
+											"type": "object"
+										},
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "GET /rate failed"
+					}
+				},
+				"security": [],
+				"summary": "Get Rate",
+				"tags": [
+					"rate"
+				]
+			}
+		},
+		"/rate/verify-rate-key": {
+			"get": {
+				"description": "Verify Rate Key",
+				"operationId": "verify rate key",
+				"parameters": [
+					{
+						"example": "2400-ETH_to_USD-691d259d-1734355986",
+						"in": "query",
+						"name": "key",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"data": {
+											"isExp": false,
+											"isValid": true
+										},
+										"message": "success"
+									},
+									"properties": {
+										"data": {
+											"properties": {
+												"isExp": {
+													"type": "boolean"
+												},
+												"isValid": {
+													"type": "boolean"
+												}
+											},
+											"type": "object"
+										},
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "GET /rate/verify-rate-key success"
 					},
 					"400": {
 						"content": {
 							"application/json": {
 								"schema": {
 									"example": {
-										"message": "error: invalid account"
+										"data": {},
+										"message": "invalid key"
 									},
 									"properties": {
-										"message": {
-											"enum": [
-												"error",
-												" invalid account"
-											],
-											"type": "string"
-										}
-									},
-									"type": "object"
-								}
-							}
-						},
-						"description": "invalid account"
-					},
-					"403": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"example": {
-										"message": "insufficient funds"
-									},
-									"properties": {
+										"data": {
+											"properties": {},
+											"type": "object"
+										},
 										"message": {
 											"type": "string"
 										}
@@ -910,25 +2665,20 @@
 								}
 							}
 						},
-						"description": "insufficient funds"
+						"description": "GET /rate/verify-rate-key failed"
 					}
 				},
-				"security": [
-					{
-						"x-api-key": [],
-                        "x-api-user": []
-					}
-				],
-				"summary": "Transfer from one account to another",
+				"security": [],
+				"summary": "Verify Rate Key",
 				"tags": [
-					"transfer"
+					"rate"
 				]
 			}
 		},
 		"/supported/assets": {
 			"get": {
-				"description": "Get supported assets",
-				"operationId": "Get assets",
+				"description": "Get Supported Assets",
+				"operationId": "get supported assets",
 				"responses": {
 					"200": {
 						"content": {
@@ -945,6 +2695,7 @@
 														"https://coinfaucet.eu/en/btc-testnet/",
 														"https://bitcoinfaucet.uo1.net/"
 													],
+													"minimumWithdrawal": 0,
 													"name": "BTC",
 													"symbol": "BTC",
 													"withdrawalFee": 0.01
@@ -958,6 +2709,7 @@
 													"faucets": [
 														"https://faucet.celo.org/alfajores"
 													],
+													"minimumWithdrawal": 1,
 													"name": "CUSD",
 													"symbol": "CUSD",
 													"withdrawalFee": 0.01
@@ -969,6 +2721,7 @@
 													"faucets": [
 														"https://faucet.circle.com/"
 													],
+													"minimumWithdrawal": 1,
 													"name": "USDC",
 													"symbol": "USDC",
 													"withdrawalFee": 0.01
@@ -985,6 +2738,7 @@
 														"https://faucet.quicknode.com/ethereum/sepolia",
 														"https://getblock.io/faucet/eth-sepolia/"
 													],
+													"minimumWithdrawal": 0,
 													"name": "ETH",
 													"symbol": "ETH",
 													"withdrawalFee": 0.01
@@ -996,8 +2750,68 @@
 													"faucets": [
 														"https://faucet.circle.com/"
 													],
+													"minimumWithdrawal": 1,
 													"name": "USDC",
 													"symbol": "USDC",
+													"withdrawalFee": 0.01
+												}
+											},
+											"lenco": {
+												"NGN": {
+													"contractAddress": "",
+													"decimals": 6,
+													"destinationCurrency": "NGN",
+													"minimumWithdrawal": 50,
+													"name": "NGN",
+													"symbol": "NGN",
+													"withdrawalFee": 0.01
+												}
+											},
+											"paybox": {
+												"GHS": {
+													"contractAddress": "",
+													"decimals": 6,
+													"destinationCurrency": "GHS",
+													"minimumWithdrawal": 5,
+													"name": "GHS",
+													"symbol": "GHS",
+													"withdrawalFee": 0.01
+												}
+											},
+											"paystack": {
+												"NGN": {
+													"contractAddress": "",
+													"decimals": 6,
+													"destinationCurrency": "NGN",
+													"minimumWithdrawal": 50,
+													"name": "NGN",
+													"symbol": "NGN",
+													"withdrawalFee": 0.01
+												}
+											},
+											"solana": {
+												"USDC": {
+													"contractAddress": "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU",
+													"decimals": 6,
+													"destinationCurrency": "USD",
+													"faucets": [
+														"https://faucet.circle.com/"
+													],
+													"minimumWithdrawal": 1,
+													"name": "USDC",
+													"symbol": "USDC",
+													"withdrawalFee": 0.01
+												},
+												"USDT": {
+													"contractAddress": "Gh9ZwEmdLJ8DscKNTkTqPbNwLNNBjuSzaG9Vp2KGtKJr",
+													"decimals": 6,
+													"destinationCurrency": "USD",
+													"faucets": [
+														"https://spl-token-faucet.com/?token-name=USDT"
+													],
+													"minimumWithdrawal": 1,
+													"name": "USDT",
+													"symbol": "USDT",
 													"withdrawalFee": 0.01
 												}
 											},
@@ -1009,6 +2823,7 @@
 													"faucets": [
 														"https://nileex.io/join/getJoinPage"
 													],
+													"minimumWithdrawal": 1,
 													"name": "USDJ",
 													"symbol": "USDJ",
 													"withdrawalFee": 0.01
@@ -1020,8 +2835,20 @@
 													"faucets": [
 														"https://nileex.io/join/getJoinPage"
 													],
+													"minimumWithdrawal": 1,
 													"name": "USDT",
 													"symbol": "USDT",
+													"withdrawalFee": 0.01
+												}
+											},
+											"xwift": {
+												"KES": {
+													"contractAddress": "",
+													"decimals": 6,
+													"destinationCurrency": "KES",
+													"minimumWithdrawal": 5,
+													"name": "KES",
+													"symbol": "KES",
 													"withdrawalFee": 0.01
 												}
 											}
@@ -1045,7 +2872,13 @@
 																	"type": "string"
 																},
 																"faucets": {
+																	"items": {
+																		"type": "string"
+																	},
 																	"type": "array"
+																},
+																"minimumWithdrawal": {
+																	"type": "number"
 																},
 																"name": {
 																	"type": "string"
@@ -1076,13 +2909,22 @@
 																	"type": "string"
 																},
 																"faucets": {
+																	"items": {
+																		"type": "string"
+																	},
 																	"type": "array"
+																},
+																"minimumWithdrawal": {
+																	"type": "number"
 																},
 																"name": {
 																	"type": "string"
 																},
 																"symbol": {
 																	"type": "string"
+																},
+																"withdrawalFee": {
+																	"type": "number"
 																}
 															},
 															"type": "object"
@@ -1099,13 +2941,22 @@
 																	"type": "string"
 																},
 																"faucets": {
+																	"items": {
+																		"type": "string"
+																	},
 																	"type": "array"
+																},
+																"minimumWithdrawal": {
+																	"type": "number"
 																},
 																"name": {
 																	"type": "string"
 																},
 																"symbol": {
 																	"type": "string"
+																},
+																"withdrawalFee": {
+																	"type": "number"
 																}
 															},
 															"type": "object"
@@ -1127,13 +2978,22 @@
 																	"type": "string"
 																},
 																"faucets": {
+																	"items": {
+																		"type": "string"
+																	},
 																	"type": "array"
+																},
+																"minimumWithdrawal": {
+																	"type": "number"
 																},
 																"name": {
 																	"type": "string"
 																},
 																"symbol": {
 																	"type": "string"
+																},
+																"withdrawalFee": {
+																	"type": "number"
 																}
 															},
 															"type": "object"
@@ -1150,13 +3010,184 @@
 																	"type": "string"
 																},
 																"faucets": {
+																	"items": {
+																		"type": "string"
+																	},
 																	"type": "array"
+																},
+																"minimumWithdrawal": {
+																	"type": "number"
 																},
 																"name": {
 																	"type": "string"
 																},
 																"symbol": {
 																	"type": "string"
+																},
+																"withdrawalFee": {
+																	"type": "number"
+																}
+															},
+															"type": "object"
+														}
+													},
+													"type": "object"
+												},
+												"lenco": {
+													"properties": {
+														"NGN": {
+															"properties": {
+																"contractAddress": {
+																	"type": "string"
+																},
+																"decimals": {
+																	"type": "number"
+																},
+																"destinationCurrency": {
+																	"type": "string"
+																},
+																"minimumWithdrawal": {
+																	"type": "number"
+																},
+																"name": {
+																	"type": "string"
+																},
+																"symbol": {
+																	"type": "string"
+																},
+																"withdrawalFee": {
+																	"type": "number"
+																}
+															},
+															"type": "object"
+														}
+													},
+													"type": "object"
+												},
+												"paybox": {
+													"properties": {
+														"GHS": {
+															"properties": {
+																"contractAddress": {
+																	"type": "string"
+																},
+																"decimals": {
+																	"type": "number"
+																},
+																"destinationCurrency": {
+																	"type": "string"
+																},
+																"minimumWithdrawal": {
+																	"type": "number"
+																},
+																"name": {
+																	"type": "string"
+																},
+																"symbol": {
+																	"type": "string"
+																},
+																"withdrawalFee": {
+																	"type": "number"
+																}
+															},
+															"type": "object"
+														}
+													},
+													"type": "object"
+												},
+												"paystack": {
+													"properties": {
+														"NGN": {
+															"properties": {
+																"contractAddress": {
+																	"type": "string"
+																},
+																"decimals": {
+																	"type": "number"
+																},
+																"destinationCurrency": {
+																	"type": "string"
+																},
+																"minimumWithdrawal": {
+																	"type": "number"
+																},
+																"name": {
+																	"type": "string"
+																},
+																"symbol": {
+																	"type": "string"
+																},
+																"withdrawalFee": {
+																	"type": "number"
+																}
+															},
+															"type": "object"
+														}
+													},
+													"type": "object"
+												},
+												"solana": {
+													"properties": {
+														"USDC": {
+															"properties": {
+																"contractAddress": {
+																	"type": "string"
+																},
+																"decimals": {
+																	"type": "number"
+																},
+																"destinationCurrency": {
+																	"type": "string"
+																},
+																"faucets": {
+																	"items": {
+																		"type": "string"
+																	},
+																	"type": "array"
+																},
+																"minimumWithdrawal": {
+																	"type": "number"
+																},
+																"name": {
+																	"type": "string"
+																},
+																"symbol": {
+																	"type": "string"
+																},
+																"withdrawalFee": {
+																	"type": "number"
+																}
+															},
+															"type": "object"
+														},
+														"USDT": {
+															"properties": {
+																"contractAddress": {
+																	"type": "string"
+																},
+																"decimals": {
+																	"type": "number"
+																},
+																"destinationCurrency": {
+																	"type": "string"
+																},
+																"faucets": {
+																	"items": {
+																		"type": "string"
+																	},
+																	"type": "array"
+																},
+																"minimumWithdrawal": {
+																	"type": "number"
+																},
+																"name": {
+																	"type": "string"
+																},
+																"symbol": {
+																	"type": "string"
+																},
+																"withdrawalFee": {
+																	"type": "number"
 																}
 															},
 															"type": "object"
@@ -1178,13 +3209,22 @@
 																	"type": "string"
 																},
 																"faucets": {
+																	"items": {
+																		"type": "string"
+																	},
 																	"type": "array"
+																},
+																"minimumWithdrawal": {
+																	"type": "number"
 																},
 																"name": {
 																	"type": "string"
 																},
 																"symbol": {
 																	"type": "string"
+																},
+																"withdrawalFee": {
+																	"type": "number"
 																}
 															},
 															"type": "object"
@@ -1201,13 +3241,53 @@
 																	"type": "string"
 																},
 																"faucets": {
+																	"items": {
+																		"type": "string"
+																	},
 																	"type": "array"
+																},
+																"minimumWithdrawal": {
+																	"type": "number"
 																},
 																"name": {
 																	"type": "string"
 																},
 																"symbol": {
 																	"type": "string"
+																},
+																"withdrawalFee": {
+																	"type": "number"
+																}
+															},
+															"type": "object"
+														}
+													},
+													"type": "object"
+												},
+												"xwift": {
+													"properties": {
+														"KES": {
+															"properties": {
+																"contractAddress": {
+																	"type": "string"
+																},
+																"decimals": {
+																	"type": "number"
+																},
+																"destinationCurrency": {
+																	"type": "string"
+																},
+																"minimumWithdrawal": {
+																	"type": "number"
+																},
+																"name": {
+																	"type": "string"
+																},
+																"symbol": {
+																	"type": "string"
+																},
+																"withdrawalFee": {
+																	"type": "number"
 																}
 															},
 															"type": "object"
@@ -1226,27 +3306,477 @@
 								}
 							}
 						},
-						"description": "get supported assets request successful"
+						"description": "GET /supported/assets success"
 					}
 				},
 				"security": [],
-				"summary": "Get supported assets",
+				"summary": "Get Supported Assets",
 				"tags": [
-					"get assets"
+					"supported"
 				]
 			}
 		},
-		"/user/activate": {
+		"/transfer": {
+			"get": {
+				"description": "Get Transfer",
+				"operationId": "get transfer",
+				"parameters": [
+					{
+						"example": "user1",
+						"in": "query",
+						"name": "accountName",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"example": "abcdef2234567890abcdef1234567867",
+						"in": "query",
+						"name": "transactionReference",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"data": [
+											{
+												"amount": 10,
+												"currency": "USD",
+												"fromAccount": "credit",
+												"fromUser": "admin",
+												"status": "completed",
+												"timestamp": 1734355800,
+												"toAccount": "user1",
+												"toUser": "user1",
+												"transactionReference": "abcdef2234567890abcdef1234567867",
+												"transactionType": "Admin Credit"
+											}
+										],
+										"message": "success"
+									},
+									"properties": {
+										"data": {
+											"items": {
+												"properties": {
+													"amount": {
+														"type": "number"
+													},
+													"currency": {
+														"type": "string"
+													},
+													"fromAccount": {
+														"type": "string"
+													},
+													"fromUser": {
+														"type": "string"
+													},
+													"status": {
+														"type": "string"
+													},
+													"timestamp": {
+														"type": "number"
+													},
+													"toAccount": {
+														"type": "string"
+													},
+													"toUser": {
+														"type": "string"
+													},
+													"transactionReference": {
+														"type": "string"
+													},
+													"transactionType": {
+														"type": "string"
+													}
+												},
+												"type": "object"
+											},
+											"type": "array"
+										},
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "GET /transfer success"
+					}
+				},
+				"security": [
+					{
+						"x-api-key": [],
+						"x-api-user": []
+					}
+				],
+				"summary": "Get Transfer",
+				"tags": [
+					"transfer"
+				]
+			},
 			"post": {
-				"description": "Self activate users",
-				"operationId": "Self activate",
+				"description": "Create Transfer",
+				"operationId": "create transfer",
 				"requestBody": {
 					"content": {
 						"application/json": {
 							"schema": {
 								"example": {
-									"email": "newuser@email.com",
-									"username": "newUser"
+									"amount": 7,
+									"currency": "USD",
+									"fromAccount": "user1",
+									"toAccount": "account1"
+								},
+								"properties": {
+									"amount": {
+										"type": "number"
+									},
+									"currency": {
+										"type": "string"
+									},
+									"fromAccount": {
+										"type": "string"
+									},
+									"toAccount": {
+										"type": "string"
+									}
+								},
+								"type": "object"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"data": {},
+										"message": "success"
+									},
+									"properties": {
+										"data": {
+											"properties": {},
+											"type": "object"
+										},
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "POST /transfer success"
+					},
+					"400": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"data": {},
+										"message": "insufficient funds"
+									},
+									"properties": {
+										"data": {
+											"properties": {},
+											"type": "object"
+										},
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "POST /transfer failed"
+					},
+					"404": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"data": {},
+										"message": "toAccount not found"
+									},
+									"properties": {
+										"data": {
+											"properties": {},
+											"type": "object"
+										},
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "POST /transfer failed"
+					}
+				},
+				"security": [
+					{
+						"x-api-key": [],
+						"x-api-user": []
+					}
+				],
+				"summary": "Create Transfer",
+				"tags": [
+					"transfer"
+				]
+			}
+		},
+		"/transfer/initiate": {
+			"post": {
+				"description": "initiate collection",
+				"operationId": "initiate collection",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"example": {
+									"accountName": "account1",
+									"amount": "100",
+									"currency": "GHS",
+									"mobileNetwork": "MTN",
+									"mobileNumber": "+231541155696"
+								},
+								"properties": {
+									"accountName": {
+										"type": "string"
+									},
+									"amount": {
+										"type": "string"
+									},
+									"currency": {
+										"enum": [
+											"GHS",
+											"KES"
+										],
+										"type": "string"
+									},
+									"mobileNetwork": {
+										"enum": [
+											"MTN",
+											"AIRTELTIGO",
+											"TELECEL",
+											"SAFARICOM"
+										],
+										"type": "string"
+									},
+									"mobileNumber": {
+										"type": "string"
+									}
+								},
+								"type": "object"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"message": "Deposit initiated successfully"
+									},
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "POST /transfer/initiate success"
+					},
+					"500": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"message": "Initiate deposit request failed"
+									},
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "POST /transfer/initiate failed"
+					}
+				},
+				"security": [
+					{
+						"x-api-key": [],
+						"x-api-user": []
+					}
+				],
+				"summary": "initiate collection",
+				"tags": [
+					"transfer"
+				]
+			}
+		},
+		"/transfer/withdraw": {
+			"post": {
+				"description": "Withdraw",
+				"operationId": "withdraw",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"example": {
+									"address": "0xA0b86991c6218b36c1d19D4a2e9eb0cE3606eB48",
+									"amount": 2,
+									"currency": "USDC",
+									"fromAccount": "user1",
+									"network": "ethereum",
+									"transactionReference": "1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d",
+									"type": "crypto"
+								},
+								"properties": {
+									"address": {
+										"type": "string"
+									},
+									"amount": {
+										"type": "number"
+									},
+									"currency": {
+										"type": "string"
+									},
+									"fromAccount": {
+										"type": "string"
+									},
+									"network": {
+										"type": "string"
+									},
+									"transactionReference": {
+										"type": "string"
+									},
+									"type": {
+										"type": "string"
+									}
+								},
+								"type": "object"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"data": {},
+										"message": "request completed"
+									},
+									"properties": {
+										"data": {
+											"properties": {},
+											"type": "object"
+										},
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "POST /transfer/withdraw success"
+					},
+					"400": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"data": {},
+										"message": "wrong network address"
+									},
+									"properties": {
+										"data": {
+											"properties": {},
+											"type": "object"
+										},
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "POST /transfer/withdraw failed"
+					},
+					"409": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"data": {},
+										"message": "transactionReference already exist"
+									},
+									"properties": {
+										"data": {
+											"properties": {},
+											"type": "object"
+										},
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "POST /transfer/withdraw failed"
+					}
+				},
+				"security": [
+					{
+						"x-api-key": [],
+						"x-api-user": []
+					}
+				],
+				"summary": "Withdraw",
+				"tags": [
+					"transfer"
+				]
+			}
+		},
+		"/user/activate": {
+			"post": {
+				"description": "Self Activate Account",
+				"operationId": "self activate account",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"example": {
+									"email": "selfactivateuser@email.com",
+									"username": "selfactivateuser"
 								},
 								"properties": {
 									"email": {
@@ -1268,9 +3798,14 @@
 							"application/json": {
 								"schema": {
 									"example": {
-										"message": "request completed"
+										"data": {},
+										"message": "success"
 									},
 									"properties": {
+										"data": {
+											"properties": {},
+											"type": "object"
+										},
 										"message": {
 											"type": "string"
 										}
@@ -1279,21 +3814,22 @@
 								}
 							}
 						},
-						"description": "self activation request successful"
+						"description": "POST /user/activate success"
 					},
 					"400": {
 						"content": {
 							"application/json": {
 								"schema": {
 									"example": {
-										"message": "error: cannot create user"
+										"data": {},
+										"message": "username or email already exists"
 									},
 									"properties": {
+										"data": {
+											"properties": {},
+											"type": "object"
+										},
 										"message": {
-											"enum": [
-												"error",
-												" cannot create user"
-											],
 											"type": "string"
 										}
 									},
@@ -1301,16 +3837,21 @@
 								}
 							}
 						},
-						"description": "self activation attempt for existing user"
+						"description": "POST /user/activate failed"
 					},
 					"401": {
 						"content": {
 							"application/json": {
 								"schema": {
 									"example": {
+										"data": {},
 										"message": "unauthorised self registration"
 									},
 									"properties": {
+										"data": {
+											"properties": {},
+											"type": "object"
+										},
 										"message": {
 											"type": "string"
 										}
@@ -1319,7 +3860,7 @@
 								}
 							}
 						},
-						"description": "unauthorized self activation request"
+						"description": "POST /user/activate failed"
 					}
 				},
 				"security": [
@@ -1328,17 +3869,19 @@
 						"x-api-user": []
 					}
 				],
-				"summary": "Self activate",
+				"summary": "Self Activate Account",
 				"tags": [
-					"activate"
+					"user"
 				]
 			}
 		}
 	},
 	"servers": [
 		{
-			"url": "https://staging-api.getpartna.com/v4/",
-			"description": "staging"
+			"url": "https://staging-api.getpartna.com/v4"
+		},
+		{
+			"url": "https://api.getpartna.com/v4"
 		}
 	],
 	"components": {
@@ -1370,9 +3913,7 @@
 	},
 	"security": [
 		{
-			"x-api-key": []
-		},
-		{
+			"x-api-key": [],
 			"x-api-user": []
 		}
 	],
@@ -1382,8 +3923,48 @@
 			"name": "ping"
 		},
 		{
+			"description": "user endpoints",
+			"name": "user"
+		},
+		{
 			"description": "account endpoints",
 			"name": "account"
+		},
+		{
+			"description": "transfer endpoints",
+			"name": "transfer"
+		},
+		{
+			"description": "conversion endpoint",
+			"name": "convert"
+		},
+		{
+			"description": "discount endpoints",
+			"name": "discount"
+		},
+		{
+			"description": "rate endpoints",
+			"name": "rate"
+		},
+		{
+			"description": "KYC endpoints",
+			"name": "kyc"
+		},
+		{
+			"description": "bank endpoints",
+			"name": "bank"
+		},
+		{
+			"description": "pricing endpoints",
+			"name": "pricing"
+		},
+		{
+			"description": "supported assets",
+			"name": "supported"
+		},
+		{
+			"description": "mocks",
+			"name": "mock"
 		}
 	]
 }
