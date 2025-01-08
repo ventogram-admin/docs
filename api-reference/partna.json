@@ -11,10 +11,11 @@
 				"operationId": "get account",
 				"parameters": [
 					{
+						"description": "Accountname of the user",
 						"example": "user1",
 						"in": "query",
 						"name": "accountName",
-						"required": false,
+						"required": true,
 						"schema": {
 							"type": "string"
 						}
@@ -388,22 +389,28 @@
 						"application/json": {
 							"schema": {
 								"example": {
-									"accountName": "user1",
-									"type": "crypto"
+									"accountName": "account1",
+									"type": "naira"
 								},
 								"properties": {
 									"accountName": {
+										"description": "Accountname of your user",
 										"type": "string"
 									},
 									"type": {
+										"description": "Type of account",
 										"enum": [
-											"crypto",
 											"dollar",
+											"crypto",
 											"naira"
 										],
 										"type": "string"
 									}
 								},
+								"required": [
+									"accountName",
+									"type"
+								],
 								"type": "object"
 							}
 						}
@@ -710,7 +717,7 @@
 								"schema": {
 									"example": {
 										"data": [
-											"Field type Expected oneof(dollar crypto naira) Value crypt"
+											"Field: [type] Expected:[oneof(dollar crypto naira)] Value: [crypt]"
 										],
 										"message": "validation error"
 									},
@@ -779,15 +786,21 @@
 								},
 								"properties": {
 									"accountName": {
+										"description": "Accountname of your user",
 										"type": "string"
 									},
 									"currency": {
+										"description": "currency",
 										"enum": [
 											"NGN"
 										],
 										"type": "string"
 									}
 								},
+								"required": [
+									"accountName",
+									"currency"
+								],
 								"type": "object"
 							}
 						}
@@ -886,11 +899,16 @@
 				"operationId": "banks",
 				"parameters": [
 					{
+						"description": "",
 						"example": "NGN",
 						"in": "query",
 						"name": "currency",
 						"required": false,
 						"schema": {
+							"enum": [
+								"NGN",
+								"GHS"
+							],
 							"type": "string"
 						}
 					}
@@ -1576,21 +1594,43 @@
 								},
 								"properties": {
 									"accountName": {
+										"description": "valid account name",
 										"type": "string"
 									},
 									"fromAmount": {
+										"description": "from amount",
 										"type": "number"
 									},
 									"fromCurrency": {
+										"description": "valid from currency",
+										"enum": [
+											"ETH",
+											"BTC",
+											"BNB"
+										],
 										"type": "string"
 									},
 									"toCurrency": {
+										"description": "valid to currency",
+										"enum": [
+											"ETH",
+											"BTC",
+											"BNB",
+											"USD"
+										],
 										"type": "string"
 									},
 									"transactionReference": {
+										"description": "valid transaction reference in hexadecimal",
 										"type": "string"
 									}
 								},
+								"required": [
+									"accountName",
+									"fromAmount",
+									"fromCurrency",
+									"toCurrency"
+								],
 								"type": "object"
 							}
 						}
@@ -1760,12 +1800,18 @@
 								},
 								"properties": {
 									"accountName": {
+										"description": "valid account name",
 										"type": "string"
 									},
 									"bvn": {
+										"description": "valid bvn",
 										"type": "string"
 									}
 								},
+								"required": [
+									"bvn",
+									"accountName"
+								],
 								"type": "object"
 							}
 						}
@@ -1867,12 +1913,18 @@
 								},
 								"properties": {
 									"accountName": {
+										"description": "valid account name",
 										"type": "string"
 									},
 									"otp": {
+										"description": "valid otp",
 										"type": "string"
 									}
 								},
+								"required": [
+									"accountName",
+									"otp"
+								],
 								"type": "object"
 							}
 						}
@@ -1943,12 +1995,18 @@
 								},
 								"properties": {
 									"accountName": {
+										"description": "valid account name",
 										"type": "string"
 									},
 									"phone": {
+										"description": "valid phone number",
 										"type": "string"
 									}
 								},
+								"required": [
+									"phone",
+									"accountName"
+								],
 								"type": "object"
 							}
 						}
@@ -2021,15 +2079,19 @@
 								},
 								"properties": {
 									"accountName": {
+										"description": "valid account name",
 										"type": "string"
 									},
 									"accountNumber": {
+										"description": "valid bank account number",
 										"type": "string"
 									},
 									"bankCode": {
+										"description": "valid bank code",
 										"type": "string"
 									},
 									"verificationMethod": {
+										"description": "valid verification method",
 										"enum": [
 											"bankdetails",
 											"sendotp",
@@ -2041,6 +2103,10 @@
 										"type": "string"
 									}
 								},
+								"required": [
+									"accountName",
+									"verificationMethod"
+								],
 								"type": "object"
 							}
 						}
@@ -2123,12 +2189,15 @@
 								},
 								"properties": {
 									"accountNumber": {
+										"description": "valid bank account number",
 										"type": "string"
 									},
 									"bankCode": {
+										"description": "valid bank code",
 										"type": "string"
 									},
 									"currency": {
+										"description": "valid currency",
 										"enum": [
 											"NGN",
 											"GHS"
@@ -2136,6 +2205,11 @@
 										"type": "string"
 									}
 								},
+								"required": [
+									"accountNumber",
+									"bankCode",
+									"currency"
+								],
 								"type": "object"
 							}
 						}
@@ -2222,18 +2296,26 @@
 								},
 								"properties": {
 									"accountName": {
+										"description": "valid account name",
 										"type": "string"
 									},
 									"amount": {
+										"description": "valid amount in string",
 										"type": "string"
 									},
 									"currency": {
+										"description": "valid currency",
 										"enum": [
 											"NGN"
 										],
 										"type": "string"
 									}
 								},
+								"required": [
+									"accountName",
+									"amount",
+									"currency"
+								],
 								"type": "object"
 							}
 						}
@@ -2356,6 +2438,7 @@
 				"operationId": "pricing pending",
 				"parameters": [
 					{
+						"description": "",
 						"example": "priceuser",
 						"in": "query",
 						"name": "username",
@@ -2441,6 +2524,7 @@
 				"operationId": "pricing trigger",
 				"parameters": [
 					{
+						"description": "",
 						"example": "charge",
 						"in": "query",
 						"name": "action",
@@ -2450,6 +2534,7 @@
 						}
 					},
 					{
+						"description": "",
 						"example": "priceuser",
 						"in": "query",
 						"name": "username",
@@ -2601,6 +2686,7 @@
 				"operationId": "verify rate key",
 				"parameters": [
 					{
+						"description": "",
 						"example": "2400-ETH_to_USD-691d259d-1734355986",
 						"in": "query",
 						"name": "key",
@@ -3322,6 +3408,7 @@
 				"operationId": "get transfer",
 				"parameters": [
 					{
+						"description": "",
 						"example": "user1",
 						"in": "query",
 						"name": "accountName",
@@ -3331,6 +3418,7 @@
 						}
 					},
 					{
+						"description": "",
 						"example": "abcdef2234567890abcdef1234567867",
 						"in": "query",
 						"name": "transactionReference",
@@ -3438,18 +3526,33 @@
 								},
 								"properties": {
 									"amount": {
+										"description": "amount should be a number",
 										"type": "number"
 									},
 									"currency": {
+										"description": "currency",
+										"enum": [
+											"NGN",
+											"USD",
+											"GHS"
+										],
 										"type": "string"
 									},
 									"fromAccount": {
+										"description": "from account",
 										"type": "string"
 									},
 									"toAccount": {
+										"description": "to account",
 										"type": "string"
 									}
 								},
+								"required": [
+									"amount",
+									"currency",
+									"fromAccount",
+									"toAccount"
+								],
 								"type": "object"
 							}
 						}
@@ -3556,19 +3659,23 @@
 								},
 								"properties": {
 									"accountName": {
+										"description": "account name",
 										"type": "string"
 									},
 									"amount": {
+										"description": "amount in number",
 										"type": "string"
 									},
 									"currency": {
+										"description": "currency",
 										"enum": [
-											"GHS",
-											"KES"
+											"KES",
+											"GHS"
 										],
 										"type": "string"
 									},
 									"mobileNetwork": {
+										"description": "mobile network",
 										"enum": [
 											"MTN",
 											"AIRTELTIGO",
@@ -3578,9 +3685,17 @@
 										"type": "string"
 									},
 									"mobileNumber": {
+										"description": "valid mobile number",
 										"type": "string"
 									}
 								},
+								"required": [
+									"accountName",
+									"currency",
+									"amount",
+									"mobileNetwork",
+									"mobileNumber"
+								],
 								"type": "object"
 							}
 						}
@@ -3656,27 +3771,49 @@
 								},
 								"properties": {
 									"address": {
+										"description": "valid crypto address",
 										"type": "string"
 									},
 									"amount": {
+										"description": "amount in number",
 										"type": "number"
 									},
 									"currency": {
+										"description": "currency",
+										"enum": [
+											"CUSD",
+											"USDC",
+											"USDT"
+										],
 										"type": "string"
 									},
 									"fromAccount": {
+										"description": "from account",
 										"type": "string"
 									},
 									"network": {
+										"description": "valid crypto network",
 										"type": "string"
 									},
 									"transactionReference": {
+										"description": "transaction reference in hexadecimal",
 										"type": "string"
 									},
 									"type": {
+										"description": "specify the type of transaction",
+										"enum": [
+											"crypto",
+											"naira"
+										],
 										"type": "string"
 									}
 								},
+								"required": [
+									"amount",
+									"currency",
+									"fromAccount",
+									"type"
+								],
 								"type": "object"
 							}
 						}
@@ -3780,12 +3917,18 @@
 								},
 								"properties": {
 									"email": {
+										"description": "valid email address",
 										"type": "string"
 									},
 									"username": {
+										"description": "unique username",
 										"type": "string"
 									}
 								},
+								"required": [
+									"email",
+									"username"
+								],
 								"type": "object"
 							}
 						}
