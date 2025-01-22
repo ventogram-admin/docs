@@ -15,7 +15,27 @@
 						"example": "user1",
 						"in": "query",
 						"name": "accountName",
-						"required": true,
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "Number of accounts per page",
+						"example": 1,
+						"in": "query",
+						"name": "perPage",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "Page number",
+						"example": 1,
+						"in": "query",
+						"name": "page",
+						"required": false,
 						"schema": {
 							"type": "string"
 						}
@@ -3449,6 +3469,54 @@
 						"schema": {
 							"type": "string"
 						}
+					},
+					{
+						"description": "Limit the number of records returned. Must be greater that 0",
+						"example": 1,
+						"in": "query",
+						"name": "limit",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "Unix timestamp in seconds. Must be less than UnixEndDate",
+						"example": "1734468599",
+						"in": "query",
+						"name": "unixStartDate",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "Unix timestamp in seconds. Must be greater than UnixStartDate",
+						"example": "1733467509",
+						"in": "query",
+						"name": "unixEndDate",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "currency",
+						"example": "USD",
+						"in": "query",
+						"name": "currency",
+						"required": false,
+						"schema": {
+							"enum": [
+								"NGN",
+								"GHS",
+								"USD",
+								"BTC",
+								"ETH",
+								"BNB"
+							],
+							"type": "string"
+						}
 					}
 				],
 				"responses": {
@@ -3971,7 +4039,7 @@
 										"type": "string"
 									},
 									"username": {
-										"description": "unique username",
+										"description": "unique username from v2",
 										"type": "string"
 									}
 								},
