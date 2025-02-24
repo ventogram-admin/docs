@@ -4135,6 +4135,177 @@
 					"user"
 				]
 			}
+		},
+		"/user/balances": {
+			"get": {
+				"description": "Get account balance",
+				"operationId": "Get balances",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"data": {
+											"BNB": {
+												"availableBalance": 5000,
+												"pendingDebit": 0
+											},
+											"BTC": {
+												"availableBalance": 0,
+												"pendingDebit": 0
+											},
+											"ETH": {
+												"availableBalance": 5000,
+												"pendingDebit": 0
+											},
+											"GHS": {
+												"availableBalance": 0,
+												"pendingDebit": 0
+											},
+											"KES": {
+												"availableBalance": 0,
+												"pendingDebit": 0
+											},
+											"NGN": {
+												"availableBalance": 10001,
+												"pendingDebit": 0
+											},
+											"USD": {
+												"availableBalance": 10001,
+												"pendingDebit": 0
+											}
+										},
+										"message": "success"
+									},
+									"properties": {
+										"data": {
+											"properties": {
+												"BNB": {
+													"properties": {
+														"availableBalance": {
+															"type": "number"
+														},
+														"pendingDebit": {
+															"type": "number"
+														}
+													},
+													"type": "object"
+												},
+												"BTC": {
+													"properties": {
+														"availableBalance": {
+															"type": "number"
+														},
+														"pendingDebit": {
+															"type": "number"
+														}
+													},
+													"type": "object"
+												},
+												"ETH": {
+													"properties": {
+														"availableBalance": {
+															"type": "number"
+														},
+														"pendingDebit": {
+															"type": "number"
+														}
+													},
+													"type": "object"
+												},
+												"GHS": {
+													"properties": {
+														"availableBalance": {
+															"type": "number"
+														},
+														"pendingDebit": {
+															"type": "number"
+														}
+													},
+													"type": "object"
+												},
+												"KES": {
+													"properties": {
+														"availableBalance": {
+															"type": "number"
+														},
+														"pendingDebit": {
+															"type": "number"
+														}
+													},
+													"type": "object"
+												},
+												"NGN": {
+													"properties": {
+														"availableBalance": {
+															"type": "number"
+														},
+														"pendingDebit": {
+															"type": "number"
+														}
+													},
+													"type": "object"
+												},
+												"USD": {
+													"properties": {
+														"availableBalance": {
+															"type": "number"
+														},
+														"pendingDebit": {
+															"type": "number"
+														}
+													},
+													"type": "object"
+												}
+											},
+											"type": "object"
+										},
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "Fetch balances successful"
+					},
+					"500": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"data": {},
+										"message": "internal server error"
+									},
+									"properties": {
+										"data": {
+											"properties": {},
+											"type": "object"
+										},
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "Fetch balances failed"
+					}
+				},
+				"security": [
+					{
+						"x-api-key": [],
+						"x-api-user": []
+					}
+				],
+				"summary": "Get balances",
+				"tags": [
+					"user"
+				]
+			}
 		}
 	},
 	"servers": [
