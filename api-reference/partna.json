@@ -7,13 +7,34 @@
 	"paths": {
 		"/account": {
 			"get": {
-				"description": "Get Account",
+				"description": "Get account",
 				"operationId": "get account",
 				"parameters": [
 					{
+						"description": "Accountname of the user",
 						"example": "user1",
 						"in": "query",
 						"name": "accountName",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "Number of accounts per page",
+						"example": 1,
+						"in": "query",
+						"name": "perPage",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "Page number",
+						"example": 1,
+						"in": "query",
+						"name": "page",
 						"required": false,
 						"schema": {
 							"type": "string"
@@ -320,7 +341,7 @@
 								}
 							}
 						},
-						"description": "GET /account success"
+						"description": "Get account success"
 					},
 					"401": {
 						"content": {
@@ -343,7 +364,7 @@
 								}
 							}
 						},
-						"description": "GET /account failed"
+						"description": "Get account failed"
 					},
 					"404": {
 						"content": {
@@ -366,7 +387,7 @@
 								}
 							}
 						},
-						"description": "GET /account failed"
+						"description": "Get account failed"
 					}
 				},
 				"security": [
@@ -381,29 +402,35 @@
 				]
 			},
 			"post": {
-				"description": "Create Account",
+				"description": "Create account",
 				"operationId": "create account",
 				"requestBody": {
 					"content": {
 						"application/json": {
 							"schema": {
 								"example": {
-									"accountName": "user1",
-									"type": "crypto"
+									"accountName": "account1",
+									"type": "naira"
 								},
 								"properties": {
 									"accountName": {
+										"description": "Accountname of your user",
 										"type": "string"
 									},
 									"type": {
+										"description": "Type of account",
 										"enum": [
-											"crypto",
 											"dollar",
+											"crypto",
 											"naira"
 										],
 										"type": "string"
 									}
 								},
+								"required": [
+									"accountName",
+									"type"
+								],
 								"type": "object"
 							}
 						}
@@ -702,7 +729,7 @@
 								}
 							}
 						},
-						"description": "POST /account success"
+						"description": "Create account success"
 					},
 					"400": {
 						"content": {
@@ -710,7 +737,7 @@
 								"schema": {
 									"example": {
 										"data": [
-											"Field type Expected oneof(dollar crypto naira) Value crypt"
+											"Field: [type] Expected:[oneof(dollar crypto naira)] Value: [crypt]"
 										],
 										"message": "validation error"
 									},
@@ -729,7 +756,7 @@
 								}
 							}
 						},
-						"description": "POST /account failed"
+						"description": "Create account failed"
 					},
 					"409": {
 						"content": {
@@ -752,7 +779,7 @@
 								}
 							}
 						},
-						"description": "POST /account failed"
+						"description": "Create account failed"
 					}
 				},
 				"security": [
@@ -767,7 +794,7 @@
 				]
 			},
 			"put": {
-				"description": "Upgrade Account",
+				"description": "Upgrade account",
 				"operationId": "Upgrade account",
 				"requestBody": {
 					"content": {
@@ -779,15 +806,21 @@
 								},
 								"properties": {
 									"accountName": {
+										"description": "Accountname of your user",
 										"type": "string"
 									},
 									"currency": {
+										"description": "currency",
 										"enum": [
 											"NGN"
 										],
 										"type": "string"
 									}
 								},
+								"required": [
+									"accountName",
+									"currency"
+								],
 								"type": "object"
 							}
 						}
@@ -847,7 +880,7 @@
 								}
 							}
 						},
-						"description": "PUT /account success"
+						"description": "Upgrade account success"
 					},
 					"500": {
 						"content": {
@@ -865,7 +898,7 @@
 								}
 							}
 						},
-						"description": "PUT /account failed"
+						"description": "Upgrade account failed"
 					}
 				},
 				"security": [
@@ -882,15 +915,20 @@
 		},
 		"/banks": {
 			"get": {
-				"description": "GET /banks",
+				"description": "Get supported banks",
 				"operationId": "banks",
 				"parameters": [
 					{
+						"description": "",
 						"example": "NGN",
 						"in": "query",
 						"name": "currency",
 						"required": false,
 						"schema": {
+							"enum": [
+								"NGN",
+								"GHS"
+							],
 							"type": "string"
 						}
 					}
@@ -1544,7 +1582,7 @@
 								}
 							}
 						},
-						"description": "POST /kyc/resolve-account success"
+						"description": "get banks success"
 					}
 				},
 				"security": [
@@ -1553,7 +1591,7 @@
 						"x-api-user": []
 					}
 				],
-				"summary": "GET /banks",
+				"summary": "Get supported banks",
 				"tags": [
 					"bank"
 				]
@@ -1561,7 +1599,7 @@
 		},
 		"/convert": {
 			"post": {
-				"description": "POST /convert",
+				"description": "Convert from one currency to another",
 				"operationId": "convert",
 				"requestBody": {
 					"content": {
@@ -1576,21 +1614,48 @@
 								},
 								"properties": {
 									"accountName": {
+										"description": "valid account name",
 										"type": "string"
 									},
 									"fromAmount": {
+										"description": "from amount",
 										"type": "number"
 									},
 									"fromCurrency": {
+										"description": "valid from currency",
+										"enum": [
+											"USD",
+											"NGN",
+											"GHS",
+											"ETH",
+											"BTC",
+											"BNB"
+										],
 										"type": "string"
 									},
 									"toCurrency": {
+										"description": "valid to currency",
+										"enum": [
+											"USD",
+											"NGN",
+											"GHS",
+											"ETH",
+											"BTC",
+											"BNB"
+										],
 										"type": "string"
 									},
 									"transactionReference": {
+										"description": "valid transaction reference in hexadecimal",
 										"type": "string"
 									}
 								},
+								"required": [
+									"accountName",
+									"fromAmount",
+									"fromCurrency",
+									"toCurrency"
+								],
 								"type": "object"
 							}
 						}
@@ -1649,7 +1714,7 @@
 								}
 							}
 						},
-						"description": "POST /convert success"
+						"description": "convert success"
 					},
 					"400": {
 						"content": {
@@ -1672,7 +1737,7 @@
 								}
 							}
 						},
-						"description": "POST /convert failed"
+						"description": "convert failed"
 					}
 				},
 				"security": [
@@ -1681,7 +1746,7 @@
 						"x-api-user": []
 					}
 				],
-				"summary": "POST /convert",
+				"summary": "Convert from one currency to another",
 				"tags": [
 					"convert"
 				]
@@ -1689,7 +1754,7 @@
 		},
 		"/discount": {
 			"get": {
-				"description": "Get Discount",
+				"description": "Get discount",
 				"operationId": "get discount",
 				"responses": {
 					"200": {
@@ -1736,7 +1801,7 @@
 								}
 							}
 						},
-						"description": "GET /discount success"
+						"description": "Get discount success"
 					}
 				},
 				"security": [],
@@ -1748,7 +1813,7 @@
 		},
 		"/kyc": {
 			"post": {
-				"description": "POST /kyc",
+				"description": "Create kyc",
 				"operationId": "create kyc",
 				"requestBody": {
 					"content": {
@@ -1760,12 +1825,18 @@
 								},
 								"properties": {
 									"accountName": {
+										"description": "valid account name",
 										"type": "string"
 									},
 									"bvn": {
+										"description": "valid bvn",
 										"type": "string"
 									}
 								},
+								"required": [
+									"bvn",
+									"accountName"
+								],
 								"type": "object"
 							}
 						}
@@ -1820,7 +1891,7 @@
 								}
 							}
 						},
-						"description": "POST /kyc success"
+						"description": "Create kyc success"
 					},
 					"404": {
 						"content": {
@@ -1838,7 +1909,7 @@
 								}
 							}
 						},
-						"description": "POST /kyc failed"
+						"description": "Create kyc failed"
 					}
 				},
 				"security": [
@@ -1847,7 +1918,7 @@
 						"x-api-user": []
 					}
 				],
-				"summary": "POST /kyc",
+				"summary": "Create kyc",
 				"tags": [
 					"kyc"
 				]
@@ -1855,7 +1926,7 @@
 		},
 		"/kyc/confirm-otp": {
 			"put": {
-				"description": "PUT /kyc/confirm-otp",
+				"description": "Confirm otp",
 				"operationId": "confirm otp",
 				"requestBody": {
 					"content": {
@@ -1867,12 +1938,18 @@
 								},
 								"properties": {
 									"accountName": {
+										"description": "Valid account name",
 										"type": "string"
 									},
 									"otp": {
+										"description": "Valid otp is 123456 when verificationMWthod is phone_1.",
 										"type": "string"
 									}
 								},
+								"required": [
+									"accountName",
+									"otp"
+								],
 								"type": "object"
 							}
 						}
@@ -1896,7 +1973,7 @@
 								}
 							}
 						},
-						"description": "PUT /kyc/confirm-otp success"
+						"description": "Confirm otp success"
 					},
 					"400": {
 						"content": {
@@ -1914,7 +1991,7 @@
 								}
 							}
 						},
-						"description": "PUT /kyc/confirm-otp failed"
+						"description": "Confirm otp failed"
 					}
 				},
 				"security": [
@@ -1923,7 +2000,7 @@
 						"x-api-user": []
 					}
 				],
-				"summary": "PUT /confirm-otp",
+				"summary": "Confirm otp",
 				"tags": [
 					"kyc"
 				]
@@ -1931,7 +2008,7 @@
 		},
 		"/kyc/confirm-phone": {
 			"put": {
-				"description": "PUT /kyc/confirm-phone",
+				"description": "Confirm phone number",
 				"operationId": "confirm phone",
 				"requestBody": {
 					"content": {
@@ -1943,12 +2020,18 @@
 								},
 								"properties": {
 									"accountName": {
+										"description": "valid account name",
 										"type": "string"
 									},
 									"phone": {
+										"description": "valid phone number",
 										"type": "string"
 									}
 								},
+								"required": [
+									"phone",
+									"accountName"
+								],
 								"type": "object"
 							}
 						}
@@ -1972,7 +2055,7 @@
 								}
 							}
 						},
-						"description": "PUT /kyc/confirm-phone success"
+						"description": "Confirm phone success"
 					},
 					"400": {
 						"content": {
@@ -1990,7 +2073,7 @@
 								}
 							}
 						},
-						"description": "PUT /kyc/confirm-phone failed"
+						"description": "Confirm phone failed"
 					}
 				},
 				"security": [
@@ -1999,7 +2082,7 @@
 						"x-api-user": []
 					}
 				],
-				"summary": "PUT /confirm-phone",
+				"summary": "Confirm phone number",
 				"tags": [
 					"kyc"
 				]
@@ -2007,7 +2090,7 @@
 		},
 		"/kyc/handle-otp": {
 			"put": {
-				"description": "PUT /kyc/handle-otp",
+				"description": "Send or receive otp to complete kyc",
 				"operationId": "handle otp",
 				"requestBody": {
 					"content": {
@@ -2021,15 +2104,19 @@
 								},
 								"properties": {
 									"accountName": {
+										"description": "Valid account name",
 										"type": "string"
 									},
 									"accountNumber": {
+										"description": "Valid bank account number",
 										"type": "string"
 									},
 									"bankCode": {
+										"description": "Valid bank code",
 										"type": "string"
 									},
 									"verificationMethod": {
+										"description": "Valid verification method",
 										"enum": [
 											"bankdetails",
 											"sendotp",
@@ -2041,6 +2128,10 @@
 										"type": "string"
 									}
 								},
+								"required": [
+									"accountName",
+									"verificationMethod"
+								],
 								"type": "object"
 							}
 						}
@@ -2075,7 +2166,7 @@
 								}
 							}
 						},
-						"description": "PUT /kyc/handle-otp success"
+						"description": "success"
 					},
 					"400": {
 						"content": {
@@ -2093,7 +2184,7 @@
 								}
 							}
 						},
-						"description": "PUT /kyc/handle-otp failed"
+						"description": "Verification failed"
 					}
 				},
 				"security": [
@@ -2102,7 +2193,7 @@
 						"x-api-user": []
 					}
 				],
-				"summary": "PUT /handle-otp",
+				"summary": "Send or receive otp to complete kyc",
 				"tags": [
 					"kyc"
 				]
@@ -2110,7 +2201,7 @@
 		},
 		"/kyc/resolve-account": {
 			"post": {
-				"description": "POST /kyc/resolve-account",
+				"description": "Resolve account",
 				"operationId": "resolve account",
 				"requestBody": {
 					"content": {
@@ -2123,12 +2214,15 @@
 								},
 								"properties": {
 									"accountNumber": {
+										"description": "Valid bank account number",
 										"type": "string"
 									},
 									"bankCode": {
+										"description": "Valid bank code",
 										"type": "string"
 									},
 									"currency": {
+										"description": "Valid currency",
 										"enum": [
 											"NGN",
 											"GHS"
@@ -2136,6 +2230,11 @@
 										"type": "string"
 									}
 								},
+								"required": [
+									"accountNumber",
+									"bankCode",
+									"currency"
+								],
 								"type": "object"
 							}
 						}
@@ -2174,7 +2273,7 @@
 								}
 							}
 						},
-						"description": "POST /kyc/resolve-account success"
+						"description": "Resolve account success"
 					},
 					"400": {
 						"content": {
@@ -2192,7 +2291,7 @@
 								}
 							}
 						},
-						"description": "POST /kyc/resolve-account failed"
+						"description": "Resolve account failed"
 					}
 				},
 				"security": [
@@ -2201,7 +2300,7 @@
 						"x-api-user": []
 					}
 				],
-				"summary": "POST /resolve-account",
+				"summary": "Resolve account",
 				"tags": [
 					"kyc"
 				]
@@ -2209,7 +2308,7 @@
 		},
 		"/mock/fiat-deposit": {
 			"post": {
-				"description": "POST /mock/fiat-deposit",
+				"description": "Mock fiat deposit",
 				"operationId": "mock fiat deposit",
 				"requestBody": {
 					"content": {
@@ -2217,23 +2316,31 @@
 							"schema": {
 								"example": {
 									"accountName": "account1",
-									"amount": "123",
+									"amount": 123,
 									"currency": "NGN"
 								},
 								"properties": {
 									"accountName": {
+										"description": "valid account name",
 										"type": "string"
 									},
 									"amount": {
-										"type": "string"
+										"description": "valid amount in string",
+										"type": "number"
 									},
 									"currency": {
+										"description": "valid currency",
 										"enum": [
 											"NGN"
 										],
 										"type": "string"
 									}
 								},
+								"required": [
+									"accountName",
+									"amount",
+									"currency"
+								],
 								"type": "object"
 							}
 						}
@@ -2257,7 +2364,7 @@
 								}
 							}
 						},
-						"description": "POST /mock/fiat-deposit success"
+						"description": "Mock fiat deposit success"
 					},
 					"404": {
 						"content": {
@@ -2275,7 +2382,7 @@
 								}
 							}
 						},
-						"description": "POST /mock/fiat-deposit failed"
+						"description": "mock fiat deposit failed"
 					},
 					"422": {
 						"content": {
@@ -2293,7 +2400,7 @@
 								}
 							}
 						},
-						"description": "POST /mock/fiat-deposit failed"
+						"description": "Mock fiat deposit failed"
 					}
 				},
 				"security": [
@@ -2302,7 +2409,7 @@
 						"x-api-user": []
 					}
 				],
-				"summary": "POST /mock/fiat-deposit",
+				"summary": "Mock fiat deposit",
 				"tags": [
 					"mock"
 				]
@@ -2310,7 +2417,7 @@
 		},
 		"/ping": {
 			"get": {
-				"description": "GET /ping",
+				"description": "Ping endpoint",
 				"operationId": "ping",
 				"responses": {
 					"200": {
@@ -2340,11 +2447,11 @@
 								}
 							}
 						},
-						"description": "GET /ping success"
+						"description": "success"
 					}
 				},
 				"security": [],
-				"summary": "GET /ping",
+				"summary": "Ping",
 				"tags": [
 					"ping"
 				]
@@ -2352,10 +2459,11 @@
 		},
 		"/pricing/pending": {
 			"get": {
-				"description": "GET /pricing/pending",
+				"description": "Get pending pricing",
 				"operationId": "pricing pending",
 				"parameters": [
 					{
+						"description": "",
 						"example": "priceuser",
 						"in": "query",
 						"name": "username",
@@ -2397,7 +2505,7 @@
 								}
 							}
 						},
-						"description": "GET /pricing/pending success"
+						"description": "Get pending prices success"
 					},
 					"401": {
 						"content": {
@@ -2420,7 +2528,7 @@
 								}
 							}
 						},
-						"description": "GET /pricing/pending failed"
+						"description": "Get pending prices failed"
 					}
 				},
 				"security": [
@@ -2429,7 +2537,7 @@
 						"x-api-user": []
 					}
 				],
-				"summary": "GET /pricing/pending",
+				"summary": "Get pending pricing",
 				"tags": [
 					"pricing"
 				]
@@ -2437,10 +2545,11 @@
 		},
 		"/pricing/trigger": {
 			"get": {
-				"description": "GET /pricing/trigger",
+				"description": "Trigger price charge",
 				"operationId": "pricing trigger",
 				"parameters": [
 					{
+						"description": "",
 						"example": "charge",
 						"in": "query",
 						"name": "action",
@@ -2450,6 +2559,7 @@
 						}
 					},
 					{
+						"description": "",
 						"example": "priceuser",
 						"in": "query",
 						"name": "username",
@@ -2460,6 +2570,24 @@
 					}
 				],
 				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"message": "success"
+									},
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "price charge successful"
+					},
 					"401": {
 						"content": {
 							"application/json": {
@@ -2481,7 +2609,7 @@
 								}
 							}
 						},
-						"description": "GET /pricing/trigger failed"
+						"description": "price charge failed"
 					}
 				},
 				"security": [
@@ -2490,7 +2618,7 @@
 						"x-api-user": []
 					}
 				],
-				"summary": "GET /pricing/trigger",
+				"summary": "Trigger price charge",
 				"tags": [
 					"pricing"
 				]
@@ -2498,7 +2626,7 @@
 		},
 		"/rate": {
 			"get": {
-				"description": "Get Rate",
+				"description": "Get rate",
 				"operationId": "get rate",
 				"responses": {
 					"200": {
@@ -2562,7 +2690,7 @@
 								}
 							}
 						},
-						"description": "GET /rate success"
+						"description": "Get rate success"
 					},
 					"503": {
 						"content": {
@@ -2585,7 +2713,7 @@
 								}
 							}
 						},
-						"description": "GET /rate failed"
+						"description": "Get rate failed"
 					}
 				},
 				"security": [],
@@ -2597,10 +2725,11 @@
 		},
 		"/rate/verify-rate-key": {
 			"get": {
-				"description": "Verify Rate Key",
+				"description": "Verify rate key",
 				"operationId": "verify rate key",
 				"parameters": [
 					{
+						"description": "",
 						"example": "2400-ETH_to_USD-691d259d-1734355986",
 						"in": "query",
 						"name": "key",
@@ -2642,7 +2771,7 @@
 								}
 							}
 						},
-						"description": "GET /rate/verify-rate-key success"
+						"description": "Verify rate key success"
 					},
 					"400": {
 						"content": {
@@ -2665,7 +2794,7 @@
 								}
 							}
 						},
-						"description": "GET /rate/verify-rate-key failed"
+						"description": "Verify rate key failed"
 					}
 				},
 				"security": [],
@@ -2677,7 +2806,7 @@
 		},
 		"/supported/assets": {
 			"get": {
-				"description": "Get Supported Assets",
+				"description": "Get supported assets",
 				"operationId": "get supported assets",
 				"responses": {
 					"200": {
@@ -3306,7 +3435,7 @@
 								}
 							}
 						},
-						"description": "GET /supported/assets success"
+						"description": "Get supported assets success"
 					}
 				},
 				"security": [],
@@ -3318,24 +3447,74 @@
 		},
 		"/transfer": {
 			"get": {
-				"description": "Get Transfer",
+				"description": "Get transfer",
 				"operationId": "get transfer",
 				"parameters": [
 					{
+						"description": "",
 						"example": "user1",
 						"in": "query",
 						"name": "accountName",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "",
+						"example": "abcdef2234567890abcdef1234567867",
+						"in": "query",
+						"name": "transactionReference",
 						"required": false,
 						"schema": {
 							"type": "string"
 						}
 					},
 					{
-						"example": "abcdef2234567890abcdef1234567867",
+						"description": "Limit the number of records returned. Must be greater that 0",
+						"example": 1,
 						"in": "query",
-						"name": "transactionReference",
+						"name": "limit",
 						"required": false,
 						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "Unix timestamp in seconds. Must be less than UnixEndDate",
+						"example": "1734468599",
+						"in": "query",
+						"name": "unixStartDate",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "Unix timestamp in seconds. Must be greater than UnixStartDate",
+						"example": "1733467509",
+						"in": "query",
+						"name": "unixEndDate",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "currency",
+						"example": "USD",
+						"in": "query",
+						"name": "currency",
+						"required": false,
+						"schema": {
+							"enum": [
+								"NGN",
+								"GHS",
+								"USD",
+								"BTC",
+								"ETH",
+								"BNB"
+							],
 							"type": "string"
 						}
 					}
@@ -3409,7 +3588,7 @@
 								}
 							}
 						},
-						"description": "GET /transfer success"
+						"description": "Get transfer success"
 					}
 				},
 				"security": [
@@ -3424,7 +3603,7 @@
 				]
 			},
 			"post": {
-				"description": "Create Transfer",
+				"description": "Create transfer",
 				"operationId": "create transfer",
 				"requestBody": {
 					"content": {
@@ -3438,18 +3617,36 @@
 								},
 								"properties": {
 									"amount": {
+										"description": "amount should be a number",
 										"type": "number"
 									},
 									"currency": {
+										"description": "currency",
+										"enum": [
+											"NGN",
+											"GHS",
+											"USD",
+											"BTC",
+											"ETH",
+											"BNB"
+										],
 										"type": "string"
 									},
 									"fromAccount": {
+										"description": "from account",
 										"type": "string"
 									},
 									"toAccount": {
+										"description": "to account",
 										"type": "string"
 									}
 								},
+								"required": [
+									"amount",
+									"currency",
+									"fromAccount",
+									"toAccount"
+								],
 								"type": "object"
 							}
 						}
@@ -3478,7 +3675,7 @@
 								}
 							}
 						},
-						"description": "POST /transfer success"
+						"description": "Create transfer success"
 					},
 					"400": {
 						"content": {
@@ -3501,7 +3698,7 @@
 								}
 							}
 						},
-						"description": "POST /transfer failed"
+						"description": "Create transfer failed"
 					},
 					"404": {
 						"content": {
@@ -3524,7 +3721,7 @@
 								}
 							}
 						},
-						"description": "POST /transfer failed"
+						"description": "Create transfer failed"
 					}
 				},
 				"security": [
@@ -3549,38 +3746,48 @@
 							"schema": {
 								"example": {
 									"accountName": "account1",
-									"amount": "100",
+									"amount": 100,
 									"currency": "GHS",
 									"mobileNetwork": "MTN",
 									"mobileNumber": "+231541155696"
 								},
 								"properties": {
 									"accountName": {
+										"description": "account name",
 										"type": "string"
 									},
 									"amount": {
-										"type": "string"
+										"description": "amount in number",
+										"type": "number"
 									},
 									"currency": {
+										"description": "currency",
 										"enum": [
-											"GHS",
-											"KES"
+											"KES",
+											"GHS"
 										],
 										"type": "string"
 									},
 									"mobileNetwork": {
+										"description": "mobile network",
 										"enum": [
 											"MTN",
-											"AIRTELTIGO",
-											"TELECEL",
-											"SAFARICOM"
+											"TELECEL"
 										],
 										"type": "string"
 									},
 									"mobileNumber": {
+										"description": "valid mobile number",
 										"type": "string"
 									}
 								},
+								"required": [
+									"accountName",
+									"currency",
+									"amount",
+									"mobileNetwork",
+									"mobileNumber"
+								],
 								"type": "object"
 							}
 						}
@@ -3604,7 +3811,7 @@
 								}
 							}
 						},
-						"description": "POST /transfer/initiate success"
+						"description": "Initiate transfer success"
 					},
 					"500": {
 						"content": {
@@ -3622,7 +3829,7 @@
 								}
 							}
 						},
-						"description": "POST /transfer/initiate failed"
+						"description": "Initiate transfer failed"
 					}
 				},
 				"security": [
@@ -3646,8 +3853,10 @@
 						"application/json": {
 							"schema": {
 								"example": {
+									"accountNumber": "07999292929",
 									"address": "0xA0b86991c6218b36c1d19D4a2e9eb0cE3606eB48",
 									"amount": 2,
+									"bankCode": "00011",
 									"currency": "USDC",
 									"fromAccount": "user1",
 									"network": "ethereum",
@@ -3655,28 +3864,74 @@
 									"type": "crypto"
 								},
 								"properties": {
+									"accountNumber": {
+										"description": "Specify a valid account number for the supported currencies",
+										"type": "string"
+									},
 									"address": {
+										"description": "Valid crypto address, only required when a crypto currency is to be withdrawn",
 										"type": "string"
 									},
 									"amount": {
+										"description": "amount in number",
 										"type": "number"
 									},
+									"bankCode": {
+										"description": "Specify a valid bank code for the supported currencies",
+										"type": "string"
+									},
 									"currency": {
+										"description": "Currency",
+										"enum": [
+											"BNB",
+											"BTC",
+											"ETH",
+											"USDC",
+											"USDT",
+											"CUSD",
+											"NGN",
+											"GHS"
+										],
 										"type": "string"
 									},
 									"fromAccount": {
+										"description": "From account",
 										"type": "string"
 									},
 									"network": {
+										"description": "Valid crypto network, only required when a crypto currency is to be withdrawn",
+										"enum": [
+											"avalanche",
+											"binance",
+											"bitcoin",
+											"celo",
+											"ethereum",
+											"polygon",
+											"tron",
+											"solana"
+										],
 										"type": "string"
 									},
 									"transactionReference": {
+										"description": "Transaction reference in hexadecimal",
 										"type": "string"
 									},
 									"type": {
+										"description": "Specify the type of withdrawal",
+										"enum": [
+											"crypto",
+											"naira",
+											"ghanaiancedis"
+										],
 										"type": "string"
 									}
 								},
+								"required": [
+									"amount",
+									"currency",
+									"fromAccount",
+									"type"
+								],
 								"type": "object"
 							}
 						}
@@ -3705,7 +3960,7 @@
 								}
 							}
 						},
-						"description": "POST /transfer/withdraw success"
+						"description": "withdraw success"
 					},
 					"400": {
 						"content": {
@@ -3728,7 +3983,7 @@
 								}
 							}
 						},
-						"description": "POST /transfer/withdraw failed"
+						"description": "withdraw failed"
 					},
 					"409": {
 						"content": {
@@ -3751,7 +4006,7 @@
 								}
 							}
 						},
-						"description": "POST /transfer/withdraw failed"
+						"description": "withdraw failed"
 					}
 				},
 				"security": [
@@ -3768,7 +4023,7 @@
 		},
 		"/user/activate": {
 			"post": {
-				"description": "Self Activate Account",
+				"description": "Self activate account",
 				"operationId": "self activate account",
 				"requestBody": {
 					"content": {
@@ -3780,12 +4035,18 @@
 								},
 								"properties": {
 									"email": {
+										"description": "valid email address",
 										"type": "string"
 									},
 									"username": {
+										"description": "unique username from v2",
 										"type": "string"
 									}
 								},
+								"required": [
+									"email",
+									"username"
+								],
 								"type": "object"
 							}
 						}
@@ -3814,7 +4075,7 @@
 								}
 							}
 						},
-						"description": "POST /user/activate success"
+						"description": "Self activate success"
 					},
 					"400": {
 						"content": {
@@ -3837,7 +4098,7 @@
 								}
 							}
 						},
-						"description": "POST /user/activate failed"
+						"description": "Self activate failed"
 					},
 					"401": {
 						"content": {
@@ -3860,7 +4121,7 @@
 								}
 							}
 						},
-						"description": "POST /user/activate failed"
+						"description": "Self activate failed"
 					}
 				},
 				"security": [
@@ -3870,6 +4131,177 @@
 					}
 				],
 				"summary": "Self Activate Account",
+				"tags": [
+					"user"
+				]
+			}
+		},
+		"/user/balances": {
+			"get": {
+				"description": "Get account balance",
+				"operationId": "Get balances",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"data": {
+											"BNB": {
+												"availableBalance": 5000,
+												"pendingDebit": 0
+											},
+											"BTC": {
+												"availableBalance": 0,
+												"pendingDebit": 0
+											},
+											"ETH": {
+												"availableBalance": 5000,
+												"pendingDebit": 0
+											},
+											"GHS": {
+												"availableBalance": 0,
+												"pendingDebit": 0
+											},
+											"KES": {
+												"availableBalance": 0,
+												"pendingDebit": 0
+											},
+											"NGN": {
+												"availableBalance": 10001,
+												"pendingDebit": 0
+											},
+											"USD": {
+												"availableBalance": 10001,
+												"pendingDebit": 0
+											}
+										},
+										"message": "success"
+									},
+									"properties": {
+										"data": {
+											"properties": {
+												"BNB": {
+													"properties": {
+														"availableBalance": {
+															"type": "number"
+														},
+														"pendingDebit": {
+															"type": "number"
+														}
+													},
+													"type": "object"
+												},
+												"BTC": {
+													"properties": {
+														"availableBalance": {
+															"type": "number"
+														},
+														"pendingDebit": {
+															"type": "number"
+														}
+													},
+													"type": "object"
+												},
+												"ETH": {
+													"properties": {
+														"availableBalance": {
+															"type": "number"
+														},
+														"pendingDebit": {
+															"type": "number"
+														}
+													},
+													"type": "object"
+												},
+												"GHS": {
+													"properties": {
+														"availableBalance": {
+															"type": "number"
+														},
+														"pendingDebit": {
+															"type": "number"
+														}
+													},
+													"type": "object"
+												},
+												"KES": {
+													"properties": {
+														"availableBalance": {
+															"type": "number"
+														},
+														"pendingDebit": {
+															"type": "number"
+														}
+													},
+													"type": "object"
+												},
+												"NGN": {
+													"properties": {
+														"availableBalance": {
+															"type": "number"
+														},
+														"pendingDebit": {
+															"type": "number"
+														}
+													},
+													"type": "object"
+												},
+												"USD": {
+													"properties": {
+														"availableBalance": {
+															"type": "number"
+														},
+														"pendingDebit": {
+															"type": "number"
+														}
+													},
+													"type": "object"
+												}
+											},
+											"type": "object"
+										},
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "Fetch balances successful"
+					},
+					"500": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"data": {},
+										"message": "internal server error"
+									},
+									"properties": {
+										"data": {
+											"properties": {},
+											"type": "object"
+										},
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "Fetch balances failed"
+					}
+				},
+				"security": [
+					{
+						"x-api-key": [],
+						"x-api-user": []
+					}
+				],
+				"summary": "Get balances",
 				"tags": [
 					"user"
 				]
