@@ -409,21 +409,11 @@
 						"application/json": {
 							"schema": {
 								"example": {
-									"accountName": "account1",
-									"type": "naira"
+									"accountName": "john_joe"
 								},
 								"properties": {
 									"accountName": {
 										"description": "Accountname of your user",
-										"type": "string"
-									},
-									"type": {
-										"description": "Type of account",
-										"enum": [
-											"dollar",
-											"crypto",
-											"naira"
-										],
 										"type": "string"
 									}
 								},
