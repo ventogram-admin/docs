@@ -39,26 +39,6 @@
 						"schema": {
 							"type": "string"
 						}
-					},
-					{
-						"description": "Number of accounts per page",
-						"example": 1,
-						"in": "query",
-						"name": "perPage",
-						"required": false,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"description": "Page number",
-						"example": 1,
-						"in": "query",
-						"name": "page",
-						"required": false,
-						"schema": {
-							"type": "string"
-						}
 					}
 				],
 				"responses": {
