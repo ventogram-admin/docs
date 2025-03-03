@@ -139,7 +139,26 @@
       "group":"Accounts",
       "pages": [
         "api-reference/endpoint/v3/account/get-account",
-        "api-reference/endpoint/v3/account/create-account"
+        "api-reference/endpoint/v3/account/create-account",
+        "api-reference/endpoint/v3/account/upgrade-account"
+      ],
+      "version": "v4"
+    },
+    {
+      "group": "KYC",
+      "pages": [
+        "api-reference/endpoint/v3/kyc/post-kyc",
+        "api-reference/endpoint/v3/kyc/put-confirm-otp",
+        "api-reference/endpoint/v3/kyc/put-confirm-phone",
+        "api-reference/endpoint/v3/kyc/put-handle-otp",
+        "api-reference/endpoint/v3/kyc/post-resolve-account"
+      ],
+      "version": "v4"
+    },
+    {
+      "group": "Bank",
+      "pages": [
+        "api-reference/endpoint/v3/bank/get-banks"
       ],
       "version": "v4"
     },
@@ -149,7 +168,40 @@
         "api-reference/endpoint/v3/transfer/transfer",
         "api-reference/endpoint/v3/transfer/withdraw",
         "api-reference/endpoint/v3/transfer/get-transactions",
+        "api-reference/endpoint/v3/transfer/initiate-collection",
+        "api-reference/endpoint/v3/convert/post-convert",
         "api-reference/endpoint/v3/assets/get-supported-assets"
+      ],
+      "version": "v4"
+    },
+    {
+      "group": "rate",
+      "pages": [
+        "api-reference/endpoint/v3/rate/get-rate",
+        "api-reference/endpoint/v3/rate/verify-rate-key"
+      ],
+      "version": "v4"
+    },
+    {
+      "group": "discount",
+      "pages": [
+        "api-reference/endpoint/v3/discount/get-discount"
+      ],
+      "version": "v4"
+    },
+    {
+      "group": "pricing",
+      "pages": [
+        "api-reference/endpoint/v3/pricing/get-pricingpending",
+        "api-reference/endpoint/v3/pricing/get-pricingtrigger"
+      ],
+      "version": "v4"
+
+    },
+    {
+      "group": "mock",
+      "pages": [
+        "api-reference/endpoint/v3/mock/post-mockfiat-deposit"
       ],
       "version": "v4"
     }
