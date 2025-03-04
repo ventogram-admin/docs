@@ -1932,7 +1932,7 @@
 										"type": "string"
 									},
 									"otp": {
-										"description": "Valid otp is 123456 when verificationMWthod is phone_1.",
+										"description": "Valid otp is 123456 when verificationMethod is phone_1.",
 										"type": "string"
 									}
 								},

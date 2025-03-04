@@ -131,7 +131,8 @@
     {
       "group":"Users",
       "pages": [
-        "api-reference/endpoint/v3/user/self-activate"
+        "api-reference/endpoint/v3/user/self-activate",
+        "api-reference/endpoint/v3/user/get-balances"
       ],
       "version": "v4"
     },
@@ -147,18 +148,18 @@
     {
       "group": "KYC",
       "pages": [
-        "api-reference/endpoint/v3/kyc/post-kyc",
-        "api-reference/endpoint/v3/kyc/put-confirm-otp",
-        "api-reference/endpoint/v3/kyc/put-confirm-phone",
-        "api-reference/endpoint/v3/kyc/put-handle-otp",
-        "api-reference/endpoint/v3/kyc/post-resolve-account"
+        "api-reference/endpoint/v3/kyc/create-kyc",
+        "api-reference/endpoint/v3/kyc/confirm-otp",
+        "api-reference/endpoint/v3/kyc/confirm-phone-number",
+        "api-reference/endpoint/v3/kyc/send-or-receive-otp-to-complete-kyc",
+        "api-reference/endpoint/v3/kyc/resolve-account"
       ],
       "version": "v4"
     },
     {
       "group": "Bank",
       "pages": [
-        "api-reference/endpoint/v3/bank/get-banks"
+        "api-reference/endpoint/v3/bank/get-supported-banks"
       ],
       "version": "v4"
     },
@@ -169,7 +170,7 @@
         "api-reference/endpoint/v3/transfer/withdraw",
         "api-reference/endpoint/v3/transfer/get-transactions",
         "api-reference/endpoint/v3/transfer/initiate-collection",
-        "api-reference/endpoint/v3/convert/post-convert",
+        "api-reference/endpoint/v3/convert/convert-from-one-currency-to-another",
         "api-reference/endpoint/v3/assets/get-supported-assets"
       ],
       "version": "v4"
@@ -192,8 +193,8 @@
     {
       "group": "pricing",
       "pages": [
-        "api-reference/endpoint/v3/pricing/get-pricingpending",
-        "api-reference/endpoint/v3/pricing/get-pricingtrigger"
+       "api-reference/endpoint/v3/pricing/get-pending-pricing",
+       "api-reference/endpoint/v3/pricing/trigger-price-charge"
       ],
       "version": "v4"
 
@@ -201,7 +202,7 @@
     {
       "group": "mock",
       "pages": [
-        "api-reference/endpoint/v3/mock/post-mockfiat-deposit"
+        "api-reference/endpoint/v3/mock/mock-fiat-deposit"
       ],
       "version": "v4"
     }
