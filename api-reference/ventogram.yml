@@ -1016,7 +1016,140 @@ paths:
                   errors:
                     type: array
                     items:
-                      type: string                       
+                      type: string
+  /v1/create-account:
+    post:
+      tags:
+        - Create Bank Account
+      security:
+        - ApiUser: []
+          ApiKey: []
+      summary: Create a new bank account
+      description: Creates a new managed bank account using user identity and contact information.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                bvn:
+                  type: string
+                  example: "46444443431"
+                currency:
+                  type: string
+                  example: "NGN"
+                email:
+                  type: string
+                  format: email
+                  example: "rahman+1@gmail.com"
+                firstName:
+                  type: string
+                  example: "rahmann"
+                lastName:
+                  type: string
+                  example: "plus"
+                middleName:
+                  type: string
+                  example: "one"
+                phone:
+                  type: string
+                  description: phone number starting with +234
+                  example: "+2348033333511"
+                dob:
+                  type: string
+                  description: Date of birth in dd-mm-yyyy format
+                  example: "25-02-2000"
+                country:
+                  type: string
+                  example: "NG"
+                stateOfOrigin:
+                  type: string
+                  example: "Lagos"
+                stateOfResidence:
+                  type: string
+                  example: "Lagos"
+                lgaOfOrigin:
+                  type: string
+                  example: "Amuwo"
+                lgaOfResidence:
+                  type: string
+                  example: "Ifako"
+                addressLine1:
+                  type: string
+                  example: "27 Obafemi Awolowo Way"
+                addressLine2:
+                  type: string
+                  example: ""
+                addressLine3:
+                  type: string
+                  example: ""
+              required:
+                - bvn
+                - currency
+                - email
+                - firstName
+                - lastName
+                - middleName
+                - phone
+                - dob
+                - country
+                - stateOfOrigin
+                - stateOfResidence
+                - lgaOfOrigin
+                - lgaOfResidence
+                - addressLine1
+      responses:
+        '200':
+          description: Bank account successfully created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: bank account successfully completed
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        bankCode:
+                          type: string
+                          example: ""
+                        bankName:
+                          type: string
+                          example: "Test Bank"
+                        accountName:
+                          type: string
+                          example: "TEST-MANAGED-ACCOUNT"
+                        accountNumber:
+                          type: string
+                          example: "1238314012"
+                        currency:
+                          type: string
+                          example: "NGN"
+        '422':
+          description: Account creation failed due to validation or processing error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: Account completion failed
+                  errors:
+                    type: array
+                    items:
+                      type: string                     
   /v1/get-accounts:
     get:
       tags:
@@ -1084,139 +1217,6 @@ paths:
                   data:
                     type: array
                     items: {}
-  /v1/create-account:
-    post:
-      tags:
-        - Create Bank Account
-      security:
-        - ApiUser: []
-          ApiKey: []
-      summary: Create a new bank account
-      description: Creates a new managed bank account using user identity and contact information.
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - bvn
-                - currency
-                - email
-                - firstName
-                - lastName
-                - middleName
-                - phone
-                - dob
-                - country
-                - stateOfOrigin
-                - stateOfResidence
-                - lgaOfOrigin
-                - lgaOfResidence
-                - addressLine1
-              properties:
-                bvn:
-                  type: string
-                  example: "46444443431"
-                currency:
-                  type: string
-                  example: "NGN"
-                email:
-                  type: string
-                  format: email
-                  example: "rahman+1@gmail.com"
-                firstName:
-                  type: string
-                  example: "rahmann"
-                lastName:
-                  type: string
-                  example: "plus"
-                middleName:
-                  type: string
-                  example: "one"
-                phone:
-                  type: string
-                  description: phone number starting with +234
-                  example: "+2348033333511"
-                dob:
-                  type: string
-                  description: Date of birth in dd-mm-yyyy format
-                  example: "25-02-2000"
-                country:
-                  type: string
-                  example: "NG"
-                stateOfOrigin:
-                  type: string
-                  example: "Lagos"
-                stateOfResidence:
-                  type: string
-                  example: "Lagos"
-                lgaOfOrigin:
-                  type: string
-                  example: "Amuwo"
-                lgaOfResidence:
-                  type: string
-                  example: "Ifako"
-                addressLine1:
-                  type: string
-                  example: "27 Obafemi Awolowo Way"
-                addressLine2:
-                  type: string
-                  example: ""
-                addressLine3:
-                  type: string
-                  example: ""
-      responses:
-        '200':
-          description: Bank account successfully created
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  message:
-                    type: string
-                    example: bank account successfully completed
-                  data:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        bankCode:
-                          type: string
-                          example: ""
-                        bankName:
-                          type: string
-                          example: "Test Bank"
-                        accountName:
-                          type: string
-                          example: "TEST-MANAGED-ACCOUNT"
-                        accountNumber:
-                          type: string
-                          example: "1238314012"
-                        currency:
-                          type: string
-                          example: "NGN"
-        '422':
-          description: Account creation failed due to validation or processing error
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: false
-                  message:
-                    type: string
-                    example: Account completion failed
-                  errors:
-                    type: array
-                    items:
-                      type: string
   /v2/vouchers:
     put:
       tags:
