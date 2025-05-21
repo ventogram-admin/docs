@@ -675,329 +675,6 @@ paths:
                       - false
                   message:
                     type: string
-  /v2/vouchers:
-    post:
-      tags:
-        - Voucher V2
-      security:
-        - ApiUser: []
-          ApiKey: []
-      summary: Create a new voucher payment
-      description: Creates a new voucher payment for a user
-      operationId: create-voucher-v2
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                bvn:
-                  type: string
-                  description: User's 11-digit BVN
-                phoneNumber:
-                  type: string
-                  description: Phone number in international format
-                  example: +23480xxxxxxxx
-                email:
-                  type: string
-                  description: User email
-                  example: email@example.com
-                fullname:
-                  type: string
-                  description: Fullname of the user creating voucher
-                amount:
-                  type: integer
-                  format: int32
-                  description: Required voucher amount
-                currency:
-                  type: string
-                  description: Required voucher currency
-                  enum:
-                    - NGN
-                    - USD
-              required:
-                - bvn
-                - email
-                - amount
-                - currency
-                - fullname
-                - phoneNumber
-      responses:
-        "201":
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:                    
-                  success:
-                    type: boolean
-                    enum:
-                      - true
-                  message:
-                    type: string
-                  data:
-                    type: object
-                    properties:
-                      id:
-                        type: string
-                        description: Voucher unique id
-        "400":
-          description: Failed operation
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:                    
-                  success:
-                    type: boolean
-                    enum:
-                      - false
-                  message:
-                    type: string
-                  errors:
-                    type: array
-                    items:
-                      type: string
-                    example: ["email is required"]
-        "409":
-          description: Duplicate request
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:                    
-                  success:
-                    type: boolean
-                    enum:
-                      - false
-                  message:
-                    type: string
-                  data:
-                    type: object
-                    properties:
-                      activeVoucher:
-                        type: object
-                        properties:
-                          id:
-                            type: string
-                          email:
-                            type: string
-                          currency:
-                            type: string
-                          fullname:
-                            type: string
-                          amount:
-                            type: number
-                          fee:
-                            type: number
-                          expectedAmount:
-                            type: number
-                          waivedFee:
-                            type: number
-                          feeBearer:
-                            type: string
-                          bankName:
-                            type: string
-                          bankCode:
-                            type: string
-                          accountName:
-                            type: string
-                          accountNumber:
-                            type: string
-                          accountType:
-                            type: string
-                            enum:
-                              - dynamic
-                              - static
-                          paymentStatus:
-                            type: string
-                          paymentExpiresAt:
-                            type: string
-                          memo:
-                            type: string
-                          merchant:
-                            type: string
-                          merchantLogo:
-                            type: string
-                      newVoucherPayload:
-                        type: object
-                        properties:
-                          bvn:
-                            type: string
-                          email:
-                            type: string
-                          fullname:
-                            type: string
-                          amount:
-                            type: number
-                          currency:
-                            type: string
-                          merchant:
-                            type: string    
-    put:
-      tags:
-        - Voucher V2
-      security:
-        - ApiUser: []
-          ApiKey: []
-      summary:  Cancel existing voucher and create a new voucher one.
-      description: In V2, a user can only have one open voucher at a time. Merchants don't need to call this endpoint from their server if they have already integrated Ventogram frontend. Users will be prompted to continue to pay an open voucher or cancel before creating a new one on the UI. 
-      operationId: cancel-and-create-voucher
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                bvn:
-                  type: string
-                  description: User's 11-digit BVN
-                phoneNumber:
-                  type: string
-                  description: Phone number in international format
-                  example: +23480xxxxxxxx
-                email:
-                  type: string
-                  description: User email
-                  example: email@example.com
-                fullname:
-                  type: string
-                  description: Fullname of the user creating voucher
-                amount:
-                  type: integer
-                  format: int32
-                  description: Required voucher amount
-                currency:
-                  type: string
-                  description: Required voucher currency
-                  enum:
-                    - NGN
-                    - USD
-                cancelActiveVoucher:
-                  type: boolean
-              required:
-                - bvn
-                - email
-                - amount
-                - currency
-                - fullname
-                - phoneNumber
-      responses:
-        "201":
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:                    
-                  success:
-                    type: boolean
-                    enum:
-                      - true
-                  message:
-                    type: string
-                  data:
-                    type: object
-                    properties:
-                      id:
-                        type: string
-                        description: Voucher unique id
-        "400":
-          description: Failed operation
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:                    
-                  success:
-                    type: boolean
-                    enum:
-                      - false
-                  message:
-                    type: string
-                  errors:
-                    type: array
-                    items:
-                      type: string
-                    example: ["email is required"]
-        "409":
-          description: Duplicate voucher
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:                    
-                  success:
-                    type: boolean
-                    enum:
-                      - false
-                  message:
-                    type: string
-                  data:
-                    type: object
-                    properties:
-                      activeVoucher:
-                        type: object
-                        properties:
-                          id:
-                            type: string
-                          email:
-                            type: string
-                          currency:
-                            type: string
-                          fullname:
-                            type: string
-                          amount:
-                            type: number
-                          fee:
-                            type: number
-                          expectedAmount:
-                            type: number
-                          waivedFee:
-                            type: number
-                          feeBearer:
-                            type: string
-                          bankName:
-                            type: string
-                          bankCode:
-                            type: string
-                          accountName:
-                            type: string
-                          accountNumber:
-                            type: string
-                          accountType:
-                            type: string
-                            enum:
-                              - dynamic
-                              - static
-                          paymentStatus:
-                            type: string
-                          paymentExpiresAt:
-                            type: string
-                          memo:
-                            type: string
-                          merchant:
-                            type: string
-                          merchantLogo:
-                            type: string
-                      newVoucherPayload:
-                        type: object
-                        properties:
-                          bvn:
-                            type: string
-                          email:
-                            type: string
-                          fullname:
-                            type: string
-                          amount:
-                            type: number
-                          currency:
-                            type: string
-                          merchant:
-                            type: string
   /v1/voucher-min-max:
     get:
       tags:
@@ -1211,7 +888,7 @@ paths:
                   errors:
                     type: array
                     example: []
-  /v1/voucher/get-many:
+  /v1/voucher/get-many:  
     get:
       tags:
         - Voucher
@@ -1339,7 +1016,370 @@ paths:
                   errors:
                     type: array
                     items:
-                      type: string                       
+                      type: string
+  /v1/create-account:
+    post:
+      tags:
+        - Create Bank Account
+      security:
+        - ApiUser: []
+          ApiKey: []
+      summary: Create a new bank account
+      description: Creates a new managed bank account using user identity and contact information.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                bvn:
+                  type: string
+                  example: "46444443431"
+                currency:
+                  type: string
+                  example: "NGN"
+                email:
+                  type: string
+                  format: email
+                  example: "rahman+1@gmail.com"
+                firstName:
+                  type: string
+                  example: "rahmann"
+                lastName:
+                  type: string
+                  example: "plus"
+                middleName:
+                  type: string
+                  example: "one"
+                phone:
+                  type: string
+                  description: phone number starting with +234
+                  example: "+2348033333511"
+                dob:
+                  type: string
+                  description: Date of birth in dd-mm-yyyy format
+                  example: "25-02-2000"
+                country:
+                  type: string
+                  example: "NG"
+                stateOfOrigin:
+                  type: string
+                  example: "Lagos"
+                stateOfResidence:
+                  type: string
+                  example: "Lagos"
+                lgaOfOrigin:
+                  type: string
+                  example: "Amuwo"
+                lgaOfResidence:
+                  type: string
+                  example: "Ifako"
+                addressLine1:
+                  type: string
+                  example: "27 Obafemi Awolowo Way"
+                addressLine2:
+                  type: string
+                  example: ""
+                addressLine3:
+                  type: string
+                  example: ""
+              required:
+                - bvn
+                - currency
+                - email
+                - firstName
+                - lastName
+                - middleName
+                - phone
+                - dob
+                - country
+                - stateOfOrigin
+                - stateOfResidence
+                - lgaOfOrigin
+                - lgaOfResidence
+                - addressLine1
+      responses:
+        '200':
+          description: Bank account successfully created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: bank account successfully completed
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        bankCode:
+                          type: string
+                          example: ""
+                        bankName:
+                          type: string
+                          example: "Test Bank"
+                        accountName:
+                          type: string
+                          example: "TEST-MANAGED-ACCOUNT"
+                        accountNumber:
+                          type: string
+                          example: "1238314012"
+                        currency:
+                          type: string
+                          example: "NGN"
+        '422':
+          description: Account creation failed due to validation or processing error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: Account completion failed
+                  errors:
+                    type: array
+                    items:
+                      type: string                     
+  /v1/get-accounts:
+    get:
+      tags:
+        - Get Bank Account
+      security:
+        - ApiUser: []
+          ApiKey: []
+      summary: Retrieve static accounts for a user
+      description: Returns static bank account details associated with the given email.
+      parameters:
+        - in: query
+          name: email
+          required: true
+          schema:
+            type: string
+            format: email
+          description: The email of the user whose static accounts are being retrieved.
+      responses:
+        '200':
+          description: Static accounts successfully retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Static account successfully retrieved
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        bankCode:
+                          type: string
+                          example: "251"
+                        bankName:
+                          type: string
+                          example: Maplerad
+                        accountName:
+                          type: string
+                          example: Adrain Schaden
+                        accountNumber:
+                          type: string
+                          example: "4957473535"
+                        currency:
+                          type: string
+                          example: NGN
+        '404':
+          description: No static accounts found for the user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: no static accounts found for this user
+                  data:
+                    type: array
+                    items: {}
+  /v2/vouchers:
+    put:
+      tags:
+        - Voucher V2
+      security:
+        - ApiUser: []
+          ApiKey: []
+      summary:  Cancel existing voucher and create a new voucher one.
+      description: In V2, a user can only have one open voucher at a time. Merchants don't need to call this endpoint from their server if they have already integrated Ventogram frontend. Users will be prompted to continue to pay an open voucher or cancel before creating a new one on the UI. 
+      operationId: cancel-and-create-voucher
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                bvn:
+                  type: string
+                  description: User's 11-digit BVN
+                phoneNumber:
+                  type: string
+                  description: Phone number in international format
+                  example: +23480xxxxxxxx
+                email:
+                  type: string
+                  description: User email
+                  example: email@example.com
+                fullname:
+                  type: string
+                  description: Fullname of the user creating voucher
+                amount:
+                  type: integer
+                  format: int32
+                  description: Required voucher amount
+                currency:
+                  type: string
+                  description: Required voucher currency
+                  enum:
+                    - NGN
+                    - USD
+                cancelActiveVoucher:
+                  type: boolean
+              required:
+                - bvn
+                - email
+                - amount
+                - currency
+                - fullname
+                - phoneNumber
+      responses:
+        "201":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:                    
+                  success:
+                    type: boolean
+                    enum:
+                      - true
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: Voucher unique id
+        "400":
+          description: Failed operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:                    
+                  success:
+                    type: boolean
+                    enum:
+                      - false
+                  message:
+                    type: string
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example: ["email is required"]
+        "409":
+          description: Duplicate voucher
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:                    
+                  success:
+                    type: boolean
+                    enum:
+                      - false
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      activeVoucher:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                          email:
+                            type: string
+                          currency:
+                            type: string
+                          fullname:
+                            type: string
+                          amount:
+                            type: number
+                          fee:
+                            type: number
+                          expectedAmount:
+                            type: number
+                          waivedFee:
+                            type: number
+                          feeBearer:
+                            type: string
+                          bankName:
+                            type: string
+                          bankCode:
+                            type: string
+                          accountName:
+                            type: string
+                          accountNumber:
+                            type: string
+                          accountType:
+                            type: string
+                            enum:
+                              - dynamic
+                              - static
+                          paymentStatus:
+                            type: string
+                          paymentExpiresAt:
+                            type: string
+                          memo:
+                            type: string
+                          merchant:
+                            type: string
+                          merchantLogo:
+                            type: string
+                      newVoucherPayload:
+                        type: object
+                        properties:
+                          bvn:
+                            type: string
+                          email:
+                            type: string
+                          fullname:
+                            type: string
+                          amount:
+                            type: number
+                          currency:
+                            type: string
+                          merchant:
+                            type: string
 components:
   securitySchemes:
     ApiUser:

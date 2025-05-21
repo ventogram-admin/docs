@@ -76,7 +76,9 @@
         "api-reference/endpoint/ventogram/voucher/redeem-existing-unused-voucher",
         "api-reference/endpoint/ventogram/voucher/redeem-and-withdraw",
         "api-reference/endpoint/ventogram/voucher-fee/retrieves-conversion-rates",
-        "api-reference/endpoint/ventogram/voucher-min-max-amount/retrieves-minimum-and-maximum-voucher-amounts"
+        "api-reference/endpoint/ventogram/voucher-min-max-amount/retrieves-minimum-and-maximum-voucher-amounts",
+        "api-reference/endpoint/ventogram/bank-account/create-bank-account",
+        "api-reference/endpoint/ventogram/bank-account/get-bank-account"
       ],
       "version": "v2"
     },
