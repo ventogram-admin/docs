@@ -204,7 +204,8 @@
     {
       "group": "mock",
       "pages": [
-        "api-reference/endpoint/v3/mock/mock-fiat-deposit"
+        "api-reference/endpoint/v3/mock/mock-fiat-deposit",
+        "api-reference/endpoint/v3/mock/mock-deposit"
       ],
       "version": "v4"
     }
