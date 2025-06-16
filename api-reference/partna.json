@@ -1279,224 +1279,6 @@
 				]
 			}
 		},
-		"/admin/upgrade-account": {
-			"post": {
-				"description": "Create bank account.",
-				"operationId": "post-admin-upgrade-account",
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"example": {
-									"accountName": "",
-									"currency": "",
-									"preferredAccountName": ""
-								},
-								"properties": {
-									"accountName": {
-										"type": "string"
-									},
-									"currency": {
-										"enum": [
-											"NGN"
-										],
-										"type": "string"
-									},
-									"preferredAccountName": {
-										"description": "preferred bank account name for merchant bank account creation",
-										"type": "string"
-									}
-								},
-								"required": [
-									"currency",
-									"accountName"
-								],
-								"type": "object"
-							}
-						}
-					},
-					"required": true
-				},
-				"responses": {
-					"200": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"example": {
-										"data": [
-											{
-												"account_name": "JANE DOE",
-												"account_number": "9003001003",
-												"bank_code": "100039",
-												"bank_name": "Paystack-Titan",
-												"currency": "NGN",
-												"status": "ACTIVE"
-											}
-										],
-										"message": "bank account successful"
-									},
-									"properties": {
-										"data": {
-											"items": {
-												"properties": {
-													"account_name": {
-														"type": "string"
-													},
-													"account_number": {
-														"type": "string"
-													},
-													"bank_code": {
-														"type": "string"
-													},
-													"bank_name": {
-														"type": "string"
-													},
-													"currency": {
-														"type": "string"
-													},
-													"status": {
-														"type": "string"
-													}
-												},
-												"type": "object"
-											},
-											"type": "array"
-										},
-										"message": {
-											"type": "string"
-										}
-									},
-									"type": "object"
-								}
-							}
-						},
-						"description": "post admin upgrade account ok"
-					}
-				},
-				"security": [
-					{
-						"x-api-key": [],
-						"x-api-user": []
-					},
-					{
-						"authorization": []
-					}
-				],
-				"summary": "Create Bank Account",
-				"tags": [
-					"Account"
-				]
-			}
-		},
-		"/admin/user": {
-			"post": {
-				"description": "Create and activate user accounts.",
-				"operationId": "post-admin-user",
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"example": {
-									"email": "",
-									"username": ""
-								},
-								"properties": {
-									"email": {
-										"type": "string"
-									},
-									"username": {
-										"type": "string"
-									}
-								},
-								"type": "object"
-							}
-						}
-					},
-					"required": true
-				},
-				"responses": {
-					"200": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"example": {
-										"data": null,
-										"message": "success"
-									},
-									"properties": {
-										"data": {
-											"type": "string"
-										},
-										"message": {
-											"type": "string"
-										}
-									},
-									"type": "object"
-								}
-							}
-						},
-						"description": "post admin user ok"
-					},
-					"400": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"example": {
-										"data": null,
-										"message": "username or email already exists"
-									},
-									"properties": {
-										"data": {
-											"type": "string"
-										},
-										"message": {
-											"type": "string"
-										}
-									},
-									"type": "object"
-								}
-							}
-						},
-						"description": "post admin user bad request"
-					},
-					"401": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"example": {
-										"data": null,
-										"message": "unable to access this resource"
-									},
-									"properties": {
-										"data": {
-											"type": "string"
-										},
-										"message": {
-											"type": "string"
-										}
-									},
-									"type": "object"
-								}
-							}
-						},
-						"description": "post admin user unauthorized"
-					}
-				},
-				"security": [
-					{
-						"x-api-key": [],
-						"x-api-user": []
-					},
-					{
-						"authorization": []
-					}
-				],
-				"summary": "Create User",
-				"tags": [
-					"User"
-				]
-			}
-		},
 		"/banks": {
 			"get": {
 				"description": "Get supported banks by currency.",
@@ -1605,115 +1387,7 @@
 				"security": [],
 				"summary": "Get Banks",
 				"tags": [
-					"Banks"
-				]
-			}
-		},
-		"/banks/resolve": {
-			"post": {
-				"description": "Resolve bank account by account number and bank code.",
-				"operationId": "post-banks-resolve",
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"example": {
-									"accountNumber": "",
-									"bankCode": "",
-									"currency": ""
-								},
-								"properties": {
-									"accountNumber": {
-										"type": "string"
-									},
-									"bankCode": {
-										"type": "string"
-									},
-									"currency": {
-										"enum": [
-											"NGN",
-											"GHS",
-											"KES"
-										],
-										"type": "string"
-									}
-								},
-								"required": [
-									"accountNumber",
-									"bankCode",
-									"currency"
-								],
-								"type": "object"
-							}
-						}
-					},
-					"required": true
-				},
-				"responses": {
-					"200": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"example": {
-										"data": {
-											"accountName": "Ngozi Hussein Iroko",
-											"accountNumber": "0120913522"
-										},
-										"message": "success"
-									},
-									"properties": {
-										"data": {
-											"properties": {
-												"accountName": {
-													"type": "string"
-												},
-												"accountNumber": {
-													"type": "string"
-												}
-											},
-											"type": "object"
-										},
-										"message": {
-											"type": "string"
-										}
-									},
-									"type": "object"
-								}
-							}
-						},
-						"description": "post banks resolve ok"
-					},
-					"400": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"example": {
-										"message": "Invalid bank account details"
-									},
-									"properties": {
-										"message": {
-											"type": "string"
-										}
-									},
-									"type": "object"
-								}
-							}
-						},
-						"description": "post banks resolve bad request"
-					}
-				},
-				"security": [
-					{
-						"x-api-key": [],
-						"x-api-user": []
-					},
-					{
-						"authorization": []
-					}
-				],
-				"summary": "Resolve Bank",
-				"tags": [
-					"Banks"
+					"Bank"
 				]
 			}
 		},
@@ -1913,16 +1587,16 @@
 									"example": {
 										"data": [
 											{
-												"discount": "10%",
-												"minimumAssetValueInUSD": "1000"
-											},
-											{
 												"discount": "5%",
 												"minimumAssetValueInUSD": "500"
 											},
 											{
 												"discount": "1%",
 												"minimumAssetValueInUSD": "100"
+											},
+											{
+												"discount": "10%",
+												"minimumAssetValueInUSD": "1000"
 											}
 										],
 										"message": "success"
@@ -1961,7 +1635,7 @@
 				],
 				"summary": "Get Discounts",
 				"tags": [
-					"Discounts"
+					"Discount"
 				]
 			}
 		},
@@ -2396,7 +2070,7 @@
 				],
 				"summary": "Resolve Bank",
 				"tags": [
-					"Banks"
+					"KYC"
 				]
 			}
 		},
@@ -2676,7 +2350,7 @@
 		},
 		"/mfa/disable": {
 			"put": {
-				"description": "Get account MFA details.",
+				"description": "Disable account MFA.",
 				"operationId": "put-mfa-disable",
 				"requestBody": {
 					"content": {
@@ -2737,7 +2411,7 @@
 						"authorization": []
 					}
 				],
-				"summary": "Get Account MFA",
+				"summary": "Disable Account MFA",
 				"tags": [
 					"MFA"
 				]
@@ -3293,7 +2967,7 @@
 											"accountNumber": "9003001002",
 											"bankName": "Paystack-Titan",
 											"currentRate": 0.000597221725,
-											"expiryDate": 1750079694,
+											"expiryDate": 1750109465,
 											"fromAmount": 1000,
 											"fromCurrency": "NGN",
 											"fromNetwork": "naira",
@@ -3447,7 +3121,7 @@
 												"ETH_to_USD": {
 													"fromAmount": 1,
 													"fromCurrency": "ETH",
-													"key": "2400-ETH_to_USD-96db7019-1750076212",
+													"key": "2400-ETH_to_USD-983b8fe4-1750105979",
 													"rate": 2400,
 													"toAmount": 2400,
 													"toCurrency": "USD"
@@ -3455,7 +3129,7 @@
 												"USDT_to_USD": {
 													"fromAmount": 1,
 													"fromCurrency": "USDT",
-													"key": "1-USDT_to_USD-e8eee558-1750076212",
+													"key": "1-USDT_to_USD-9f757bd4-1750105979",
 													"rate": 1,
 													"toAmount": 1,
 													"toCurrency": "USD"
@@ -3463,7 +3137,7 @@
 												"USD_to_ETH": {
 													"fromAmount": 2500,
 													"fromCurrency": "USD",
-													"key": "0.0004-USD_to_ETH-ac01b73f-1750076212",
+													"key": "0.0004-USD_to_ETH-648de393-1750105979",
 													"rate": 0.0004,
 													"toAmount": 1,
 													"toCurrency": "ETH"
@@ -5178,11 +4852,11 @@
 											{
 												"amount": 10,
 												"currency": "USD",
-												"date": "2025-06-16T12:13:20Z",
+												"date": "2025-06-16T20:30:00Z",
 												"fromAccount": "credit",
 												"fromUser": "admin",
 												"status": "completed",
-												"timestamp": 1750076000,
+												"timestamp": 1750105800,
 												"toAccount": "user1",
 												"toUser": "user1",
 												"transactionReference": "abcdef2234567890abcdef1234567867",
@@ -6125,7 +5799,7 @@
 								"schema": {
 									"example": {
 										"data": {
-											"apikey": "1--M--069c30b9d61f4327b9763e34c6392461--1775996096452--24f28687"
+											"apikey": "1--M--a657e3c35f5a4eb4bd4f90b488b05fff--1776025898077--e7134003"
 										},
 										"message": "success"
 									},
@@ -6542,7 +6216,7 @@
 						"authorization": []
 					}
 				],
-				"summary": "Registration, Deposit and Fee Settings",
+				"summary": "Get Registration, Deposit and Fee Settings",
 				"tags": [
 					"User"
 				]
@@ -6671,71 +6345,6 @@
 				"summary": "Registration, Deposit and Fee Settings",
 				"tags": [
 					"User"
-				]
-			}
-		},
-		"/user/trigger": {
-			"get": {
-				"description": "Trigger pricing reminder, charge, retry or receipt.",
-				"operationId": "get-user-trigger",
-				"parameters": [
-					{
-						"description": "pricing action to execute",
-						"in": "query",
-						"name": "action",
-						"required": false,
-						"schema": {
-							"enum": [
-								"reminder",
-								"charge",
-								"retry",
-								"receipt"
-							],
-							"type": "string"
-						}
-					},
-					{
-						"description": "",
-						"in": "query",
-						"name": "username",
-						"required": false,
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"responses": {
-					"200": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"example": {
-										"message": "success"
-									},
-									"properties": {
-										"message": {
-											"type": "string"
-										}
-									},
-									"type": "object"
-								}
-							}
-						},
-						"description": "get user trigger ok"
-					}
-				},
-				"security": [
-					{
-						"x-api-key": [],
-						"x-api-user": []
-					},
-					{
-						"authorization": []
-					}
-				],
-				"summary": "Pricing Alert",
-				"tags": [
-					"Pricing"
 				]
 			}
 		},
@@ -6968,7 +6577,7 @@
 		},
 		{
 			"description": "discount endpoints",
-			"name": "Discounts"
+			"name": "Discount"
 		},
 		{
 			"description": "rate endpoints",
@@ -6992,7 +6601,7 @@
 		},
 		{
 			"description": "banks",
-			"name": "Banks"
+			"name": "Bank"
 		},
 		{
 			"description": "convert endpoints",
