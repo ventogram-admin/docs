@@ -787,7 +787,7 @@
 				]
 			},
 			"put": {
-				"description": "Create bank account.",
+				"description": "Create bank account. You need to complete KYC before creating a bank account.",
 				"operationId": "put-account",
 				"requestBody": {
 					"content": {
@@ -918,7 +918,7 @@
 		},
 		"/account/account-details": {
 			"get": {
-				"description": "Get accounts profile.",
+				"description": "Get accounts details.",
 				"operationId": "get-account-account-details",
 				"parameters": [
 					{
@@ -1105,7 +1105,7 @@
 						"authorization": []
 					}
 				],
-				"summary": "Get Accounts Profile",
+				"summary": "Get Accounts Details",
 				"tags": [
 					"Account"
 				]
@@ -1542,7 +1542,7 @@
 				],
 				"summary": "Convert Currency",
 				"tags": [
-					"Convert"
+					"Transfer"
 				]
 			}
 		},
@@ -1587,16 +1587,16 @@
 									"example": {
 										"data": [
 											{
+												"discount": "10%",
+												"minimumAssetValueInUSD": "1000"
+											},
+											{
 												"discount": "5%",
 												"minimumAssetValueInUSD": "500"
 											},
 											{
 												"discount": "1%",
 												"minimumAssetValueInUSD": "100"
-											},
-											{
-												"discount": "10%",
-												"minimumAssetValueInUSD": "1000"
 											}
 										],
 										"message": "success"
@@ -2967,7 +2967,7 @@
 											"accountNumber": "9003001002",
 											"bankName": "Paystack-Titan",
 											"currentRate": 0.000597221725,
-											"expiryDate": 1750109465,
+											"expiryDate": 1750165040,
 											"fromAmount": 1000,
 											"fromCurrency": "NGN",
 											"fromNetwork": "naira",
@@ -3121,7 +3121,7 @@
 												"ETH_to_USD": {
 													"fromAmount": 1,
 													"fromCurrency": "ETH",
-													"key": "2400-ETH_to_USD-983b8fe4-1750105979",
+													"key": "2400-ETH_to_USD-69f90675-1750161559",
 													"rate": 2400,
 													"toAmount": 2400,
 													"toCurrency": "USD"
@@ -3129,7 +3129,7 @@
 												"USDT_to_USD": {
 													"fromAmount": 1,
 													"fromCurrency": "USDT",
-													"key": "1-USDT_to_USD-9f757bd4-1750105979",
+													"key": "1-USDT_to_USD-7e0fa621-1750161559",
 													"rate": 1,
 													"toAmount": 1,
 													"toCurrency": "USD"
@@ -3137,7 +3137,7 @@
 												"USD_to_ETH": {
 													"fromAmount": 2500,
 													"fromCurrency": "USD",
-													"key": "0.0004-USD_to_ETH-648de393-1750105979",
+													"key": "0.0004-USD_to_ETH-9ca74816-1750161559",
 													"rate": 0.0004,
 													"toAmount": 1,
 													"toCurrency": "ETH"
@@ -4852,11 +4852,11 @@
 											{
 												"amount": 10,
 												"currency": "USD",
-												"date": "2025-06-16T20:30:00Z",
+												"date": "2025-06-17T11:56:40Z",
 												"fromAccount": "credit",
 												"fromUser": "admin",
 												"status": "completed",
-												"timestamp": 1750105800,
+												"timestamp": 1750161400,
 												"toAccount": "user1",
 												"toUser": "user1",
 												"transactionReference": "abcdef2234567890abcdef1234567867",
@@ -5799,7 +5799,7 @@
 								"schema": {
 									"example": {
 										"data": {
-											"apikey": "1--M--a657e3c35f5a4eb4bd4f90b488b05fff--1776025898077--e7134003"
+											"apikey": "1--M--3c1fc953f34f432589df37371d4a3fb1--1776081443040--2bacd10c"
 										},
 										"message": "success"
 									},
@@ -6602,10 +6602,6 @@
 		{
 			"description": "banks",
 			"name": "Bank"
-		},
-		{
-			"description": "convert endpoints",
-			"name": "Convert"
 		},
 		{
 			"description": "mock endpoints for testing",
