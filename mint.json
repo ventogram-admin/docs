@@ -1,18 +1,20 @@
 {
   "$schema": "https://mintlify.com/schema.json",
   "name": "Partna API docs",
-  "versions": ["v2", "v4"],
+  "versions": [
+    "v2",
+    "v4"
+  ],
   "logo": {
     "dark": "/logo/dark.svg",
     "light": "/logo/light.svg"
   },
   "metadata": {
     "og:image": "https://res.cloudinary.com/payourse-technologies-inc/image/upload/v1710838758/seo-partna/dev_doc_cu1aax.jpg"
-},
+  },
   "favicon": "/favicon.svg",
-  
   "colors": {
-     "primary": "#00CC66",
+    "primary": "#00CC66",
     "light": "#07C983",
     "dark": "#00CC66",
     "anchors": {
@@ -36,7 +38,6 @@
       "url": "api-reference"
     }
   ],
- 
   "navigation": [
     {
       "group": "Overview",
@@ -49,7 +50,6 @@
       ],
       "version": "v2"
     },
-
     {
       "group": "Use cases",
       "pages": [
@@ -59,8 +59,7 @@
         "offramp"
       ],
       "version": "v2"
-    },   
-    
+    },
     {
       "group": "Collect & Onramp",
       "pages": [
@@ -121,64 +120,98 @@
       ],
       "version": "v2"
     },
-
     {
       "group": "Overview",
       "pages": [
         "v4"
       ],
       "version": "v4"
-    },  
-    
-    {
-      "group":"Users",
-      "pages": [
-        "api-reference/endpoint/v3/user/self-activate",
-        "api-reference/endpoint/v3/user/get-balances"
-      ],
-      "version": "v4"
     },
     {
-      "group":"Accounts",
+      "group": "Account",
       "pages": [
         "api-reference/endpoint/v3/account/get-account",
+        "api-reference/endpoint/v3/account/create-bank-account",
         "api-reference/endpoint/v3/account/create-account",
-        "api-reference/endpoint/v3/account/upgrade-account"
-      ],
-      "version": "v4"
-    },
-    {
-      "group": "KYC",
-      "pages": [
-        "api-reference/endpoint/v3/kyc/create-kyc",
-        "api-reference/endpoint/v3/kyc/confirm-otp",
-        "api-reference/endpoint/v3/kyc/confirm-phone-number",
-        "api-reference/endpoint/v3/kyc/send-or-receive-otp-to-complete-kyc",
-        "api-reference/endpoint/v3/kyc/resolve-account"
+        "api-reference/endpoint/v3/account/get-accounts-details",
+        "api-reference/endpoint/v3/account/update-account-email",
+        "api-reference/endpoint/v3/account/get-account-profile"
       ],
       "version": "v4"
     },
     {
       "group": "Bank",
       "pages": [
-        "api-reference/endpoint/v3/bank/get-supported-banks"
+        "api-reference/endpoint/v3/bank/get-banks"
       ],
       "version": "v4"
     },
     {
-      "group":"Transfer",
+      "group": "Transfer",
       "pages": [
-        "api-reference/endpoint/v3/transfer/transfer",
-        "api-reference/endpoint/v3/transfer/withdraw",
-        "api-reference/endpoint/v3/transfer/get-transactions",
-        "api-reference/endpoint/v3/transfer/initiate-collection",
-        "api-reference/endpoint/v3/convert/convert-from-one-currency-to-another",
-        "api-reference/endpoint/v3/assets/get-supported-assets"
+        "api-reference/endpoint/v3/transfer/convert-currency",
+        "api-reference/endpoint/v3/transfer/get-transfer",
+        "api-reference/endpoint/v3/transfer/create-transfer",
+        "api-reference/endpoint/v3/transfer/get-single-transaction",
+        "api-reference/endpoint/v3/transfer/initiate-transfer",
+        "api-reference/endpoint/v3/transfer/withdraw"
       ],
       "version": "v4"
     },
     {
-      "group": "rate",
+      "group": "Discount",
+      "pages": [
+        "api-reference/endpoint/v3/discount/get-discounts"
+      ],
+      "version": "v4"
+    },
+    {
+      "group": "KYC",
+      "pages": [
+        "api-reference/endpoint/v3/kyc/initiate-bvn-kyc",
+        "api-reference/endpoint/v3/kyc/confirm-bvn-otp",
+        "api-reference/endpoint/v3/kyc/confirm-phone",
+        "api-reference/endpoint/v3/kyc/handle-bvn-otp-method",
+        "api-reference/endpoint/v3/kyc/resolve-bank",
+        "api-reference/endpoint/v3/kyc/supported-verification-methods"
+      ],
+      "version": "v4"
+    },
+    {
+      "group": "MFA",
+      "pages": [
+        "api-reference/endpoint/v3/mfa/get-account-mfa",
+        "api-reference/endpoint/v3/mfa/validate-account-mfa",
+        "api-reference/endpoint/v3/mfa/enable-account-mfa",
+        "api-reference/endpoint/v3/mfa/disable-account-mfa"
+      ],
+      "version": "v4"
+    },
+    {
+      "group": "Mock",
+      "pages": [
+        "api-reference/endpoint/v3/mock/mock-deposit",
+        "api-reference/endpoint/v3/mock/mock-fiat-deposit"
+      ],
+      "version": "v4"
+    },
+    {
+      "group": "Pricing",
+      "pages": [
+        "api-reference/endpoint/v3/pricing/get-pending-pricing",
+        "api-reference/endpoint/v3/pricing/pricing-alert"
+      ],
+      "version": "v4"
+    },
+    {
+      "group": "Ramp",
+      "pages": [
+        "api-reference/endpoint/v3/ramp/onramp-and-offramp"
+      ],
+      "version": "v4"
+    },
+    {
+      "group": "Rate",
       "pages": [
         "api-reference/endpoint/v3/rate/get-rate",
         "api-reference/endpoint/v3/rate/verify-rate-key"
@@ -186,25 +219,28 @@
       "version": "v4"
     },
     {
-      "group": "discount",
+      "group": "Supported",
       "pages": [
-        "api-reference/endpoint/v3/discount/get-discount"
+        "api-reference/endpoint/v3/supported/get-supported-assets"
       ],
       "version": "v4"
     },
     {
-      "group": "pricing",
+      "group": "User",
       "pages": [
-       "api-reference/endpoint/v3/pricing/get-pending-pricing",
-       "api-reference/endpoint/v3/pricing/trigger-price-charge"
-      ],
-      "version": "v4"
-
-    },
-    {
-      "group": "mock",
-      "pages": [
-        "api-reference/endpoint/v3/mock/mock-fiat-deposit"
+        "api-reference/endpoint/v3/user/update-user",
+        "api-reference/endpoint/v3/user/create-user",
+        "api-reference/endpoint/v3/user/generate-api-key",
+        "api-reference/endpoint/v3/user/delete-api-key",
+        "api-reference/endpoint/v3/user/get-api-key-scopes",
+        "api-reference/endpoint/v3/user/get-api-keys",
+        "api-reference/endpoint/v3/user/get-balances",
+        "api-reference/endpoint/v3/user/invalidate-api-key",
+        "api-reference/endpoint/v3/user/get-registration-deposit-and-fee-settings",
+        "api-reference/endpoint/v3/user/registration-deposit-and-fee-settings",
+        "api-reference/endpoint/v3/user/get-webhook-url",
+        "api-reference/endpoint/v3/user/update-webhook-url",
+        "api-reference/endpoint/v3/user/delete-webhook-url"
       ],
       "version": "v4"
     }
@@ -213,5 +249,9 @@
     "twitter": "https://twitter.com/getpartna",
     "linkedin": "https://www.linkedin.com/company/getpartna"
   },
-  "openapi": ["api-reference/ventogram.yml", "api-reference/biz.yml", "api-reference/partna.json"]
+  "openapi": [
+    "api-reference/ventogram.yml",
+    "api-reference/biz.yml",
+    "api-reference/partna.json"
+  ]
 }
