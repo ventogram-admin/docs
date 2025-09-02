@@ -1843,7 +1843,7 @@
 		},
 		"/kyc/complete-kyc": {
 			"post": {
-				"description": "Merchant manually populate KYC table for her members.",
+				"description": "Merchant KYC users manually.",
 				"operationId": "post-kyc-complete-kyc",
 				"requestBody": {
 					"content": {
@@ -1944,7 +1944,7 @@
 						"x-api-user": []
 					}
 				],
-				"summary": "Merchant Populate KYC Table",
+				"summary": "Merchant KYC users manually",
 				"tags": [
 					"KYC"
 				]
@@ -6783,7 +6783,7 @@
 		},
 		"/user/kyc-exempt": {
 			"get": {
-				"description": "Used by merchant to return if merchant is in kyc_exempt table.",
+				"description": "Used to check if merchant can KYC their users manually.",
 				"operationId": "get-user-kyc-exempt",
 				"responses": {
 					"200": {
@@ -6840,7 +6840,7 @@
 						"x-api-user": []
 					}
 				],
-				"summary": "Returns if merchant is in kyc_exempt table",
+				"summary": "Check for manual kyc ",
 				"tags": [
 					"KYC"
 				]

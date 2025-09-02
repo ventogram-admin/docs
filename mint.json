@@ -135,6 +135,7 @@
         "api-reference/endpoint/v3/account/create-account",
         "api-reference/endpoint/v3/account/get-accounts-details",
         "api-reference/endpoint/v3/account/update-account-email",
+        "api-reference/endpoint/v3/account/get-account-permissions",
         "api-reference/endpoint/v3/account/get-account-profile"
       ],
       "version": "v4"
@@ -169,11 +170,13 @@
       "group": "KYC",
       "pages": [
         "api-reference/endpoint/v3/kyc/initiate-bvn-kyc",
+        "api-reference/endpoint/v3/kyc/merchant-kyc-users-manually",
         "api-reference/endpoint/v3/kyc/confirm-bvn-otp",
         "api-reference/endpoint/v3/kyc/confirm-phone",
         "api-reference/endpoint/v3/kyc/handle-bvn-otp-method",
         "api-reference/endpoint/v3/kyc/resolve-bank",
-        "api-reference/endpoint/v3/kyc/supported-verification-methods"
+        "api-reference/endpoint/v3/kyc/supported-verification-methods",
+        "api-reference/endpoint/v3/kyc/check-for-manual-kyc"
       ],
       "version": "v4"
     },
@@ -206,6 +209,7 @@
     {
       "group": "Ramp",
       "pages": [
+        "api-reference/endpoint/v3/ramp/get-ramp-requests",
         "api-reference/endpoint/v3/ramp/onramp-and-offramp"
       ],
       "version": "v4"
@@ -230,6 +234,9 @@
       "pages": [
         "api-reference/endpoint/v3/user/update-user",
         "api-reference/endpoint/v3/user/create-user",
+        "api-reference/endpoint/v3/user/used-to-get-all-active-admins-with-privileges",
+        "api-reference/endpoint/v3/user/used-to-give-admin-privileges",
+        "api-reference/endpoint/v3/user/used-to-delete-an-admin-with-privileges",
         "api-reference/endpoint/v3/user/generate-api-key",
         "api-reference/endpoint/v3/user/delete-api-key",
         "api-reference/endpoint/v3/user/get-api-key-scopes",
