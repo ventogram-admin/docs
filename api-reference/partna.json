@@ -1198,6 +1198,103 @@
 				]
 			}
 		},
+		"/account/permissions": {
+			"get": {
+				"description": "Get the valid permissions for accounts.",
+				"operationId": "get-account-permissions",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"data": [
+											{
+												"description": "Monitor activity and data without changes.",
+												"name": "Read-Only",
+												"permissions": [
+													"admin",
+													"view"
+												]
+											},
+											{
+												"description": "Perform transactions and view data.",
+												"name": "Operations Admin",
+												"permissions": [
+													"admin",
+													"view",
+													"operation"
+												]
+											},
+											{
+												"description": "Configure settings and view data.",
+												"name": "Settings Admin",
+												"permissions": [
+													"admin",
+													"view",
+													"settings"
+												]
+											},
+											{
+												"description": "Complete access to all features and settings.",
+												"name": "Super Admin",
+												"permissions": [
+													"admin",
+													"view",
+													"operation",
+													"settings"
+												]
+											}
+										],
+										"message": "success"
+									},
+									"properties": {
+										"data": {
+											"items": {
+												"properties": {
+													"description": {
+														"type": "string"
+													},
+													"name": {
+														"type": "string"
+													},
+													"permissions": {
+														"items": {
+															"type": "string"
+														},
+														"type": "array"
+													}
+												},
+												"type": "object"
+											},
+											"type": "array"
+										},
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "get account permissions ok"
+					}
+				},
+				"security": [
+					{
+						"x-api-key": [],
+						"x-api-user": []
+					},
+					{
+						"authorization": []
+					}
+				],
+				"summary": "Get Account Permissions",
+				"tags": [
+					"Account"
+				]
+			}
+		},
 		"/account/profile": {
 			"get": {
 				"description": "Get account profile.",
@@ -1648,7 +1745,8 @@
 						"application/json": {
 							"schema": {
 								"example": {
-									"accountName": ""
+									"accountName": "",
+									"bvn": null
 								},
 								"properties": {
 									"accountName": {
@@ -1738,6 +1836,115 @@
 					}
 				],
 				"summary": "Initiate BVN KYC",
+				"tags": [
+					"KYC"
+				]
+			}
+		},
+		"/kyc/complete-kyc": {
+			"post": {
+				"description": "Merchant manually populate KYC table for her members.",
+				"operationId": "post-kyc-complete-kyc",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"example": {
+									"accountName": "",
+									"dob": "",
+									"documentId": "",
+									"email": "",
+									"firstName": "",
+									"gender": "",
+									"kycDocument": "",
+									"lastName": "",
+									"middleName": "",
+									"phoneNumber": ""
+								},
+								"properties": {
+									"accountName": {
+										"type": "string"
+									},
+									"dob": {
+										"type": "string"
+									},
+									"documentId": {
+										"type": "string"
+									},
+									"email": {
+										"type": "string"
+									},
+									"firstName": {
+										"type": "string"
+									},
+									"gender": {
+										"enum": [
+											"Male",
+											"Female"
+										],
+										"type": "string"
+									},
+									"kycDocument": {
+										"enum": [
+											"BVN"
+										],
+										"type": "string"
+									},
+									"lastName": {
+										"type": "string"
+									},
+									"middleName": {
+										"type": "string"
+									},
+									"phoneNumber": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"accountName",
+									"firstName",
+									"middleName",
+									"lastName",
+									"email",
+									"phoneNumber",
+									"kycDocument",
+									"documentId",
+									"dob",
+									"gender"
+								],
+								"type": "object"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"message": "success"
+									},
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "post kyc complete kyc ok"
+					}
+				},
+				"security": [
+					{
+						"x-api-key": [],
+						"x-api-user": []
+					}
+				],
+				"summary": "Merchant Populate KYC Table",
 				"tags": [
 					"KYC"
 				]
@@ -2544,7 +2751,7 @@
 		},
 		"/mock/deposit-fiat": {
 			"post": {
-				"description": "Mock fiat deposit with Maplerad.",
+				"description": "Mock fiat deposit.",
 				"operationId": "post-mock-deposit-fiat",
 				"requestBody": {
 					"content": {
@@ -2816,6 +3023,223 @@
 			}
 		},
 		"/ramp": {
+			"get": {
+				"description": "Gets ramp requests.",
+				"operationId": "get-ramp",
+				"parameters": [
+					{
+						"description": "",
+						"in": "query",
+						"name": "accountName",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "",
+						"in": "query",
+						"name": "rampReference",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "",
+						"in": "query",
+						"name": "perPage",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "",
+						"in": "query",
+						"name": "page",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"data": {
+											"page": 1,
+											"perPage": 2,
+											"rampRequests": [
+												{
+													"bankAccountName": "Joseph Asuquo",
+													"bankAccountNumber": "1011024053",
+													"bankName": "ECOBANK",
+													"confirmed": false,
+													"createdAt": 1755873658,
+													"expireAction": "useCurrentRate",
+													"expiredAt": 1755877258,
+													"fromAmount": 0.2,
+													"fromCurrency": "USDT",
+													"fromNetwork": "tron",
+													"initialRate": 1674.42,
+													"processedRate": 1674.42,
+													"rampReference": "f32c3925063447a54905d31305a14da2",
+													"status": "completed",
+													"toAmount": 334.87,
+													"toCurrency": "NGN",
+													"toNetwork": "naira",
+													"type": "cryptoToFiat"
+												},
+												{
+													"address": "TSNBd8vAqacr5duGWHdLRk4KsT5pUxW7jF",
+													"confirmed": false,
+													"createdAt": 1756361841,
+													"expireAction": "useCurrentRate",
+													"expiredAt": 1756365441,
+													"fromAmount": 1000,
+													"fromCurrency": "NGN",
+													"fromNetwork": "naira",
+													"initialRate": 0.000597221725,
+													"rampReference": "f32c3925063447a54905d31305a14d99",
+													"status": "canceled",
+													"toAmount": 0.5872,
+													"toCurrency": "USDT",
+													"toNetwork": "tron",
+													"type": "fiatToCrypto"
+												}
+											],
+											"total": 4
+										},
+										"message": "success"
+									},
+									"properties": {
+										"data": {
+											"properties": {
+												"page": {
+													"type": "number"
+												},
+												"perPage": {
+													"type": "number"
+												},
+												"rampRequests": {
+													"items": {
+														"properties": {
+															"bankAccountName": {
+																"type": "string"
+															},
+															"bankAccountNumber": {
+																"type": "string"
+															},
+															"bankName": {
+																"type": "string"
+															},
+															"confirmed": {
+																"type": "boolean"
+															},
+															"createdAt": {
+																"type": "number"
+															},
+															"expireAction": {
+																"type": "string"
+															},
+															"expiredAt": {
+																"type": "number"
+															},
+															"fromAmount": {
+																"type": "number"
+															},
+															"fromCurrency": {
+																"type": "string"
+															},
+															"fromNetwork": {
+																"type": "string"
+															},
+															"initialRate": {
+																"type": "number"
+															},
+															"processedRate": {
+																"type": "number"
+															},
+															"rampReference": {
+																"type": "string"
+															},
+															"status": {
+																"type": "string"
+															},
+															"toAmount": {
+																"type": "number"
+															},
+															"toCurrency": {
+																"type": "string"
+															},
+															"toNetwork": {
+																"type": "string"
+															},
+															"type": {
+																"type": "string"
+															}
+														},
+														"type": "object"
+													},
+													"type": "array"
+												},
+												"total": {
+													"type": "number"
+												}
+											},
+											"type": "object"
+										},
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "get ramp ok"
+					},
+					"400": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"data": null,
+										"message": "accountName is required"
+									},
+									"properties": {
+										"data": {
+											"type": "string"
+										},
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "get ramp bad request"
+					}
+				},
+				"security": [
+					{
+						"x-api-key": [],
+						"x-api-user": []
+					},
+					{
+						"authorization": []
+					}
+				],
+				"summary": "Get Ramp Requests",
+				"tags": [
+					"Ramp"
+				]
+			},
 			"post": {
 				"description": "Initiates onramp and offramp requests.",
 				"operationId": "post-ramp",
@@ -2843,6 +3267,7 @@
 								},
 								"properties": {
 									"accountName": {
+										"description": "accountname of the user (not bank account name)",
 										"type": "string"
 									},
 									"accountNumber": {
@@ -2948,6 +3373,8 @@
 									}
 								},
 								"required": [
+									"fromCurrency",
+									"toCurrency",
 									"rateKey"
 								],
 								"type": "object"
@@ -2967,14 +3394,19 @@
 											"accountNumber": "9003001002",
 											"bankName": "Paystack-Titan",
 											"currentRate": 0.000597221725,
-											"expiryDate": 1750165040,
+											"discountApplied": "0",
+											"expiryDate": 1756309430,
+											"feeInFromCurrency": 16.74,
+											"feeInToCurrency": 0.01,
 											"fromAmount": 1000,
 											"fromCurrency": "NGN",
 											"fromNetwork": "naira",
 											"rampReference": "f32c3925063447a54905d31305a14da5",
-											"toAmount": 0.597221724537,
+											"toAmount": 0.5872,
 											"toCurrency": "USDT",
-											"toNetwork": "tron"
+											"toNetwork": "tron",
+											"totalFeesInFromCurrency": 16.74,
+											"totalFeesInToCurrency": 0.01
 										},
 										"message": "request completed"
 									},
@@ -2993,7 +3425,16 @@
 												"currentRate": {
 													"type": "number"
 												},
+												"discountApplied": {
+													"type": "string"
+												},
 												"expiryDate": {
+													"type": "number"
+												},
+												"feeInFromCurrency": {
+													"type": "number"
+												},
+												"feeInToCurrency": {
 													"type": "number"
 												},
 												"fromAmount": {
@@ -3016,6 +3457,12 @@
 												},
 												"toNetwork": {
 													"type": "string"
+												},
+												"totalFeesInFromCurrency": {
+													"type": "number"
+												},
+												"totalFeesInToCurrency": {
+													"type": "number"
 												}
 											},
 											"type": "object"
@@ -3121,7 +3568,7 @@
 												"ETH_to_USD": {
 													"fromAmount": 1,
 													"fromCurrency": "ETH",
-													"key": "2400-ETH_to_USD-69f90675-1750161559",
+													"key": "2400-ETH_to_USD-5ddc8f46-1755873777",
 													"rate": 2400,
 													"toAmount": 2400,
 													"toCurrency": "USD"
@@ -3129,7 +3576,7 @@
 												"USDT_to_USD": {
 													"fromAmount": 1,
 													"fromCurrency": "USDT",
-													"key": "1-USDT_to_USD-7e0fa621-1750161559",
+													"key": "1-USDT_to_USD-bbfcdc61-1755873777",
 													"rate": 1,
 													"toAmount": 1,
 													"toCurrency": "USD"
@@ -3137,7 +3584,7 @@
 												"USD_to_ETH": {
 													"fromAmount": 2500,
 													"fromCurrency": "USD",
-													"key": "0.0004-USD_to_ETH-9ca74816-1750161559",
+													"key": "0.0004-USD_to_ETH-c5375bfb-1755873777",
 													"rate": 0.0004,
 													"toAmount": 1,
 													"toCurrency": "ETH"
@@ -4852,11 +5299,12 @@
 											{
 												"amount": 10,
 												"currency": "USD",
-												"date": "2025-06-17T11:56:40Z",
+												"date": "2025-08-22T14:40:00Z",
 												"fromAccount": "credit",
+												"fromTo": "credit",
 												"fromUser": "admin",
 												"status": "completed",
-												"timestamp": 1750161400,
+												"timestamp": 1755873600,
 												"toAccount": "user1",
 												"toUser": "user1",
 												"transactionReference": "abcdef2234567890abcdef1234567867",
@@ -4879,6 +5327,9 @@
 														"type": "string"
 													},
 													"fromAccount": {
+														"type": "string"
+													},
+													"fromTo": {
 														"type": "string"
 													},
 													"fromUser": {
@@ -5681,6 +6132,191 @@
 				]
 			}
 		},
+		"/user/admin": {
+			"delete": {
+				"description": "Used to delete an admin with privileges.",
+				"operationId": "delete-user-admin",
+				"parameters": [
+					{
+						"description": "",
+						"in": "query",
+						"name": "email",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"message": "success"
+									},
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "delete user admin ok"
+					}
+				},
+				"security": [
+					{
+						"x-api-key": [],
+						"x-api-user": []
+					},
+					{
+						"authorization": []
+					}
+				],
+				"summary": "Used to delete an admin with privileges",
+				"tags": [
+					"User"
+				]
+			},
+			"get": {
+				"description": "Used to get all active admins with privileges.",
+				"operationId": "get-user-admin",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"AdminPermissions": [
+											{
+												"email": "changadmin@email.com",
+												"roles": [
+													"view"
+												],
+												"username": "changadmin"
+											}
+										]
+									},
+									"properties": {
+										"AdminPermissions": {
+											"items": {
+												"properties": {
+													"email": {
+														"type": "string"
+													},
+													"roles": {
+														"items": {
+															"type": "string"
+														},
+														"type": "array"
+													},
+													"username": {
+														"type": "string"
+													}
+												},
+												"type": "object"
+											},
+											"type": "array"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "get user admin ok"
+					}
+				},
+				"security": [
+					{
+						"x-api-key": [],
+						"x-api-user": []
+					},
+					{
+						"authorization": []
+					}
+				],
+				"summary": "Used to get all active admins with privileges",
+				"tags": [
+					"User"
+				]
+			},
+			"post": {
+				"description": "The first value of the roles array should be 'admin' followed by other permissions (view, operation, settings)",
+				"operationId": "post-user-admin",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"example": {
+									"email": "",
+									"fullname": "",
+									"roles": {},
+									"username": ""
+								},
+								"properties": {
+									"email": {
+										"type": "string"
+									},
+									"fullname": {
+										"description": "fullname should be between 2 to 100 characters long",
+										"type": "string"
+									},
+									"roles": {
+										"description": "should be admin followed by any of view, operation or settings",
+										"items": {
+											"type": "string"
+										},
+										"type": "array"
+									},
+									"username": {
+										"description": "username should be alphanumeric, lowercase and between 2 to 40 characters long",
+										"type": "string"
+									}
+								},
+								"type": "object"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"message": "success"
+									},
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "post user admin ok"
+					}
+				},
+				"security": [
+					{
+						"x-api-key": [],
+						"x-api-user": []
+					},
+					{
+						"authorization": []
+					}
+				],
+				"summary": "Used to give admin privileges.",
+				"tags": [
+					"User"
+				]
+			}
+		},
 		"/user/apikey": {
 			"delete": {
 				"description": "Delete user API key.",
@@ -5799,7 +6435,7 @@
 								"schema": {
 									"example": {
 										"data": {
-											"apikey": "1--M--3c1fc953f34f432589df37371d4a3fb1--1776081443040--2bacd10c"
+											"apikey": "1--M--4fca371417414423ace78dc730b46e81--1781793658613--3677a356"
 										},
 										"message": "success"
 									},
@@ -6145,6 +6781,71 @@
 				]
 			}
 		},
+		"/user/kyc-exempt": {
+			"get": {
+				"description": "Used by merchant to return if merchant is in kyc_exempt table.",
+				"operationId": "get-user-kyc-exempt",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"message": "success"
+									},
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "post user kyc exempt ok"
+					},
+					"400": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"data": {
+											"exempted": true
+										},
+										"message": "user not exempted"
+									},
+									"properties": {
+										"data": {
+											"properties": {
+												"exempted": {
+													"type": "boolean"
+												}
+											},
+											"type": "object"
+										},
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "post user kyc exempt bad request"
+					}
+				},
+				"security": [
+					{
+						"x-api-key": [],
+						"x-api-user": []
+					}
+				],
+				"summary": "Returns if merchant is in kyc_exempt table",
+				"tags": [
+					"KYC"
+				]
+			}
+		},
 		"/user/settings": {
 			"get": {
 				"description": "Get preferred registration type, fee settings, deposit account, and crypto payment source.",
@@ -6159,7 +6860,9 @@
 											"autoMoveDeposit": false,
 											"cryptoPaymentSource": "unknown",
 											"fees": {
+												"feeAccount": "settingsmerchantfeeaccount",
 												"feeAmount": 2,
+												"feeCap": 2,
 												"feeCurrency": "USD",
 												"feeType": "fixed"
 											},
@@ -6178,7 +6881,13 @@
 												},
 												"fees": {
 													"properties": {
+														"feeAccount": {
+															"type": "string"
+														},
 														"feeAmount": {
+															"type": "number"
+														},
+														"feeCap": {
 															"type": "number"
 														},
 														"feeCurrency": {
@@ -6231,7 +6940,9 @@
 								"example": {
 									"autoMoveDeposit": false,
 									"cryptoPaymentSource": "",
+									"feeAccount": "",
 									"feeAmount": 0,
+									"feeCap": 0,
 									"feeCurrency": "",
 									"feeType": "",
 									"registrationType": ""
@@ -6249,8 +6960,16 @@
 										],
 										"type": "string"
 									},
+									"feeAccount": {
+										"description": "account to receive fees",
+										"type": "string"
+									},
 									"feeAmount": {
 										"description": "required with feeCurrency and feeType",
+										"type": "number"
+									},
+									"feeCap": {
+										"description": "optional maximum fee amount; if set, the fee will not exceed this amount if type is percentage",
 										"type": "number"
 									},
 									"feeCurrency": {
