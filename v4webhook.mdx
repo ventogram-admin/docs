@@ -1,0 +1,260 @@
+---
+title: "Webhooks"
+description: "Learn how to receive and verify webhook events for Deposit, Convert, and Transfer."
+---
+# Introduction
+
+Webhooks allow your application to be notified in real time when events occur.
+This guide shows how to receive and verify **Deposit**, **Convert**, and **Transfer** webhook events.
+
+
+# Receiving an Event
+
+You need to expose an endpoint in your server to receive webhook events.
+Below are examples in **TypeScript**, **Go**, and **Python**.
+<CodeGroup>
+
+```ts TypeScript
+import express from "express";
+
+const app = express();
+app.use(express.json());
+
+app.post("/webhook", (req, res) => {
+  const signature = req.headers["x-webhook-signature"] as string;
+  const payload = req.body;
+
+  console.log("Received event:", payload);
+  res.sendStatus(200);
+});
+
+app.listen(3000, () => console.log("Webhook server running on port 3000"));
+```
+
+```go Golang
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"net/http"
+)
+
+func webhookHandler(w http.ResponseWriter, r *http.Request) {
+	var payload map[string]interface{}
+	if err := json.NewDecoder(r.Body).Decode(&payload); err != nil {
+		http.Error(w, "invalid payload", http.StatusBadRequest)
+		return
+	}
+
+	signature := r.Header.Get("X-Webhook-Signature")
+	fmt.Println("Received signature:", signature)
+	fmt.Println("Received event:", payload)
+
+	w.WriteHeader(http.StatusOK)
+}
+
+func main() {
+	http.HandleFunc("/webhook", webhookHandler)
+	fmt.Println("Server running on :3000")
+	http.ListenAndServe(":3000", nil)
+}
+```
+
+```python Python
+from fastapi import FastAPI, Request
+
+app = FastAPI()
+
+@app.post("/webhook")
+async def webhook(request: Request):
+    payload = await request.json()
+    signature = request.headers.get("x-webhook-signature")
+
+    print("Received signature:", signature)
+    print("Received event:", payload)
+
+    return {"status": "ok"}
+```
+</CodeGroup>
+
+# Public Keys
+
+<AccordionGroup>
+  <Accordion title="Staging">
+
+```
+-----BEGIN PUBLIC KEY-----
+MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAuzfSLqSXbFmRgLGZF9d8
+c4Q4BksUXS8wfFEKZAHJTjFvvlijVc5Csl31/9zOOL2jHmuWelwfe8KN8/kzJ/Jy
+pJg4tQfxT7xxpdRU2YJid/Lncxf5s82/inDz4QgfEH/ehkBcnKOE+strQLfMAwZe
+XbtAOKx+wyJAdL/c6ePLU2o9It3uPKHbkAmyHC67w4PkcF6ctEsB+u8ewlzgR1N3
+j+8aHR31Lufzt/eOcIvHc04dmkx3Ca3k7HzP1SrnGyVVnRudbd2rtzn42lUCP0p3
+HMuDZK+7TWQO1OeXbQ5ZcsDtynLay6pKiQVDlPo1flr5HB2FIrg+9E+lg4qhTYap
+Kx6itHCoIdl5USELgO/wNP6ZuSlfm1lRG3A9n0PZc8orF+jW70hPG12dhLKkDV/h
+8WyfO96WsVaqSmZUdwoTJ73ntxIQ0Aif4bD7Vd189UEMzvoi+tmtY6bFRTy4DCR2
+owgvkONqJ3gfZSgUBFEtXumh4O/2/53YadBR/aXt46lIhiygpAbYUkIdQDjI5KNR
+ZRgts7LdsPACjF7XxaIlkcjoe8bLKUvovkIo70IH7R6E6r9yZ2RogSZVUqsseNeO
+09gW6+eLtSur1uu+zQ3ZWWe3qy1z8kwzSZAHKntD9DSFUCwtGvtb2iYDa/8MqhtF
+lsxTOQ2eqV/prwonm5fRfw8CAwEAAQ==
+-----END PUBLIC KEY-----
+
+````
+
+
+  </Accordion>
+  <Accordion title="Production">
+
+```
+-----BEGIN PUBLIC KEY-----
+MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAo0XDxp0EgedBHmOAalzy
+N+n1bsZbbY71LOzZEPde3u/ookgKCQL6WEyI6Wcg5bIc2SiSMBvQacHTikf9zBVw
+wekSftGNL4//qFWClb30ebdMxx+jlrkh0GQBKvZgXdBNA1fjxpzz7zFEu8lWeKS9
+QVAj3iW+IIYcToVh+OCExyMhsolgZocdmsDjyATXm1jW+gp4rbcHOK8UmaopPG+Z
+yk3ekYyXNlQNXdJ+YYWy252Zhk+e3Hl50+t20gFvpiGR6f6xgaLFq84GmI9XHYns
+IQ8U/c2Ftcu80n+kY0r+o/E91kn6GJuLZYvUI4h9eOInPiLiqw9OZs86vITHioEU
+ZztM3MrX+n3oV6uvYIejtpq+YgWaZda+Bnn+IwgoThDwZjR4YZaE0IXn2VLY9mzJ
+kl+L4qVdBZrHZ5PG7RO5l+rQc0/R6scR1w+pHtbT+2mbYm5IrVpnFShR9WkUelaD
+faYuG8dZQxo9xxu+VAKfXpc/ezB7ArClX5kSB3LfKHLBBCH1UbvFEPAbU+pcJZjG
+T/ukBfFWYm4/oZmh4w324VLs4myejnOuJZTL411p/Y67+PKOcLFznRtoy+UlECfR
+ZB8kLSfB+K9PxwLArIfpSFOSpPkIdhIEdbaBFcwQ57xDt8DhWJQFRNHU7V2KFbYp
+FRci61O4nfsgUtH5Oq1cngkCAwEAAQ==
+-----END PUBLIC KEY-----
+
+````
+  </Accordion>
+</AccordionGroup>
+
+# Supported Events
+<CodeGroup>
+
+```json Deposit
+{
+  "type": "deposit",
+  "data": {
+    "id": "dep_12345",
+    "amount": "100.00",
+    "currency": "USD",
+    "status": "completed",
+    "timestamp": "2025-09-01T12:34:56Z"
+  },
+  "signature": "base64-encoded-signature"
+}
+```
+
+```json Convert
+{
+  "type": "convert",
+  "data": {
+    "id": "conv_67890",
+    "from_currency": "USD",
+    "to_currency": "EUR",
+    "rate": "0.92",
+    "amount": "50.00",
+    "timestamp": "2025-09-01T13:00:00Z"
+  },
+  "signature": "base64-encoded-signature"
+}
+```
+
+```json Transfer
+{
+  "type": "transfer",
+  "data": {
+    "id": "trf_54321",
+    "from_account": "acct_001",
+    "to_account": "acct_002",
+    "amount": "200.00",
+    "currency": "USD",
+    "status": "pending",
+    "timestamp": "2025-09-01T14:15:00Z"
+  },
+  "signature": "base64-encoded-signature"
+}
+```
+</CodeGroup>
+
+
+# Verifying Event Source
+
+Each webhook includes a `signature` that you must verify using your configured public key.
+Below is a verification **handler pattern** in **TypeScript**, **Go**, and **Python**.
+
+<CodeGroup>
+
+```ts TypeScript
+import crypto from "crypto";
+
+const publicKey = `-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtVdummyPublicKeyHere
+-----END PUBLIC KEY-----`;
+
+export function verifySignature(payload: string, signature: string): boolean {
+  const verifier = crypto.createVerify("RSA-SHA256");
+  verifier.update(payload);
+  verifier.end();
+
+  return verifier.verify(publicKey, Buffer.from(signature, "base64"));
+}
+```
+
+```go Golang
+package main
+
+import (
+	"crypto"
+	"crypto/rsa"
+	"crypto/sha256"
+	"crypto/x509"
+	"encoding/base64"
+	"encoding/pem"
+)
+
+var publicKeyPEM = []byte(`-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtVdummyPublicKeyHere
+-----END PUBLIC KEY-----`)
+
+func verifySignature(payload []byte, signature string) bool {
+	block, _ := pem.Decode(publicKeyPEM)
+	if block == nil {
+		return false
+	}
+	pub, err := x509.ParsePKIXPublicKey(block.Bytes)
+	if err != nil {
+		return false
+	}
+	rsaPub := pub.(*rsa.PublicKey)
+
+	hashed := sha256.Sum256(payload)
+	sigBytes, _ := base64.StdEncoding.DecodeString(signature)
+
+	err = rsa.VerifyPKCS1v15(rsaPub, crypto.SHA256, hashed[:], sigBytes)
+	return err == nil
+}
+```
+
+```python Python
+import base64
+from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives.asymmetric import padding
+from cryptography.hazmat.primitives import serialization
+
+public_key_pem = b"""-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtVdummyPublicKeyHere
+-----END PUBLIC KEY-----"""
+
+public_key = serialization.load_pem_public_key(public_key_pem)
+
+def verify_signature(payload: str, signature: str) -> bool:
+    try:
+        public_key.verify(
+            base64.b64decode(signature),
+            payload.encode(),
+            padding.PKCS1v15(),
+            hashes.SHA256()
+        )
+        return True
+    except Exception:
+        return False
+```
+</CodeGroup>

@@ -123,7 +123,8 @@
     {
       "group": "Overview",
       "pages": [
-        "v4"
+        "v4",
+        "v4webhook"
       ],
       "version": "v4"
     },
