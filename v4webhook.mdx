@@ -21,10 +21,9 @@ const app = express();
 app.use(express.json());
 
 app.post("/webhook", (req, res) => {
-  const signature = req.headers["x-webhook-signature"] as string;
-  const payload = req.body;
+  const {signature, data, event} = req.body
 
-  console.log("Received event:", payload);
+  console.log("Received event:", data);
   res.sendStatus(200);
 });
 
@@ -47,9 +46,11 @@ func webhookHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	signature := r.Header.Get("X-Webhook-Signature")
+	signature := payload["signature"]
 	fmt.Println("Received signature:", signature)
-	fmt.Println("Received event:", payload)
+	fmt.Println("Received event:", payload["event"])
+	fmt.Println("Received data:", payload["data"])
+
 
 	w.WriteHeader(http.StatusOK)
 }
@@ -69,10 +70,10 @@ app = FastAPI()
 @app.post("/webhook")
 async def webhook(request: Request):
     payload = await request.json()
-    signature = request.headers.get("x-webhook-signature")
+    signature = payload.signature
 
     print("Received signature:", signature)
-    print("Received event:", payload)
+    print("Received event:", payload.event)
 
     return {"status": "ok"}
 ```
@@ -130,46 +131,105 @@ FRci61O4nfsgUtH5Oq1cngkCAwEAAQ==
 
 ```json Deposit
 {
-  "type": "deposit",
+  "event": "Deposit",
   "data": {
-    "id": "dep_12345",
-    "amount": "100.00",
-    "currency": "USD",
+    "amount": 5001,
+    "toUser": "chng",
+    "currency": "NGN",
+    "toAccount": "chng",
     "status": "completed",
-    "timestamp": "2025-09-01T12:34:56Z"
+    "sessionId": "3c58db9",
+    "transactionMemo": "Mock Deposit"
   },
-  "signature": "base64-encoded-signature"
+  "signature": "m9STu6pcsviYMfgu5JBjuR"
 }
 ```
 
 ```json Convert
 {
-  "type": "convert",
+  "event": "convert",
   "data": {
-    "id": "conv_67890",
-    "from_currency": "USD",
-    "to_currency": "EUR",
-    "rate": "0.92",
-    "amount": "50.00",
-    "timestamp": "2025-09-01T13:00:00Z"
+    "transactionReference": "a1fe4aa5679d7",
+    "fromUser": "chng",
+    "toAccount": "chng",
+    "fromAmount": 5,
+    "toAmount": 6000.05,
+    "fromCurrency": "USD",
+    "toCurrency": "NGN"
   },
-  "signature": "base64-encoded-signature"
+  "signature": "gTZdvoadZscP3g=="
 }
 ```
 
 ```json Transfer
 {
-  "type": "transfer",
+  "event": "Transfer",
   "data": {
-    "id": "trf_54321",
-    "from_account": "acct_001",
-    "to_account": "acct_002",
-    "amount": "200.00",
+    "transactionReference": "a16db1274783",
+    "amount": 1,
+    "fromUser": "chngr",
+    "toUser": "chngr",
     "currency": "USD",
-    "status": "pending",
-    "timestamp": "2025-09-01T14:15:00Z"
+    "fromAccount": "chngr",
+    "toAccount": "rhmn",
+    "status": "completed"
   },
-  "signature": "base64-encoded-signature"
+  "signature": "C73lZKC80Cg=="
+}
+```
+
+```json Onramp
+{
+  "event": "On Ramp",
+  "data": {
+    "transactionReference": "a1e681b09cc7ccea",
+    "toUser": "chngr",
+    "toAccount": "chngr",
+    "status": "completed",
+    "sessionId": "52567c9fb6864a8c94549675c70cc9a8",
+    "fromAmount": 149775,
+    "toAmount": 109.99175768162324,
+    "fromCurrency": "NGN",
+    "toCurrency": "USDT",
+    "transactionMemo": "Mock Deposit"
+  },
+  "signature": "Wh+Jqnxc2Iw=="
+}
+```
+
+```json Withdrawal
+{
+  "event": "Withdrawal",
+  "data": {
+    "transactionReference": "a1e687ccea",
+    "amount": 109.9917,
+    "fromUser": "chang",
+    "currency": "USDT",
+    "network": "tron",
+    "fromAccount": "chang",
+    "toAddress": "TSqRgHDE1Nypqo1LUp6Q",
+    "status": "processing",
+    "transactionHash": "3fa07c748260f469896bf"
+  },
+  "signature": "dC8YIklLc08uiGxA=="
+}
+```
+
+```json Offramp
+{
+  "event": "Off Ramp",
+  "data": {
+    "transactionReference": "691af31ba66789",
+    "toUser": "chng",
+    "toAccount": "chng",
+    "status": "completed",
+    "transactionHash": "99d7c7b5f8f3447d0cc20279f8bab2f827558c5b76",
+    "fromAmount": 84.2,
+    "toAmount": 99879.3927,
+    "fromCurrency": "USDT",
+    "toCurrency": "NGN"
+  },
+  "signature": "faUgOe8SYUfBlvRWsDxg=="
 }
 ```
 </CodeGroup>
@@ -185,17 +245,29 @@ Below is a verification **handler pattern** in **TypeScript**, **Go**, and **Pyt
 ```ts TypeScript
 import crypto from "crypto";
 
-const publicKey = `-----BEGIN PUBLIC KEY-----
-MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtVdummyPublicKeyHere
------END PUBLIC KEY-----`;
+const pubKey =`-----BEGIN RSA PUBLIC KEY-----
+MIIBCgKCAQEAs7aTdI7X7yAE+9
+-----END RSA PUBLIC KEY-----`
 
-export function verifySignature(payload: string, signature: string): boolean {
-  const verifier = crypto.createVerify("RSA-SHA256");
-  verifier.update(payload);
+function verifySignature(pubkeyPem: string, data: string, signature: string): boolean {
+  const verifier = crypto.createVerify("sha256");
+  verifier.update(Buffer.from(data, "utf8"));
   verifier.end();
 
-  return verifier.verify(publicKey, Buffer.from(signature, "base64"));
+  return crypto.verify(
+      "sha256",
+      Buffer.from(data, "utf8"),
+      {
+        key: pubkeyPem,
+        padding: crypto.constants.RSA_PKCS1_PSS_PADDING,
+      },
+      Buffer.from(signature, "base64")
+    );
 }
+const jsonData = JSON.stringify({...data})
+const signature = "Sd5gurUiHNhHfPjMUT2V958xxL"
+const isValid = verifySignature(pubKey, jsonData, signature)
+
 ```
 
 ```go Golang
@@ -210,51 +282,65 @@ import (
 	"encoding/pem"
 )
 
-var publicKeyPEM = []byte(`-----BEGIN PUBLIC KEY-----
-MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtVdummyPublicKeyHere
------END PUBLIC KEY-----`)
+var pubKey :=`-----BEGIN RSA PUBLIC KEY-----
+MIIBCgKCAQEAs7a
+-----END RSA PUBLIC KEY-----`
 
-func verifySignature(payload []byte, signature string) bool {
-	block, _ := pem.Decode(publicKeyPEM)
-	if block == nil {
-		return false
-	}
-	pub, err := x509.ParsePKIXPublicKey(block.Bytes)
+func VerifyData(pubkey, data []byte, signature string) bool {
+	sig, err := base64.StdEncoding.DecodeString(signature)
 	if err != nil {
+		fmt.Println(err)
 		return false
 	}
-	rsaPub := pub.(*rsa.PublicKey)
+	_pubKey := exportPEMStrToPubKey(pubkey)
+	msgHash := sha256.New()
+	msgHash.Write(data)
+	msgHashSum := msgHash.Sum(nil)
 
-	hashed := sha256.Sum256(payload)
-	sigBytes, _ := base64.StdEncoding.DecodeString(signature)
+	err = rsa.VerifyPSS(_pubKey, crypto.SHA256, msgHashSum, sig, nil)
 
-	err = rsa.VerifyPKCS1v15(rsaPub, crypto.SHA256, hashed[:], sigBytes)
 	return err == nil
 }
+signature:= "Sd5gurUiHNhHfPj"
+jsonData := []byte(`{}`)
+
+isValid := VerifyData([]byte(pubKey), jsonData, signature)
 ```
 
 ```python Python
 import base64
+import json
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import padding
 from cryptography.hazmat.primitives import serialization
 
-public_key_pem = b"""-----BEGIN PUBLIC KEY-----
+public_key_pem = b"""-----BEGIN RSA PUBLIC KEY-----
 MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtVdummyPublicKeyHere
------END PUBLIC KEY-----"""
+-----END RSA PUBLIC KEY-----"""
 
 public_key = serialization.load_pem_public_key(public_key_pem)
 
-def verify_signature(payload: str, signature: str) -> bool:
+def verify(payload: bytes, signature: str, public_key_str: str) -> bool:
+    public_key = serialization.load_pem_public_key(public_key_str)
+
+    decoded_signature = base64.b64decode(signature)
+
     try:
         public_key.verify(
-            base64.b64decode(signature),
-            payload.encode(),
-            padding.PKCS1v15(),
+            decoded_signature,
+            payload,
+            padding.PSS(
+                mgf=padding.MGF1(hashes.SHA256()),
+                salt_length=padding.PSS.MAX_LENGTH
+            ),
             hashes.SHA256()
         )
-        return True
-    except Exception:
-        return False
+        return True 
+    except Exception as e:
+        return False  
+
+payload = json.dump(data, separators=(',', ':'))
+signature = b"Sd5gurUiH"
+is_valid = verify(payload.encode(), signature, public_key)
 ```
 </CodeGroup>
