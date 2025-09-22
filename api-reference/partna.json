@@ -349,13 +349,9 @@
 							"application/json": {
 								"schema": {
 									"example": {
-										"data": null,
 										"message": "invalid apikey"
 									},
 									"properties": {
-										"data": {
-											"type": "string"
-										},
 										"message": {
 											"type": "string"
 										}
@@ -371,13 +367,9 @@
 							"application/json": {
 								"schema": {
 									"example": {
-										"data": null,
 										"message": "account not found"
 									},
 									"properties": {
-										"data": {
-											"type": "string"
-										},
 										"message": {
 											"type": "string"
 										}
@@ -732,13 +724,9 @@
 							"application/json": {
 								"schema": {
 									"example": {
-										"data": null,
 										"message": "get only api key cannot access POST /account"
 									},
 									"properties": {
-										"data": {
-											"type": "string"
-										},
 										"message": {
 											"type": "string"
 										}
@@ -754,13 +742,9 @@
 							"application/json": {
 								"schema": {
 									"example": {
-										"data": null,
 										"message": "account already exists"
 									},
 									"properties": {
-										"data": {
-											"type": "string"
-										},
 										"message": {
 											"type": "string"
 										}
@@ -883,13 +867,9 @@
 							"application/json": {
 								"schema": {
 									"example": {
-										"data": null,
 										"message": "user has not completed kyc"
 									},
 									"properties": {
-										"data": {
-											"type": "string"
-										},
 										"message": {
 											"type": "string"
 										}
@@ -1111,6 +1091,356 @@
 				]
 			}
 		},
+		"/account/complete-registration": {
+			"post": {
+				"description": "Complete a pending account registration request. This is used when merchant registration type is set to open",
+				"operationId": "post-account-complete-registration",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"example": {
+									"email": "",
+									"merchantName": "",
+									"otp": ""
+								},
+								"properties": {
+									"email": {
+										"type": "string"
+									},
+									"merchantName": {
+										"type": "string"
+									},
+									"otp": {
+										"type": "string"
+									}
+								},
+								"type": "object"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"201": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"data": {
+											"BNB": {
+												"accountName": "rahmanx",
+												"asset": [
+													{
+														"id": "0x3Fa6207c9D56cc8E13eDb9Fae012dAd2E40e376F",
+														"meta": null,
+														"type": "crypto"
+													}
+												],
+												"balance": 0,
+												"pendingDebit": 0
+											},
+											"BTC": {
+												"accountName": "rahmanx",
+												"asset": [
+													{
+														"id": "tb1qgtklrn6s9tvfe4vew96hsnz2cclgaeamzah08y",
+														"meta": null,
+														"type": "crypto"
+													}
+												],
+												"balance": 0,
+												"pendingDebit": 0
+											},
+											"ETH": {
+												"accountName": "rahmanx",
+												"asset": [
+													{
+														"id": "0x3Fa6207c9D56cc8E13eDb9Fae012dAd2E40e376F",
+														"meta": null,
+														"type": "crypto"
+													}
+												],
+												"balance": 0,
+												"pendingDebit": 0
+											},
+											"GHS": {
+												"accountName": "rahmanx",
+												"asset": [
+													{
+														"id": "",
+														"meta": null,
+														"type": "ghanaiancedis"
+													}
+												],
+												"balance": 0,
+												"pendingDebit": 0
+											},
+											"NGN": {
+												"accountName": "rahmanx",
+												"asset": [
+													{
+														"id": "",
+														"meta": null,
+														"type": "naira"
+													}
+												],
+												"balance": 0,
+												"pendingDebit": 0
+											},
+											"USD": {
+												"accountName": "rahmanx",
+												"asset": [
+													{
+														"id": "0x3Fa6207c9D56cc8E13eDb9Fae012dAd2E40e376F",
+														"meta": null,
+														"type": "crypto"
+													},
+													{
+														"id": "TFmkaqtkcsEgwm2SpBXVcgjwQRsitrRAbE",
+														"meta": null,
+														"type": "crypto"
+													},
+													{
+														"id": "3Jxh1nESSfiBNyCTZi5yrrX3mEPmGavpTaGmHQoY1v8g",
+														"meta": null,
+														"type": "crypto"
+													}
+												],
+												"balance": 0,
+												"pendingDebit": 0
+											}
+										},
+										"message": "success"
+									},
+									"properties": {
+										"data": {
+											"properties": {
+												"BNB": {
+													"properties": {
+														"accountName": {
+															"type": "string"
+														},
+														"asset": {
+															"items": {
+																"properties": {
+																	"id": {
+																		"type": "string"
+																	},
+																	"meta": {
+																		"type": "string"
+																	},
+																	"type": {
+																		"type": "string"
+																	}
+																},
+																"type": "object"
+															},
+															"type": "array"
+														},
+														"balance": {
+															"type": "number"
+														},
+														"pendingDebit": {
+															"type": "number"
+														}
+													},
+													"type": "object"
+												},
+												"BTC": {
+													"properties": {
+														"accountName": {
+															"type": "string"
+														},
+														"asset": {
+															"items": {
+																"properties": {
+																	"id": {
+																		"type": "string"
+																	},
+																	"meta": {
+																		"type": "string"
+																	},
+																	"type": {
+																		"type": "string"
+																	}
+																},
+																"type": "object"
+															},
+															"type": "array"
+														},
+														"balance": {
+															"type": "number"
+														},
+														"pendingDebit": {
+															"type": "number"
+														}
+													},
+													"type": "object"
+												},
+												"ETH": {
+													"properties": {
+														"accountName": {
+															"type": "string"
+														},
+														"asset": {
+															"items": {
+																"properties": {
+																	"id": {
+																		"type": "string"
+																	},
+																	"meta": {
+																		"type": "string"
+																	},
+																	"type": {
+																		"type": "string"
+																	}
+																},
+																"type": "object"
+															},
+															"type": "array"
+														},
+														"balance": {
+															"type": "number"
+														},
+														"pendingDebit": {
+															"type": "number"
+														}
+													},
+													"type": "object"
+												},
+												"GHS": {
+													"properties": {
+														"accountName": {
+															"type": "string"
+														},
+														"asset": {
+															"items": {
+																"properties": {
+																	"id": {
+																		"type": "string"
+																	},
+																	"meta": {
+																		"type": "string"
+																	},
+																	"type": {
+																		"type": "string"
+																	}
+																},
+																"type": "object"
+															},
+															"type": "array"
+														},
+														"balance": {
+															"type": "number"
+														},
+														"pendingDebit": {
+															"type": "number"
+														}
+													},
+													"type": "object"
+												},
+												"NGN": {
+													"properties": {
+														"accountName": {
+															"type": "string"
+														},
+														"asset": {
+															"items": {
+																"properties": {
+																	"id": {
+																		"type": "string"
+																	},
+																	"meta": {
+																		"type": "string"
+																	},
+																	"type": {
+																		"type": "string"
+																	}
+																},
+																"type": "object"
+															},
+															"type": "array"
+														},
+														"balance": {
+															"type": "number"
+														},
+														"pendingDebit": {
+															"type": "number"
+														}
+													},
+													"type": "object"
+												},
+												"USD": {
+													"properties": {
+														"accountName": {
+															"type": "string"
+														},
+														"asset": {
+															"items": {
+																"properties": {
+																	"id": {
+																		"type": "string"
+																	},
+																	"meta": {
+																		"type": "string"
+																	},
+																	"type": {
+																		"type": "string"
+																	}
+																},
+																"type": "object"
+															},
+															"type": "array"
+														},
+														"balance": {
+															"type": "number"
+														},
+														"pendingDebit": {
+															"type": "number"
+														}
+													},
+													"type": "object"
+												}
+											},
+											"type": "object"
+										},
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "post account complete registration created"
+					},
+					"500": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"message": "cannot create account"
+									},
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "post account complete registration internal server error"
+					}
+				},
+				"security": [],
+				"summary": "Complete Account Registration",
+				"tags": [
+					"Account"
+				]
+			}
+		},
 		"/account/email": {
 			"put": {
 				"description": "Update account email.",
@@ -1143,13 +1473,9 @@
 							"application/json": {
 								"schema": {
 									"example": {
-										"data": null,
 										"message": "success"
 									},
 									"properties": {
-										"data": {
-											"type": "string"
-										},
 										"message": {
 											"type": "string"
 										}
@@ -1165,13 +1491,9 @@
 							"application/json": {
 								"schema": {
 									"example": {
-										"data": null,
 										"message": "account not found"
 									},
 									"properties": {
-										"data": {
-											"type": "string"
-										},
 										"message": {
 											"type": "string"
 										}
@@ -1371,6 +1693,64 @@
 					}
 				],
 				"summary": "Get Account Profile",
+				"tags": [
+					"Account"
+				]
+			}
+		},
+		"/account/register": {
+			"post": {
+				"description": "Create a pending account registration request. This is used when merchant registration type is set to open",
+				"operationId": "post-account-register",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"example": {
+									"accountName": "",
+									"email": "",
+									"merchantName": ""
+								},
+								"properties": {
+									"accountName": {
+										"description": "accountName should be alphanumeric, lowercase and between 2 to 40 characters long",
+										"type": "string"
+									},
+									"email": {
+										"type": "string"
+									},
+									"merchantName": {
+										"type": "string"
+									}
+								},
+								"type": "object"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"201": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"message": "success"
+									},
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "post account register created"
+					}
+				},
+				"security": [],
+				"summary": "Register Account",
 				"tags": [
 					"Account"
 				]
@@ -1610,13 +1990,9 @@
 							"application/json": {
 								"schema": {
 									"example": {
-										"data": null,
 										"message": "insufficient funds"
 									},
 									"properties": {
-										"data": {
-											"type": "string"
-										},
 										"message": {
 											"type": "string"
 										}
@@ -1640,6 +2016,89 @@
 				"summary": "Convert Currency",
 				"tags": [
 					"Transfer"
+				]
+			}
+		},
+		"/convert/preorder": {
+			"post": {
+				"description": "When a user needs to create a rate key to carry out an order such as conversion, this endpoint can be used for such",
+				"operationId": "post-convert-preorder",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"example": {
+									"accountName": "",
+									"fromAmount": 0,
+									"rateKey": "",
+									"transactionReference": ""
+								},
+								"properties": {
+									"accountName": {
+										"type": "string"
+									},
+									"fromAmount": {
+										"type": "number"
+									},
+									"rateKey": {
+										"type": "string"
+									},
+									"transactionReference": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"rateKey"
+								],
+								"type": "object"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"data": {
+											"transactionReference": "a4e864ca2cd8e48598586e15d63311d7"
+										},
+										"message": "success"
+									},
+									"properties": {
+										"data": {
+											"properties": {
+												"transactionReference": {
+													"type": "string"
+												}
+											},
+											"type": "object"
+										},
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "post convert preorder ok"
+					}
+				},
+				"security": [
+					{
+						"x-api-key": [],
+						"x-api-user": []
+					},
+					{
+						"authorization": []
+					}
+				],
+				"summary": "Used by a user to create a ratekey order",
+				"tags": [
+					"Rate"
 				]
 			}
 		},
@@ -1987,13 +2446,9 @@
 							"application/json": {
 								"schema": {
 									"example": {
-										"data": null,
 										"message": "KYC verification successful!"
 									},
 									"properties": {
-										"data": {
-											"type": "string"
-										},
 										"message": {
 											"type": "string"
 										}
@@ -2140,13 +2595,9 @@
 							"application/json": {
 								"schema": {
 									"example": {
-										"data": null,
 										"message": "OTP sent successfully"
 									},
 									"properties": {
-										"data": {
-											"type": "string"
-										},
 										"message": {
 											"type": "string"
 										}
@@ -2440,13 +2891,9 @@
 							"application/json": {
 								"schema": {
 									"example": {
-										"data": null,
 										"message": "unable to access this resource"
 									},
 									"properties": {
-										"data": {
-											"type": "string"
-										},
 										"message": {
 											"type": "string"
 										}
@@ -2462,13 +2909,9 @@
 							"application/json": {
 								"schema": {
 									"example": {
-										"data": null,
 										"message": "account not found"
 									},
 									"properties": {
-										"data": {
-											"type": "string"
-										},
 										"message": {
 											"type": "string"
 										}
@@ -2522,13 +2965,9 @@
 							"application/json": {
 								"schema": {
 									"example": {
-										"data": null,
 										"message": "success"
 									},
 									"properties": {
-										"data": {
-											"type": "string"
-										},
 										"message": {
 											"type": "string"
 										}
@@ -2591,13 +3030,9 @@
 							"application/json": {
 								"schema": {
 									"example": {
-										"data": null,
 										"message": "success"
 									},
 									"properties": {
-										"data": {
-											"type": "string"
-										},
 										"message": {
 											"type": "string"
 										}
@@ -2898,13 +3333,9 @@
 							"application/json": {
 								"schema": {
 									"example": {
-										"data": null,
 										"message": "unauthorised self trigger"
 									},
 									"properties": {
-										"data": {
-											"type": "string"
-										},
 										"message": {
 											"type": "string"
 										}
@@ -2920,13 +3351,9 @@
 							"application/json": {
 								"schema": {
 									"example": {
-										"data": null,
 										"message": "cannot get user's account count"
 									},
 									"properties": {
-										"data": {
-											"type": "string"
-										},
 										"message": {
 											"type": "string"
 										}
@@ -2989,13 +3416,9 @@
 							"application/json": {
 								"schema": {
 									"example": {
-										"data": null,
 										"message": "unauthorised self trigger"
 									},
 									"properties": {
-										"data": {
-											"type": "string"
-										},
 										"message": {
 											"type": "string"
 										}
@@ -3208,13 +3631,9 @@
 							"application/json": {
 								"schema": {
 									"example": {
-										"data": null,
 										"message": "accountName is required"
 									},
 									"properties": {
-										"data": {
-											"type": "string"
-										},
 										"message": {
 											"type": "string"
 										}
@@ -3482,13 +3901,9 @@
 							"application/json": {
 								"schema": {
 									"example": {
-										"data": null,
 										"message": "ramp reference already exists"
 									},
 									"properties": {
-										"data": {
-											"type": "string"
-										},
 										"message": {
 											"type": "string"
 										}
@@ -3688,13 +4103,9 @@
 							"application/json": {
 								"schema": {
 									"example": {
-										"data": null,
 										"message": "Rates not available, please try again later"
 									},
 									"properties": {
-										"data": {
-											"type": "string"
-										},
 										"message": {
 											"type": "string"
 										}
@@ -3775,13 +4186,9 @@
 							"application/json": {
 								"schema": {
 									"example": {
-										"data": null,
 										"message": "invalid key"
 									},
 									"properties": {
-										"data": {
-											"type": "string"
-										},
 										"message": {
 											"type": "string"
 										}
@@ -5460,13 +5867,9 @@
 							"application/json": {
 								"schema": {
 									"example": {
-										"data": null,
 										"message": "insufficient funds"
 									},
 									"properties": {
-										"data": {
-											"type": "string"
-										},
 										"message": {
 											"type": "string"
 										}
@@ -5482,13 +5885,9 @@
 							"application/json": {
 								"schema": {
 									"example": {
-										"data": null,
 										"message": "toAccount not found"
 									},
 									"properties": {
-										"data": {
-											"type": "string"
-										},
 										"message": {
 											"type": "string"
 										}
@@ -5504,13 +5903,9 @@
 							"application/json": {
 								"schema": {
 									"example": {
-										"data": null,
 										"message": "transactionReference already exist"
 									},
 									"properties": {
-										"data": {
-											"type": "string"
-										},
 										"message": {
 											"type": "string"
 										}
@@ -5845,13 +6240,9 @@
 							"application/json": {
 								"schema": {
 									"example": {
-										"data": null,
 										"message": "request completed"
 									},
 									"properties": {
-										"data": {
-											"type": "string"
-										},
 										"message": {
 											"type": "string"
 										}
@@ -5867,13 +6258,9 @@
 							"application/json": {
 								"schema": {
 									"example": {
-										"data": null,
 										"message": "wrong network address"
 									},
 									"properties": {
-										"data": {
-											"type": "string"
-										},
 										"message": {
 											"type": "string"
 										}
@@ -5889,13 +6276,9 @@
 							"application/json": {
 								"schema": {
 									"example": {
-										"data": null,
 										"message": "no withdrawal api key cannot access POST /transfer/withdraw"
 									},
 									"properties": {
-										"data": {
-											"type": "string"
-										},
 										"message": {
 											"type": "string"
 										}
@@ -5911,13 +6294,9 @@
 							"application/json": {
 								"schema": {
 									"example": {
-										"data": null,
 										"message": "transactionReference already exist"
 									},
 									"properties": {
-										"data": {
-											"type": "string"
-										},
 										"message": {
 											"type": "string"
 										}
@@ -6055,13 +6434,9 @@
 							"application/json": {
 								"schema": {
 									"example": {
-										"data": null,
 										"message": "success"
 									},
 									"properties": {
-										"data": {
-											"type": "string"
-										},
 										"message": {
 											"type": "string"
 										}
@@ -6077,13 +6452,9 @@
 							"application/json": {
 								"schema": {
 									"example": {
-										"data": null,
 										"message": "username or email already exists"
 									},
 									"properties": {
-										"data": {
-											"type": "string"
-										},
 										"message": {
 											"type": "string"
 										}
@@ -6099,13 +6470,9 @@
 							"application/json": {
 								"schema": {
 									"example": {
-										"data": null,
 										"message": "unauthorised self registration"
 									},
 									"properties": {
-										"data": {
-											"type": "string"
-										},
 										"message": {
 											"type": "string"
 										}
@@ -6463,13 +6830,9 @@
 							"application/json": {
 								"schema": {
 									"example": {
-										"data": null,
 										"message": "invalid API scope"
 									},
 									"properties": {
-										"data": {
-											"type": "string"
-										},
 										"message": {
 											"type": "string"
 										}
@@ -6652,12 +7015,56 @@
 									"example": {
 										"data": {
 											"customer": {
-												"availableBalance": 0,
-												"pendingDebit": 0
+												"BNB": {
+													"availableBalance": 0,
+													"pendingDebit": 0
+												},
+												"BTC": {
+													"availableBalance": 0,
+													"pendingDebit": 0
+												},
+												"ETH": {
+													"availableBalance": 19.994,
+													"pendingDebit": 0
+												},
+												"GHS": {
+													"availableBalance": 0,
+													"pendingDebit": 0
+												},
+												"NGN": {
+													"availableBalance": 0,
+													"pendingDebit": 0
+												},
+												"USD": {
+													"availableBalance": 34,
+													"pendingDebit": 0
+												}
 											},
 											"merchant": {
-												"availableBalance": 0,
-												"pendingDebit": 0
+												"BNB": {
+													"availableBalance": 0,
+													"pendingDebit": 0
+												},
+												"BTC": {
+													"availableBalance": 0,
+													"pendingDebit": 0
+												},
+												"ETH": {
+													"availableBalance": 10,
+													"pendingDebit": 0
+												},
+												"GHS": {
+													"availableBalance": 0,
+													"pendingDebit": 0
+												},
+												"NGN": {
+													"availableBalance": 0,
+													"pendingDebit": 0
+												},
+												"USD": {
+													"availableBalance": 10,
+													"pendingDebit": 0
+												}
 											}
 										},
 										"message": "success"
@@ -6667,22 +7074,142 @@
 											"properties": {
 												"customer": {
 													"properties": {
-														"availableBalance": {
-															"type": "number"
+														"BNB": {
+															"properties": {
+																"availableBalance": {
+																	"type": "number"
+																},
+																"pendingDebit": {
+																	"type": "number"
+																}
+															},
+															"type": "object"
 														},
-														"pendingDebit": {
-															"type": "number"
+														"BTC": {
+															"properties": {
+																"availableBalance": {
+																	"type": "number"
+																},
+																"pendingDebit": {
+																	"type": "number"
+																}
+															},
+															"type": "object"
+														},
+														"ETH": {
+															"properties": {
+																"availableBalance": {
+																	"type": "number"
+																},
+																"pendingDebit": {
+																	"type": "number"
+																}
+															},
+															"type": "object"
+														},
+														"GHS": {
+															"properties": {
+																"availableBalance": {
+																	"type": "number"
+																},
+																"pendingDebit": {
+																	"type": "number"
+																}
+															},
+															"type": "object"
+														},
+														"NGN": {
+															"properties": {
+																"availableBalance": {
+																	"type": "number"
+																},
+																"pendingDebit": {
+																	"type": "number"
+																}
+															},
+															"type": "object"
+														},
+														"USD": {
+															"properties": {
+																"availableBalance": {
+																	"type": "number"
+																},
+																"pendingDebit": {
+																	"type": "number"
+																}
+															},
+															"type": "object"
 														}
 													},
 													"type": "object"
 												},
 												"merchant": {
 													"properties": {
-														"availableBalance": {
-															"type": "number"
+														"BNB": {
+															"properties": {
+																"availableBalance": {
+																	"type": "number"
+																},
+																"pendingDebit": {
+																	"type": "number"
+																}
+															},
+															"type": "object"
 														},
-														"pendingDebit": {
-															"type": "number"
+														"BTC": {
+															"properties": {
+																"availableBalance": {
+																	"type": "number"
+																},
+																"pendingDebit": {
+																	"type": "number"
+																}
+															},
+															"type": "object"
+														},
+														"ETH": {
+															"properties": {
+																"availableBalance": {
+																	"type": "number"
+																},
+																"pendingDebit": {
+																	"type": "number"
+																}
+															},
+															"type": "object"
+														},
+														"GHS": {
+															"properties": {
+																"availableBalance": {
+																	"type": "number"
+																},
+																"pendingDebit": {
+																	"type": "number"
+																}
+															},
+															"type": "object"
+														},
+														"NGN": {
+															"properties": {
+																"availableBalance": {
+																	"type": "number"
+																},
+																"pendingDebit": {
+																	"type": "number"
+																}
+															},
+															"type": "object"
+														},
+														"USD": {
+															"properties": {
+																"availableBalance": {
+																	"type": "number"
+																},
+																"pendingDebit": {
+																	"type": "number"
+																}
+															},
+															"type": "object"
 														}
 													},
 													"type": "object"
@@ -6747,12 +7274,18 @@
 							"application/json": {
 								"schema": {
 									"example": {
-										"data": {},
+										"data": {
+											"apikey": "1--G--598708855fb7494586c3c6b28d6409a1--1789653243057--20d5db17"
+										},
 										"message": "success"
 									},
 									"properties": {
 										"data": {
-											"properties": {},
+											"properties": {
+												"apikey": {
+													"type": "string"
+												}
+											},
 											"type": "object"
 										},
 										"message": {
@@ -7007,13 +7540,9 @@
 							"application/json": {
 								"schema": {
 									"example": {
-										"data": null,
 										"message": "success"
 									},
 									"properties": {
-										"data": {
-											"type": "string"
-										},
 										"message": {
 											"type": "string"
 										}

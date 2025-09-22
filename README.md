@@ -33,5 +33,5 @@ Install our Github App to autopropagate changes from youre repo to your deployme
 
 
 ```
-npx @mintlify/scraping@latest openapi-file <path-to-openapi-file> -o api-reference
+npx @mintlify/scraping@latest openapi-file ./api-reference/partna.json  -o ./api-reference/endpoint/v3
 ```
