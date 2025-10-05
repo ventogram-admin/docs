@@ -1,0 +1,334 @@
+---
+title: "Webhooks"
+description: "Learn how to receive and verify webhook events for Deposit, Convert, and Transfer."
+---
+# Introduction
+
+Webhooks allow your application to be notified in real time when events occur.
+This guide shows how to receive and verify **Deposit**, **Convert**, and **Transfer** webhook events.
+
+
+# Receiving an Event
+
+You need to expose an endpoint in your server to receive webhook events.
+Below are examples in **TypeScript**, **Go**, and **Python**.
+<CodeGroup>
+
+```ts TypeScript
+import express from "express";
+
+const app = express();
+app.use(express.json());
+
+app.post("/webhook", (req, res) => {
+  const {signature, data, event} = req.body
+
+  console.log("Received event:", data);
+  res.sendStatus(200);
+});
+
+app.listen(3000, () => console.log("Webhook server running on port 3000"));
+```
+
+```go Golang
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"net/http"
+)
+
+func webhookHandler(w http.ResponseWriter, r *http.Request) {
+	var payload map[string]interface{}
+	if err := json.NewDecoder(r.Body).Decode(&payload); err != nil {
+		http.Error(w, "invalid payload", http.StatusBadRequest)
+		return
+	}
+
+	signature := payload["signature"]
+	fmt.Println("Received signature:", signature)
+	fmt.Println("Received event:", payload["event"])
+	fmt.Println("Received data:", payload["data"])
+
+
+	w.WriteHeader(http.StatusOK)
+}
+
+func main() {
+	http.HandleFunc("/webhook", webhookHandler)
+	fmt.Println("Server running on :3000")
+	http.ListenAndServe(":3000", nil)
+}
+```
+
+```python Python
+from fastapi import FastAPI, Request
+
+app = FastAPI()
+
+@app.post("/webhook")
+async def webhook(request: Request):
+    payload = await request.json()
+    signature = payload.signature
+
+    print("Received signature:", signature)
+    print("Received event:", payload.event)
+
+    return {"status": "ok"}
+```
+</CodeGroup>
+
+# Public Keys
+
+<AccordionGroup>
+  <Accordion title="Staging">
+
+```
+-----BEGIN RSA PUBLIC KEY-----
+MIIBCgKCAQEAv2ipgHLFFHgGHr9VpsPN8V1HIbCrlmTZRU/CYSDaoVX+xerJOMGX
+qmwgQMQH5T81VaMw4rtIA8tT4DkJgjb+7G0x4CGK1OPdlvhEGP2mOFy02onkEnMv
+uN3glVc4YKLvWDTG0KT7q9mARBIkO2Nrwy6IVHAl9pMXMJTRS22c0cIbuRmkYsGZ
+trylUv50knbRSgy5EA6523+j3PPJB4TgsigGSJxJGuksaxnDQGRE558xnyw/0gJm
+mAIdbxboQTGMqod/My/kAssRkUNu1QtqrsdhZmGYHS+pIPJSaxqHEy8eiTahoqqq
+8KgNUfQfwduG+Kc4f/t5JHetSt1dgulmswIDAQAB
+-----END RSA PUBLIC KEY-----
+
+````
+
+
+  </Accordion>
+  <Accordion title="Production">
+
+```
+-----BEGIN RSA PUBLIC KEY-----
+MIIBCgKCAQEAoGmOqVUxIGq92P8J5KqwJbwucsNeUwfS76saj0UPgT1IsK/mvceR
+Ges7dsgE4EVx7Wsd5PPNeAfaNt8d0plBLhHRW64WFyv6jYcYp8eVdHUxWLA6p5gZ
+9rGrZiwqKqunppTPlV04gdDC32rAbpAR3IMYmMJLuPy63Oumszl4qk69A1o60Son
+r0KYBaRK7aQsFT9IFexicDUhrF1SohaNH/msTdvJb0SwSGiV92EhmmC2R8CL83/B
+S8QC5c9PWtZ4a26CRLHe0IfaGGz8ClhlO8IFxz0cNrpoRa4JRsffezQ+RMQqCxhc
+igC7wHfqZr5BtziQOYJjUknVzsd81HEYlwIDAQAB
+-----END RSA PUBLIC KEY-----
+
+````
+  </Accordion>
+</AccordionGroup>
+
+# Supported Events
+<CodeGroup>
+
+```json Deposit
+{
+  "event": "Deposit",
+  "data": {
+    "amount": 5001,
+    "toUser": "chng",
+    "currency": "NGN",
+    "toAccount": "chng",
+    "status": "completed",
+    "sessionId": "3c58db9",
+    "transactionMemo": "Mock Deposit"
+  },
+  "signature": "m9STu6pcsviYMfgu5JBjuR"
+}
+```
+
+```json Convert
+{
+  "event": "convert",
+  "data": {
+    "transactionReference": "a1fe4aa5679d7",
+    "fromUser": "chng",
+    "toAccount": "chng",
+    "fromAmount": 5,
+    "toAmount": 6000.05,
+    "fromCurrency": "USD",
+    "toCurrency": "NGN"
+  },
+  "signature": "gTZdvoadZscP3g=="
+}
+```
+
+```json Transfer
+{
+  "event": "Transfer",
+  "data": {
+    "transactionReference": "a16db1274783",
+    "amount": 1,
+    "fromUser": "chngr",
+    "toUser": "chngr",
+    "currency": "USD",
+    "fromAccount": "chngr",
+    "toAccount": "rhmn",
+    "status": "completed"
+  },
+  "signature": "C73lZKC80Cg=="
+}
+```
+
+```json Onramp
+{
+  "event": "Onramp",
+  "data": {
+    "transactionReference": "a1e681b09cc7ccea",
+    "toUser": "chngr",
+    "toAccount": "chngr",
+    "status": "completed",
+    "sessionId": "52567c9fb6864a8c94549675c70cc9a8",
+    "fromAmount": 149775,
+    "toAmount": 109.99175768162324,
+    "fromCurrency": "NGN",
+    "toCurrency": "USDT",
+    "transactionMemo": "Mock Deposit"
+  },
+  "signature": "Wh+Jqnxc2Iw=="
+}
+```
+
+```json Withdrawal
+{
+  "event": "Withdrawal",
+  "data": {
+    "transactionReference": "a1e687ccea",
+    "amount": 109.9917,
+    "fromUser": "chang",
+    "currency": "USDT",
+    "network": "tron",
+    "fromAccount": "chang",
+    "toAddress": "TSqRgHDE1Nypqo1LUp6Q",
+    "status": "processing",
+    "transactionHash": "3fa07c748260f469896bf"
+  },
+  "signature": "dC8YIklLc08uiGxA=="
+}
+```
+
+```json Offramp
+{
+  "event": "Offramp",
+  "data": {
+    "transactionReference": "691af31ba66789",
+    "toUser": "chng",
+    "toAccount": "chng",
+    "status": "completed",
+    "transactionHash": "99d7c7b5f8f3447d0cc20279f8bab2f827558c5b76",
+    "fromAmount": 84.2,
+    "toAmount": 99879.3927,
+    "fromCurrency": "USDT",
+    "toCurrency": "NGN"
+  },
+  "signature": "faUgOe8SYUfBlvRWsDxg=="
+}
+```
+</CodeGroup>
+
+
+# Verifying Event Source
+
+Each webhook includes a `signature` that you must verify using your configured public key.
+Below is a verification **handler pattern** in **TypeScript**, **Go**, and **Python**.
+
+<CodeGroup>
+
+```ts TypeScript
+import crypto from "crypto";
+
+const pubKey =`-----BEGIN RSA PUBLIC KEY-----
+MIIBCgKCAQEAs7aTdI7X7yAE+9
+-----END RSA PUBLIC KEY-----`
+
+function verifySignature(pubkeyPem: string, data: string, signature: string): boolean {
+  const verifier = crypto.createVerify("sha256");
+  verifier.update(Buffer.from(data, "utf8"));
+  verifier.end();
+
+  return crypto.verify(
+      "sha256",
+      Buffer.from(data, "utf8"),
+      {
+        key: pubkeyPem,
+        padding: crypto.constants.RSA_PKCS1_PSS_PADDING,
+      },
+      Buffer.from(signature, "base64")
+    );
+}
+const jsonData = JSON.stringify({...data})
+const signature = "Sd5gurUiHNhHfPjMUT2V958xxL"
+const isValid = verifySignature(pubKey, jsonData, signature)
+
+```
+
+```go Golang
+package main
+
+import (
+	"crypto"
+	"crypto/rsa"
+	"crypto/sha256"
+	"crypto/x509"
+	"encoding/base64"
+	"encoding/pem"
+)
+
+var pubKey :=`-----BEGIN RSA PUBLIC KEY-----
+MIIBCgKCAQEAs7a
+-----END RSA PUBLIC KEY-----`
+
+func VerifyData(pubkey, data []byte, signature string) bool {
+	sig, err := base64.StdEncoding.DecodeString(signature)
+	if err != nil {
+		fmt.Println(err)
+		return false
+	}
+	_pubKey := exportPEMStrToPubKey(pubkey)
+	msgHash := sha256.New()
+	msgHash.Write(data)
+	msgHashSum := msgHash.Sum(nil)
+
+	err = rsa.VerifyPSS(_pubKey, crypto.SHA256, msgHashSum, sig, nil)
+
+	return err == nil
+}
+signature:= "Sd5gurUiHNhHfPj"
+jsonData := []byte(`{}`)
+
+isValid := VerifyData([]byte(pubKey), jsonData, signature)
+```
+
+```python Python
+import base64
+import json
+from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives.asymmetric import padding
+from cryptography.hazmat.primitives import serialization
+
+public_key_pem = b"""-----BEGIN RSA PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtVdummyPublicKeyHere
+-----END RSA PUBLIC KEY-----"""
+
+public_key = serialization.load_pem_public_key(public_key_pem)
+
+def verify(payload: bytes, signature: str, public_key_str: str) -> bool:
+    public_key = serialization.load_pem_public_key(public_key_str)
+
+    decoded_signature = base64.b64decode(signature)
+
+    try:
+        public_key.verify(
+            decoded_signature,
+            payload,
+            padding.PSS(
+                mgf=padding.MGF1(hashes.SHA256()),
+                salt_length=padding.PSS.MAX_LENGTH
+            ),
+            hashes.SHA256()
+        )
+        return True 
+    except Exception as e:
+        return False  
+
+payload = json.dump(data, separators=(',', ':'))
+signature = b"Sd5gurUiH"
+is_valid = verify(payload.encode(), signature, public_key)
+```
+</CodeGroup>
