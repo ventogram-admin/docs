@@ -135,10 +135,10 @@
         "api-reference/endpoint/v3/account/create-bank-account",
         "api-reference/endpoint/v3/account/create-account",
         "api-reference/endpoint/v3/account/get-accounts-details",
+        "api-reference/endpoint/v3/account/complete-account-registration",
         "api-reference/endpoint/v3/account/update-account-email",
         "api-reference/endpoint/v3/account/get-account-permissions",
         "api-reference/endpoint/v3/account/get-account-profile",
-        "api-reference/endpoint/v3/account/complete-account-registration",
         "api-reference/endpoint/v3/account/register-account"
       ],
       "version": "v4"
@@ -159,6 +159,15 @@
         "api-reference/endpoint/v3/transfer/get-single-transaction",
         "api-reference/endpoint/v3/transfer/initiate-transfer",
         "api-reference/endpoint/v3/transfer/withdraw"
+      ],
+      "version": "v4"
+    },
+    {
+      "group": "Rate",
+      "pages": [
+        "api-reference/endpoint/v3/rate/create-a-custom-ratekey-for-conversion",
+        "api-reference/endpoint/v3/rate/get-rate",
+        "api-reference/endpoint/v3/rate/verify-rate-key"
       ],
       "version": "v4"
     },
@@ -214,15 +223,6 @@
       "pages": [
         "api-reference/endpoint/v3/ramp/get-ramp-requests",
         "api-reference/endpoint/v3/ramp/onramp-and-offramp"
-      ],
-      "version": "v4"
-    },
-    {
-      "group": "Rate",
-      "pages": [
-        "api-reference/endpoint/v3/rate/get-rate",
-        "api-reference/endpoint/v3/rate/verify-rate-key",
-        "api-reference/endpoint/v3/rate/used-by-a-user-to-create-a-ratekey-order"
       ],
       "version": "v4"
     },
