@@ -95,6 +95,18 @@
                             "balance": 0,
                             "pendingDebit": 0
                           },
+                          "KES": {
+                            "accountName": "user1",
+                            "asset": [
+                              {
+                                "id": "",
+                                "meta": null,
+                                "type": "kenyanshilling"
+                              }
+                            ],
+                            "balance": 0,
+                            "pendingDebit": 0
+                          },
                           "NGN": {
                             "accountName": "user1",
                             "asset": [
@@ -234,6 +246,37 @@
                                 "type": "object"
                               },
                               "GHS": {
+                                "properties": {
+                                  "accountName": {
+                                    "type": "string"
+                                  },
+                                  "asset": {
+                                    "items": {
+                                      "properties": {
+                                        "id": {
+                                          "type": "string"
+                                        },
+                                        "meta": {
+                                          "type": "string"
+                                        },
+                                        "type": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "type": "object"
+                                    },
+                                    "type": "array"
+                                  },
+                                  "balance": {
+                                    "type": "number"
+                                  },
+                                  "pendingDebit": {
+                                    "type": "number"
+                                  }
+                                },
+                                "type": "object"
+                              },
+                              "KES": {
                                 "properties": {
                                   "accountName": {
                                     "type": "string"
@@ -480,6 +523,18 @@
                         "balance": 0,
                         "pendingDebit": 0
                       },
+                      "KES": {
+                        "accountName": "account1",
+                        "asset": [
+                          {
+                            "id": "",
+                            "meta": null,
+                            "type": "kenyanshilling"
+                          }
+                        ],
+                        "balance": 0,
+                        "pendingDebit": 0
+                      },
                       "NGN": {
                         "accountName": "account1",
                         "asset": [
@@ -614,6 +669,37 @@
                           "type": "object"
                         },
                         "GHS": {
+                          "properties": {
+                            "accountName": {
+                              "type": "string"
+                            },
+                            "asset": {
+                              "items": {
+                                "properties": {
+                                  "id": {
+                                    "type": "string"
+                                  },
+                                  "meta": {
+                                    "type": "string"
+                                  },
+                                  "type": {
+                                    "type": "string"
+                                  }
+                                },
+                                "type": "object"
+                              },
+                              "type": "array"
+                            },
+                            "balance": {
+                              "type": "number"
+                            },
+                            "pendingDebit": {
+                              "type": "number"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "KES": {
                           "properties": {
                             "accountName": {
                               "type": "string"
@@ -788,7 +874,8 @@
                   },
                   "currency": {
                     "enum": [
-                      "NGN"
+                      "NGN",
+                      "KES"
                     ],
                     "type": "string"
                   },
@@ -1128,279 +1215,15 @@
                 "schema": {
                   "example": {
                     "data": {
-                      "BNB": {
-                        "accountName": "rahmanx",
-                        "asset": [
-                          {
-                            "id": "0x3Fa6207c9D56cc8E13eDb9Fae012dAd2E40e376F",
-                            "meta": null,
-                            "type": "crypto"
-                          }
-                        ],
-                        "balance": 0,
-                        "pendingDebit": 0
-                      },
-                      "BTC": {
-                        "accountName": "rahmanx",
-                        "asset": [
-                          {
-                            "id": "tb1qgtklrn6s9tvfe4vew96hsnz2cclgaeamzah08y",
-                            "meta": null,
-                            "type": "crypto"
-                          }
-                        ],
-                        "balance": 0,
-                        "pendingDebit": 0
-                      },
-                      "ETH": {
-                        "accountName": "rahmanx",
-                        "asset": [
-                          {
-                            "id": "0x3Fa6207c9D56cc8E13eDb9Fae012dAd2E40e376F",
-                            "meta": null,
-                            "type": "crypto"
-                          }
-                        ],
-                        "balance": 0,
-                        "pendingDebit": 0
-                      },
-                      "GHS": {
-                        "accountName": "rahmanx",
-                        "asset": [
-                          {
-                            "id": "",
-                            "meta": null,
-                            "type": "ghanaiancedis"
-                          }
-                        ],
-                        "balance": 0,
-                        "pendingDebit": 0
-                      },
-                      "NGN": {
-                        "accountName": "rahmanx",
-                        "asset": [
-                          {
-                            "id": "",
-                            "meta": null,
-                            "type": "naira"
-                          }
-                        ],
-                        "balance": 0,
-                        "pendingDebit": 0
-                      },
-                      "USD": {
-                        "accountName": "rahmanx",
-                        "asset": [
-                          {
-                            "id": "0x3Fa6207c9D56cc8E13eDb9Fae012dAd2E40e376F",
-                            "meta": null,
-                            "type": "crypto"
-                          },
-                          {
-                            "id": "TFmkaqtkcsEgwm2SpBXVcgjwQRsitrRAbE",
-                            "meta": null,
-                            "type": "crypto"
-                          },
-                          {
-                            "id": "3Jxh1nESSfiBNyCTZi5yrrX3mEPmGavpTaGmHQoY1v8g",
-                            "meta": null,
-                            "type": "crypto"
-                          }
-                        ],
-                        "balance": 0,
-                        "pendingDebit": 0
-                      }
+                      "code": "123456"
                     },
                     "message": "success"
                   },
                   "properties": {
                     "data": {
                       "properties": {
-                        "BNB": {
-                          "properties": {
-                            "accountName": {
-                              "type": "string"
-                            },
-                            "asset": {
-                              "items": {
-                                "properties": {
-                                  "id": {
-                                    "type": "string"
-                                  },
-                                  "meta": {
-                                    "type": "string"
-                                  },
-                                  "type": {
-                                    "type": "string"
-                                  }
-                                },
-                                "type": "object"
-                              },
-                              "type": "array"
-                            },
-                            "balance": {
-                              "type": "number"
-                            },
-                            "pendingDebit": {
-                              "type": "number"
-                            }
-                          },
-                          "type": "object"
-                        },
-                        "BTC": {
-                          "properties": {
-                            "accountName": {
-                              "type": "string"
-                            },
-                            "asset": {
-                              "items": {
-                                "properties": {
-                                  "id": {
-                                    "type": "string"
-                                  },
-                                  "meta": {
-                                    "type": "string"
-                                  },
-                                  "type": {
-                                    "type": "string"
-                                  }
-                                },
-                                "type": "object"
-                              },
-                              "type": "array"
-                            },
-                            "balance": {
-                              "type": "number"
-                            },
-                            "pendingDebit": {
-                              "type": "number"
-                            }
-                          },
-                          "type": "object"
-                        },
-                        "ETH": {
-                          "properties": {
-                            "accountName": {
-                              "type": "string"
-                            },
-                            "asset": {
-                              "items": {
-                                "properties": {
-                                  "id": {
-                                    "type": "string"
-                                  },
-                                  "meta": {
-                                    "type": "string"
-                                  },
-                                  "type": {
-                                    "type": "string"
-                                  }
-                                },
-                                "type": "object"
-                              },
-                              "type": "array"
-                            },
-                            "balance": {
-                              "type": "number"
-                            },
-                            "pendingDebit": {
-                              "type": "number"
-                            }
-                          },
-                          "type": "object"
-                        },
-                        "GHS": {
-                          "properties": {
-                            "accountName": {
-                              "type": "string"
-                            },
-                            "asset": {
-                              "items": {
-                                "properties": {
-                                  "id": {
-                                    "type": "string"
-                                  },
-                                  "meta": {
-                                    "type": "string"
-                                  },
-                                  "type": {
-                                    "type": "string"
-                                  }
-                                },
-                                "type": "object"
-                              },
-                              "type": "array"
-                            },
-                            "balance": {
-                              "type": "number"
-                            },
-                            "pendingDebit": {
-                              "type": "number"
-                            }
-                          },
-                          "type": "object"
-                        },
-                        "NGN": {
-                          "properties": {
-                            "accountName": {
-                              "type": "string"
-                            },
-                            "asset": {
-                              "items": {
-                                "properties": {
-                                  "id": {
-                                    "type": "string"
-                                  },
-                                  "meta": {
-                                    "type": "string"
-                                  },
-                                  "type": {
-                                    "type": "string"
-                                  }
-                                },
-                                "type": "object"
-                              },
-                              "type": "array"
-                            },
-                            "balance": {
-                              "type": "number"
-                            },
-                            "pendingDebit": {
-                              "type": "number"
-                            }
-                          },
-                          "type": "object"
-                        },
-                        "USD": {
-                          "properties": {
-                            "accountName": {
-                              "type": "string"
-                            },
-                            "asset": {
-                              "items": {
-                                "properties": {
-                                  "id": {
-                                    "type": "string"
-                                  },
-                                  "meta": {
-                                    "type": "string"
-                                  },
-                                  "type": {
-                                    "type": "string"
-                                  }
-                                },
-                                "type": "object"
-                              },
-                              "type": "array"
-                            },
-                            "balance": {
-                              "type": "number"
-                            },
-                            "pendingDebit": {
-                              "type": "number"
-                            }
-                          },
-                          "type": "object"
+                        "code": {
+                          "type": "string"
                         }
                       },
                       "type": "object"
@@ -1520,6 +1343,76 @@
         ]
       }
     },
+    "/account/myprofile": {
+      "get": {
+        "description": "Get user account profile.",
+        "operationId": "get-account-myprofile",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "data": {
+                      "createdAt": 1755873600,
+                      "dob": "2002-09-01",
+                      "firstName": "jane",
+                      "lastName": "doe",
+                      "middleName": "doe",
+                      "phoneNumber": "+2349099999999"
+                    },
+                    "message": "success"
+                  },
+                  "properties": {
+                    "data": {
+                      "properties": {
+                        "createdAt": {
+                          "type": "number"
+                        },
+                        "dob": {
+                          "type": "string"
+                        },
+                        "firstName": {
+                          "type": "string"
+                        },
+                        "lastName": {
+                          "type": "string"
+                        },
+                        "middleName": {
+                          "type": "string"
+                        },
+                        "phoneNumber": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "get account myprofile ok"
+          }
+        },
+        "security": [
+          {
+            "x-api-key": [],
+            "x-api-user": []
+          },
+          {
+            "authorization": []
+          }
+        ],
+        "summary": "Get user Account Profile",
+        "tags": [
+          "Account"
+        ]
+      }
+    },
     "/account/permissions": {
       "get": {
         "description": "Get the valid permissions for accounts.",
@@ -1617,87 +1510,6 @@
         ]
       }
     },
-    "/account/profile": {
-      "get": {
-        "description": "Get account profile.",
-        "operationId": "get-account-profile",
-        "parameters": [
-          {
-            "description": "",
-            "in": "query",
-            "name": "accountName",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "example": {
-                    "data": {
-                      "createdAt": 1755873600,
-                      "dob": "2002-09-01",
-                      "firstName": "jane",
-                      "lastName": "doe",
-                      "middleName": "doe",
-                      "phoneNumber": "+2349099999999"
-                    },
-                    "message": "success"
-                  },
-                  "properties": {
-                    "data": {
-                      "properties": {
-                        "createdAt": {
-                          "type": "number"
-                        },
-                        "dob": {
-                          "type": "string"
-                        },
-                        "firstName": {
-                          "type": "string"
-                        },
-                        "lastName": {
-                          "type": "string"
-                        },
-                        "middleName": {
-                          "type": "string"
-                        },
-                        "phoneNumber": {
-                          "type": "string"
-                        }
-                      },
-                      "type": "object"
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "type": "object"
-                }
-              }
-            },
-            "description": "get account profile ok"
-          }
-        },
-        "security": [
-          {
-            "x-api-key": [],
-            "x-api-user": []
-          },
-          {
-            "authorization": []
-          }
-        ],
-        "summary": "Get Account Profile",
-        "tags": [
-          "Account"
-        ]
-      }
-    },
     "/account/register": {
       "post": {
         "description": "Create a pending account registration request. This is used when merchant registration type is set to open",
@@ -1751,6 +1563,76 @@
         },
         "security": [],
         "summary": "Register Account",
+        "tags": [
+          "Account"
+        ]
+      }
+    },
+    "/account/search": {
+      "get": {
+        "description": "Search matching account names using at least 2 characters",
+        "operationId": "get-account-search",
+        "parameters": [
+          {
+            "description": "The name of the account to search for. Must be at least 2 characters.",
+            "in": "query",
+            "name": "accountName",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "data": [
+                      "searchaccount1",
+                      "searchaccount2",
+                      "searchuser"
+                    ],
+                    "message": "success"
+                  },
+                  "properties": {
+                    "data": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "get account search ok"
+          }
+        },
+        "security": [
+          {
+            "x-api-key": [],
+            "x-api-user": []
+          },
+          {
+            "authorization": []
+          }
+        ],
+        "summary": "Search Account",
         "tags": [
           "Account"
         ]
@@ -1898,7 +1780,8 @@
                       "ETH",
                       "USD",
                       "BNB",
-                      "NGN"
+                      "NGN",
+                      "KES"
                     ],
                     "type": "string"
                   },
@@ -1914,7 +1797,8 @@
                       "ETH",
                       "USD",
                       "BNB",
-                      "NGN"
+                      "NGN",
+                      "KES"
                     ],
                     "type": "string"
                   },
@@ -2205,7 +2089,9 @@
               "schema": {
                 "example": {
                   "accountName": "",
-                  "bvn": null
+                  "bvn": null,
+                  "kesMobileNetwork": null,
+                  "kesShortcode": null
                 },
                 "properties": {
                   "accountName": {
@@ -2214,11 +2100,20 @@
                   "bvn": {
                     "description": "11 digit bvn for kyc verification",
                     "type": "string"
+                  },
+                  "kesMobileNetwork": {
+                    "type": "string"
+                  },
+                  "kesShortcode": {
+                    "description": "10 digits Kenyan phone number",
+                    "type": "string"
                   }
                 },
                 "required": [
                   "accountName",
-                  "bvn"
+                  "bvn",
+                  "kesShortcode",
+                  "kesMobileNetwork"
                 ],
                 "type": "object"
               }
@@ -2395,6 +2290,42 @@
               }
             },
             "description": "post kyc complete kyc ok"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "message": "user not exempted"
+                  },
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "post kyc complete kyc bad request"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "message": "KYC record already exists"
+                  },
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "post kyc complete kyc conflict"
           }
         },
         "security": [
@@ -2411,7 +2342,7 @@
     },
     "/kyc/confirm-otp": {
       "put": {
-        "description": "Confirm BVN verification OTP.",
+        "description": "Confirm KYC verification OTP.",
         "operationId": "put-kyc-confirm-otp",
         "requestBody": {
           "content": {
@@ -2419,10 +2350,18 @@
               "schema": {
                 "example": {
                   "accountName": "",
+                  "currency": "",
                   "otp": ""
                 },
                 "properties": {
                   "accountName": {
+                    "type": "string"
+                  },
+                  "currency": {
+                    "enum": [
+                      "KES",
+                      "NGN"
+                    ],
                     "type": "string"
                   },
                   "otp": {
@@ -2469,7 +2408,7 @@
             "authorization": []
           }
         ],
-        "summary": "Confirm BVN OTP",
+        "summary": "Confirm KYC OTP",
         "tags": [
           "KYC"
         ]
@@ -2543,7 +2482,7 @@
     },
     "/kyc/handle-otp": {
       "put": {
-        "description": "Choose BVN verification method.",
+        "description": "Choose KYC verification method.",
         "operationId": "put-kyc-handle-otp",
         "requestBody": {
           "content": {
@@ -2553,6 +2492,7 @@
                   "accountName": "",
                   "accountNumber": "",
                   "bankCode": "",
+                  "currency": "",
                   "verificationMethod": ""
                 },
                 "properties": {
@@ -2565,6 +2505,13 @@
                   },
                   "bankCode": {
                     "description": "bank code associated with user's bank",
+                    "type": "string"
+                  },
+                  "currency": {
+                    "enum": [
+                      "KES",
+                      "NGN"
+                    ],
                     "type": "string"
                   },
                   "verificationMethod": {
@@ -2618,7 +2565,7 @@
             "authorization": []
           }
         ],
-        "summary": "Handle BVN OTP Method",
+        "summary": "Handle KYC OTP Method",
         "tags": [
           "KYC"
         ]
@@ -2635,7 +2582,9 @@
                 "example": {
                   "accountNumber": "",
                   "bankCode": "",
-                  "currency": ""
+                  "currency": "",
+                  "mobileNetwork": "",
+                  "shortCode": ""
                 },
                 "properties": {
                   "accountNumber": {
@@ -2650,6 +2599,12 @@
                       "GHS",
                       "KES"
                     ],
+                    "type": "string"
+                  },
+                  "mobileNetwork": {
+                    "type": "string"
+                  },
+                  "shortCode": {
                     "type": "string"
                   }
                 },
@@ -2734,27 +2689,52 @@
     },
     "/kyc/supported-methods": {
       "get": {
-        "description": "Get supported KYC verification methods.",
+        "description": "Get supported KYC verification methods by country.",
         "operationId": "get-kyc-supported-methods",
+        "parameters": [
+          {
+            "description": "",
+            "in": "query",
+            "name": "currency",
+            "required": false,
+            "schema": {
+              "enum": [
+                "KES",
+                "NGN"
+              ],
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "content": {
               "application/json": {
                 "schema": {
                   "example": {
-                    "data": [
-                      "sendotp",
-                      "receiveotp",
-                      "bankdetails"
-                    ],
+                    "data": {
+                      "country": "KE",
+                      "methods": [
+                        "sendotp",
+                        "receiveotp"
+                      ]
+                    },
                     "message": "success"
                   },
                   "properties": {
                     "data": {
-                      "items": {
-                        "type": "string"
+                      "properties": {
+                        "country": {
+                          "type": "string"
+                        },
+                        "methods": {
+                          "items": {
+                            "type": "string"
+                          },
+                          "type": "array"
+                        }
                       },
-                      "type": "array"
+                      "type": "object"
                     },
                     "message": {
                       "type": "string"
@@ -2764,7 +2744,7 @@
                 }
               }
             },
-            "description": "get kyc supported methods ok"
+            "description": "Supported methods for KE (default)"
           }
         },
         "security": [
@@ -2776,7 +2756,129 @@
             "authorization": []
           }
         ],
-        "summary": "Supported Verification Methods",
+        "summary": "Supported Verification Methods by country",
+        "tags": [
+          "KYC"
+        ]
+      }
+    },
+    "/kyc/verification-method": {
+      "put": {
+        "description": "Choose KYC verification method.",
+        "operationId": "put-kyc-verification-method",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "example": {
+                  "accountName": "",
+                  "accountNumber": "",
+                  "bankCode": "",
+                  "currency": "",
+                  "verificationMethod": ""
+                },
+                "properties": {
+                  "accountName": {
+                    "type": "string"
+                  },
+                  "accountNumber": {
+                    "description": "bank account number for bank account verification",
+                    "type": "string"
+                  },
+                  "bankCode": {
+                    "description": "bank code associated with user's bank",
+                    "type": "string"
+                  },
+                  "currency": {
+                    "enum": [
+                      "KES",
+                      "NGN"
+                    ],
+                    "type": "string"
+                  },
+                  "verificationMethod": {
+                    "enum": [
+                      "sendotp",
+                      "receiveotp",
+                      "bankdetails",
+                      "phone",
+                      "phone_1",
+                      "email"
+                    ],
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "accountName",
+                  "verificationMethod"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"example": {
+										"data": {
+											"attempts": 1,
+											"expectedPayment": "500.00",
+											"maskedPhoneNumber": "080****2345",
+											"otp": "123456",
+											"partnaBankDetails": "Test Bank - 1234567890",
+											"subscriptionId": "dev-username-accountname"
+										},
+										"message": "success"
+									},
+									"properties": {
+										"data": {
+											"properties": {
+												"attempts": {
+													"type": "number"
+												},
+												"expectedPayment": {
+													"type": "string"
+												},
+												"maskedPhoneNumber": {
+													"type": "string"
+												},
+												"otp": {
+													"type": "string"
+												},
+												"partnaBankDetails": {
+													"type": "string"
+												},
+												"subscriptionId": {
+													"type": "string"
+												}
+											},
+											"type": "object"
+										},
+										"message": {
+											"type": "string"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"description": "put kyc handle otp ok"
+					}
+        },
+        "security": [
+          {
+            "x-api-key": [],
+            "x-api-user": []
+          },
+          {
+            "authorization": []
+          }
+        ],
+        "summary": "Handle KYC OTP Method",
         "tags": [
           "KYC"
         ]
@@ -3076,6 +3178,8 @@
                   "fromAddress": "",
                   "network": "",
                   "reference": "",
+                  "sourceAccount": "",
+                  "transactionID": "",
                   "txHash": "",
                   "username": ""
                 },
@@ -3097,7 +3201,8 @@
                       "USDC",
                       "USDT",
                       "CUSD",
-                      "NGN"
+                      "NGN",
+                      "KES"
                     ],
                     "type": "string"
                   },
@@ -3119,11 +3224,19 @@
                       "ethereum",
                       "polygon",
                       "tron",
-                      "solana"
+                      "solana",
+                      "naira",
+                      "kenyanshilling"
                     ],
                     "type": "string"
                   },
                   "reference": {
+                    "type": "string"
+                  },
+                  "sourceAccount": {
+                    "type": "string"
+                  },
+                  "transactionID": {
                     "type": "string"
                   },
                   "txHash": {
@@ -3175,6 +3288,24 @@
               }
             },
             "description": "post mock deposit bad request"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "message": "Unable to process deposit"
+                  },
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "post mock deposit internal server error"
           }
         },
         "security": [],
@@ -3515,6 +3646,7 @@
                           "toAmount": 334.87,
                           "toCurrency": "NGN",
                           "toNetwork": "naira",
+                          "totalFeesInToCurrency": 0.01,
                           "type": "cryptoToFiat"
                         },
                         {
@@ -3532,6 +3664,8 @@
                           "toAmount": 0.5872,
                           "toCurrency": "USDT",
                           "toNetwork": "tron",
+                          "totalFeesInFromCurrency": 16.74,
+                          "totalFeesInToCurrency": 0.01,
                           "type": "fiatToCrypto"
                         }
                       ],
@@ -3601,6 +3735,9 @@
                               },
                               "toNetwork": {
                                 "type": "string"
+                              },
+                              "totalFeesInToCurrency": {
+                                "type": "number"
                               },
                               "type": {
                                 "type": "string"
@@ -3793,7 +3930,9 @@
                 },
                 "required": [
                   "fromCurrency",
+                  "fromNetwork",
                   "toCurrency",
+                  "toNetwork",
                   "rateKey"
                 ],
                 "type": "object"
@@ -4269,16 +4408,16 @@
                         "CUSD": {
                           "celo": {
                             "assetIndex": 0,
-                            "contractAddress": "0x874069fa1eb16d44d622f2e0ca25eea172369bc1",
+                            "contractAddress": "0xde9e4c3ce781b4ba68120d6261cbad65ce0ab00b",
                             "decimals": 18,
                             "destinationCurrency": "USD",
                             "faucets": [
-                              "https://faucet.celo.org/alfajores"
+                              "https://app.mento.org/"
                             ],
                             "minimumWithdrawal": 1,
                             "name": "CUSD",
                             "symbol": "CUSD",
-                            "transactionExplorerLink": "https://alfajores.celoscan.io/tx/%s",
+                            "transactionExplorerLink": "https://sepolia.celoscan.io/tx/%s",
                             "withdrawalFee": 0.01
                           }
                         },
@@ -4340,16 +4479,17 @@
                         "USDC": {
                           "celo": {
                             "assetIndex": 0,
-                            "contractAddress": "0x2f25deb3848c207fc8e0c34035b3ba7fc157602b",
+                            "contractAddress": "0x01c5c0122039549ad1493b8220cabedd739bc44e",
                             "decimals": 6,
                             "destinationCurrency": "USD",
                             "faucets": [
-                              "https://faucet.circle.com/"
+                              "https://faucet.circle.com/",
+                              "https://faucet.celo.org/celo-sepolia"
                             ],
                             "minimumWithdrawal": 1,
                             "name": "USDC",
                             "symbol": "USDC",
-                            "transactionExplorerLink": "https://alfajores.celoscan.io/tx/%s",
+                            "transactionExplorerLink": "https://sepolia.celoscan.io/tx/%s",
                             "withdrawalFee": 0.01
                           },
                           "ethereum": {
@@ -4449,30 +4589,31 @@
                         "celo": {
                           "CUSD": {
                             "assetIndex": 0,
-                            "contractAddress": "0x874069fa1eb16d44d622f2e0ca25eea172369bc1",
+                            "contractAddress": "0xde9e4c3ce781b4ba68120d6261cbad65ce0ab00b",
                             "decimals": 18,
                             "destinationCurrency": "USD",
                             "faucets": [
-                              "https://faucet.celo.org/alfajores"
+                              "https://app.mento.org/"
                             ],
                             "minimumWithdrawal": 1,
                             "name": "CUSD",
                             "symbol": "CUSD",
-                            "transactionExplorerLink": "https://alfajores.celoscan.io/tx/%s",
+                            "transactionExplorerLink": "https://sepolia.celoscan.io/tx/%s",
                             "withdrawalFee": 0.01
                           },
                           "USDC": {
                             "assetIndex": 0,
-                            "contractAddress": "0x2f25deb3848c207fc8e0c34035b3ba7fc157602b",
+                            "contractAddress": "0x01c5c0122039549ad1493b8220cabedd739bc44e",
                             "decimals": 6,
                             "destinationCurrency": "USD",
                             "faucets": [
-                              "https://faucet.circle.com/"
+                              "https://faucet.circle.com/",
+                              "https://faucet.celo.org/celo-sepolia"
                             ],
                             "minimumWithdrawal": 1,
                             "name": "USDC",
                             "symbol": "USDC",
-                            "transactionExplorerLink": "https://alfajores.celoscan.io/tx/%s",
+                            "transactionExplorerLink": "https://sepolia.celoscan.io/tx/%s",
                             "withdrawalFee": 0.01
                           }
                         },
@@ -5815,7 +5956,8 @@
                       "BTC",
                       "ETH",
                       "USD",
-                      "BNB"
+                      "BNB",
+                      "KES"
                     ],
                     "type": "string"
                   },
@@ -6085,7 +6227,8 @@
                   },
                   "currency": {
                     "enum": [
-                      "GHS"
+                      "GHS",
+                      "KES"
                     ],
                     "type": "string"
                   },
@@ -6162,8 +6305,10 @@
                   "bankCode": "",
                   "currency": "",
                   "fromAccount": "",
+                  "mobileNetwork": "",
                   "network": "",
                   "otp": "",
+                  "shortcode": "",
                   "transactionReference": "",
                   "type": ""
                 },
@@ -6189,11 +6334,19 @@
                       "USDT",
                       "CUSD",
                       "NGN",
-                      "GHS"
+                      "GHS",
+                      "KES"
                     ],
                     "type": "string"
                   },
                   "fromAccount": {
+                    "type": "string"
+                  },
+                  "mobileNetwork": {
+                    "enum": [
+                      "Safaricom",
+                      "Airtel"
+                    ],
                     "type": "string"
                   },
                   "network": {
@@ -6205,12 +6358,18 @@
                       "ethereum",
                       "polygon",
                       "tron",
-                      "solana"
+                      "solana",
+                      "MOBILE",
+                      "BUY_GOODS"
                     ],
                     "type": "string"
                   },
                   "otp": {
                     "description": "6 digit otp from authenticator app; required if withdrawal request is made with jwt token",
+                    "type": "string"
+                  },
+                  "shortcode": {
+                    "description": "mobile number of the recipient",
                     "type": "string"
                   },
                   "transactionReference": {
@@ -6220,7 +6379,8 @@
                     "enum": [
                       "crypto",
                       "naira",
-                      "ghanaiancedis"
+                      "ghanaiancedis",
+                      "kenyanshilling"
                     ],
                     "type": "string"
                   }
@@ -7031,6 +7191,10 @@
                           "availableBalance": 0,
                           "pendingDebit": 0
                         },
+                        "KES": {
+                          "availableBalance": 0,
+                          "pendingDebit": 0
+                        },
                         "NGN": {
                           "availableBalance": 0,
                           "pendingDebit": 0
@@ -7054,6 +7218,10 @@
                           "pendingDebit": 0
                         },
                         "GHS": {
+                          "availableBalance": 0,
+                          "pendingDebit": 0
+                        },
+                        "KES": {
                           "availableBalance": 0,
                           "pendingDebit": 0
                         },
@@ -7108,6 +7276,17 @@
                               "type": "object"
                             },
                             "GHS": {
+                              "properties": {
+                                "availableBalance": {
+                                  "type": "number"
+                                },
+                                "pendingDebit": {
+                                  "type": "number"
+                                }
+                              },
+                              "type": "object"
+                            },
+                            "KES": {
                               "properties": {
                                 "availableBalance": {
                                   "type": "number"
@@ -7179,6 +7358,17 @@
                               "type": "object"
                             },
                             "GHS": {
+                              "properties": {
+                                "availableBalance": {
+                                  "type": "number"
+                                },
+                                "pendingDebit": {
+                                  "type": "number"
+                                }
+                              },
+                              "type": "object"
+                            },
+                            "KES": {
                               "properties": {
                                 "availableBalance": {
                                   "type": "number"
@@ -7376,6 +7566,96 @@
         "summary": "Check for manual kyc ",
         "tags": [
           "KYC"
+        ]
+      }
+    },
+    "/user/profile": {
+      "get": {
+        "description": "Get customer's account profile.",
+        "operationId": "get-user-profile",
+        "parameters": [
+          {
+            "description": "",
+            "in": "query",
+            "name": "accountName",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "data": {
+                      "createdAt": 1755873600,
+                      "dob": "2002-09-01",
+                      "firstName": "jane",
+                      "kycs": [
+                        "NG"
+                      ],
+                      "lastName": "doe",
+                      "middleName": "doe",
+                      "phoneNumber": "+2349099999999"
+                    },
+                    "message": "success"
+                  },
+                  "properties": {
+                    "data": {
+                      "properties": {
+                        "createdAt": {
+                          "type": "number"
+                        },
+                        "dob": {
+                          "type": "string"
+                        },
+                        "firstName": {
+                          "type": "string"
+                        },
+                        "kycs": {
+                          "items": {
+                            "type": "string"
+                          },
+                          "type": "array"
+                        },
+                        "lastName": {
+                          "type": "string"
+                        },
+                        "middleName": {
+                          "type": "string"
+                        },
+                        "phoneNumber": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "get user profile ok"
+          }
+        },
+        "security": [
+          {
+            "x-api-key": [],
+            "x-api-user": []
+          },
+          {
+            "authorization": []
+          }
+        ],
+        "summary": "Get Customer's Account Profile",
+        "tags": [
+          "Account"
         ]
       }
     },

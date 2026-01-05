@@ -139,7 +139,8 @@
         "api-reference/endpoint/v3/account/update-account-email",
         "api-reference/endpoint/v3/account/get-account-permissions",
         "api-reference/endpoint/v3/account/get-account-profile",
-        "api-reference/endpoint/v3/account/register-account"
+        "api-reference/endpoint/v3/account/register-account",
+        "api-reference/endpoint/v3/account/search-account"
       ],
       "version": "v4"
     },
@@ -183,11 +184,11 @@
       "pages": [
         "api-reference/endpoint/v3/kyc/initiate-bvn-kyc",
         "api-reference/endpoint/v3/kyc/merchant-kyc-users-manually",
-        "api-reference/endpoint/v3/kyc/confirm-bvn-otp",
+        "api-reference/endpoint/v3/kyc/confirm-kyc-otp",
         "api-reference/endpoint/v3/kyc/confirm-phone",
-        "api-reference/endpoint/v3/kyc/handle-bvn-otp-method",
+        "api-reference/endpoint/v3/kyc/handle-bvn-otp-method-1",
         "api-reference/endpoint/v3/kyc/resolve-bank",
-        "api-reference/endpoint/v3/kyc/supported-verification-methods",
+        "api-reference/endpoint/v3/kyc/supported-verification-methods-by-country",
         "api-reference/endpoint/v3/kyc/check-for-manual-kyc"
       ],
       "version": "v4"
@@ -251,7 +252,8 @@
         "api-reference/endpoint/v3/user/registration-deposit-and-fee-settings",
         "api-reference/endpoint/v3/user/get-webhook-url",
         "api-reference/endpoint/v3/user/update-webhook-url",
-        "api-reference/endpoint/v3/user/delete-webhook-url"
+        "api-reference/endpoint/v3/user/delete-webhook-url",
+        "api-reference/endpoint/v3/user/get-customers-account-profile"
       ],
       "version": "v4"
     }
