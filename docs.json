@@ -1,0 +1,281 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "Partna API docs",
+  "colors": {
+    "primary": "#00CC66",
+    "light": "#07C983",
+    "dark": "#00CC66"
+  },
+  "favicon": "/favicon.svg",
+  "navigation": {
+    "versions": [
+      {
+        "version": "v2",
+        "tabs": [
+          {
+            "tab": "Documentation",
+            "groups": [
+              {
+                "group": "Overview",
+                "pages": [
+                  "introduction",
+                  "environments",
+                  "authentication",
+                  "webhooks",
+                  "rate-tiers"
+                ]
+              },
+              {
+                "group": "Use cases",
+                "pages": [
+                  "collect",
+                  "onramp",
+                  "payout",
+                  "offramp"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "API Reference",
+            "groups": [
+              {
+                "group": "Collect & Onramp",
+                "pages": [
+                  "api-reference/endpoint/ventogram/balance/retrieve-merchant-account-balance",
+                  "api-reference/endpoint/ventogram/merchants/retrieve-merchant-record",
+                  "api-reference/endpoint/ventogram/merchants/update-merchant-record",
+                  "api-reference/endpoint/ventogram/mock-payment/make-a-mock-payment",
+                  "api-reference/endpoint/ventogram/rates/retrieves-conversion-rates",
+                  "api-reference/endpoint/ventogram/transactions/retrieve-merchant-transaction-summary",
+                  "api-reference/endpoint/ventogram/voucher/create-a-new-voucher-payment",
+                  "api-reference/endpoint/ventogram/voucher/retrieve-voucher-record",
+                  "api-reference/endpoint/ventogram/voucher/get-multiple-records",
+                  "api-reference/endpoint/ventogram/voucher/redeem-existing-unused-voucher",
+                  "api-reference/endpoint/ventogram/voucher/redeem-and-withdraw",
+                  "api-reference/endpoint/ventogram/voucher-fee/retrieves-conversion-rates",
+                  "api-reference/endpoint/ventogram/voucher-min-max-amount/retrieves-minimum-and-maximum-voucher-amounts",
+                  "api-reference/endpoint/ventogram/bank-account/create-bank-account",
+                  "api-reference/endpoint/ventogram/bank-account/get-bank-account"
+                ]
+              },
+              {
+                "group": "Offramp",
+                "pages": [
+                  "api-reference/endpoint/biz/create-api-key",
+                  "api-reference/endpoint/biz/create-payment",
+                  "api-reference/endpoint/biz/get-a-single-payment",
+                  "api-reference/endpoint/biz/get-a-transaction",
+                  "api-reference/endpoint/biz/get-current-rates",
+                  "api-reference/endpoint/biz/get-minimum-amount-allowed",
+                  "api-reference/endpoint/biz/get-supported-currencies",
+                  "api-reference/endpoint/biz/get-supported-cryptocurrencies-and-network",
+                  "api-reference/endpoint/biz/resolve-overpaid-transaction",
+                  "api-reference/endpoint/biz/retrieve-subscribed-webhook-url",
+                  "api-reference/endpoint/biz/retrieve-users-transaction-records",
+                  "api-reference/endpoint/biz/retrieve-users-transaction-summary",
+                  "api-reference/endpoint/biz/retrieves-a-users-crypto-wallet-addresses",
+                  "api-reference/endpoint/biz/subscribe-to-webhook"
+                ]
+              },
+              {
+                "group": "Payout",
+                "pages": [
+                  "api-reference/endpoint/biz/get-current-rates",
+                  "api-reference/endpoint/biz/withdraw-balance",
+                  "api-reference/endpoint/biz/get-a-transaction",
+                  "api-reference/endpoint/biz/resolve-bank-account",
+                  "api-reference/endpoint/biz/get-minimum-amount-allowed",
+                  "api-reference/endpoint/biz/retrieve-a-list-of-supported-banks",
+                  "api-reference/endpoint/biz/retrieve-subscribed-webhook-url",
+                  "api-reference/endpoint/biz/retrieve-users-account-balance",
+                  "api-reference/endpoint/biz/retrieve-users-transaction-records",
+                  "api-reference/endpoint/biz/retrieve-users-transaction-summary",
+                  "api-reference/endpoint/biz/subscribe-to-webhook",
+                  "api-reference/endpoint/biz/transfer-funds",
+                  "api-reference/endpoint/biz/wallet-transfer"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "version": "v4",
+        "tabs": [
+          {
+            "tab": "Documentation",
+            "groups": [
+              {
+                "group": "Overview",
+                "pages": [
+                  "v4",
+                  "v4webhook"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "API Reference",
+            "groups": [
+              {
+                "group": "Account",
+                "pages": [
+                  "api-reference/endpoint/v3/account/get-account",
+                  "api-reference/endpoint/v3/account/create-bank-account",
+                  "api-reference/endpoint/v3/account/create-account",
+                  "api-reference/endpoint/v3/account/get-accounts-details",
+                  "api-reference/endpoint/v3/account/complete-account-registration",
+                  "api-reference/endpoint/v3/account/update-account-email",
+                  "api-reference/endpoint/v3/account/get-account-permissions",
+                  "api-reference/endpoint/v3/account/get-account-profile",
+                  "api-reference/endpoint/v3/account/register-account",
+                  "api-reference/endpoint/v3/account/search-account"
+                ]
+              },
+              {
+                "group": "Bank",
+                "pages": [
+                  "api-reference/endpoint/v3/bank/get-banks"
+                ]
+              },
+              {
+                "group": "Transfer",
+                "pages": [
+                  "api-reference/endpoint/v3/transfer/convert-currency",
+                  "api-reference/endpoint/v3/transfer/get-transfer",
+                  "api-reference/endpoint/v3/transfer/create-transfer",
+                  "api-reference/endpoint/v3/transfer/get-single-transaction",
+                  "api-reference/endpoint/v3/transfer/initiate-transfer",
+                  "api-reference/endpoint/v3/transfer/withdraw"
+                ]
+              },
+              {
+                "group": "Rate",
+                "pages": [
+                  "api-reference/endpoint/v3/rate/create-a-custom-ratekey-for-conversion",
+                  "api-reference/endpoint/v3/rate/get-rate",
+                  "api-reference/endpoint/v3/rate/verify-rate-key"
+                ]
+              },
+              {
+                "group": "Discount",
+                "pages": [
+                  "api-reference/endpoint/v3/discount/get-discounts"
+                ]
+              },
+              {
+                "group": "KYC",
+                "pages": [
+                  "api-reference/endpoint/v3/kyc/initiate-bvn-kyc",
+                  "api-reference/endpoint/v3/kyc/merchant-kyc-users-manually",
+                  "api-reference/endpoint/v3/kyc/confirm-kyc-otp",
+                  "api-reference/endpoint/v3/kyc/confirm-phone",
+                  "api-reference/endpoint/v3/kyc/handle-bvn-otp-method-1",
+                  "api-reference/endpoint/v3/kyc/resolve-bank",
+                  "api-reference/endpoint/v3/kyc/supported-verification-methods-by-country",
+                  "api-reference/endpoint/v3/kyc/check-for-manual-kyc"
+                ]
+              },
+              {
+                "group": "MFA",
+                "pages": [
+                  "api-reference/endpoint/v3/mfa/get-account-mfa",
+                  "api-reference/endpoint/v3/mfa/validate-account-mfa",
+                  "api-reference/endpoint/v3/mfa/enable-account-mfa",
+                  "api-reference/endpoint/v3/mfa/disable-account-mfa"
+                ]
+              },
+              {
+                "group": "Mock",
+                "pages": [
+                  "api-reference/endpoint/v3/mock/mock-deposit",
+                  "api-reference/endpoint/v3/mock/mock-fiat-deposit"
+                ]
+              },
+              {
+                "group": "Pricing",
+                "pages": [
+                  "api-reference/endpoint/v3/pricing/get-pending-pricing",
+                  "api-reference/endpoint/v3/pricing/pricing-alert"
+                ]
+              },
+              {
+                "group": "Ramp",
+                "pages": [
+                  "api-reference/endpoint/v3/ramp/get-ramp-requests",
+                  "api-reference/endpoint/v3/ramp/onramp-and-offramp"
+                ]
+              },
+              {
+                "group": "Supported",
+                "pages": [
+                  "api-reference/endpoint/v3/supported/get-supported-assets"
+                ]
+              },
+              {
+                "group": "User",
+                "pages": [
+                  "api-reference/endpoint/v3/user/update-user",
+                  "api-reference/endpoint/v3/user/create-user",
+                  "api-reference/endpoint/v3/user/used-to-get-all-active-admins-with-privileges",
+                  "api-reference/endpoint/v3/user/used-to-give-admin-privileges",
+                  "api-reference/endpoint/v3/user/used-to-delete-an-admin-with-privileges",
+                  "api-reference/endpoint/v3/user/generate-api-key",
+                  "api-reference/endpoint/v3/user/delete-api-key",
+                  "api-reference/endpoint/v3/user/get-api-key-scopes",
+                  "api-reference/endpoint/v3/user/get-api-keys",
+                  "api-reference/endpoint/v3/user/get-balances",
+                  "api-reference/endpoint/v3/user/invalidate-api-key",
+                  "api-reference/endpoint/v3/user/get-registration-deposit-and-fee-settings",
+                  "api-reference/endpoint/v3/user/registration-deposit-and-fee-settings",
+                  "api-reference/endpoint/v3/user/get-webhook-url",
+                  "api-reference/endpoint/v3/user/update-webhook-url",
+                  "api-reference/endpoint/v3/user/delete-webhook-url",
+                  "api-reference/endpoint/v3/user/get-customers-account-profile"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "logo": {
+    "light": "/logo/light.svg",
+    "dark": "/logo/dark.svg"
+  },
+  "api": {
+    "openapi": [
+      "api-reference/ventogram.yml",
+      "api-reference/biz.yml",
+      "api-reference/partna.json"
+    ]
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "Support",
+        "href": "mailto:dev@getpartna.com"
+      }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "Dashboard",
+      "href": "https://app.getpartna.com"
+    }
+  },
+  "seo": {
+    "metatags": {
+      "og:image": "https://res.cloudinary.com/payourse-technologies-inc/image/upload/v1710838758/seo-partna/dev_doc_cu1aax.jpg"
+    },
+    "indexing": "navigable"
+  },
+  "footer": {
+    "socials": {
+      "twitter": "https://twitter.com/getpartna",
+      "linkedin": "https://www.linkedin.com/company/getpartna"
+    }
+  }
+}
