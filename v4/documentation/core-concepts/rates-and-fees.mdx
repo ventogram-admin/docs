@@ -1,0 +1,62 @@
+---
+title: "Rates and Fees"
+description: "Conversion rates, rate keys, and volume-based discounts"
+icon: "chart-line"
+---
+
+Partna provides real-time conversion rates between supported currencies. Rates are fetched via the API and locked using rate keys before initiating a transaction.
+
+## Fetching rates
+
+Use the [Get Rate](/api-reference/rate/get-rate) endpoint to fetch current conversion rates.
+
+```bash
+curl --request GET \
+  --url 'https://staging-api.getpartna.com/v4/rate?fromCurrency=NGN&toCurrency=USDT&fromAmount=100000' \
+  --header 'x-api-key: YOUR_API_KEY' \
+  --header 'x-api-user: YOUR_USERNAME'
+```
+
+The response includes a `key` field for each rate pair:
+
+```json
+{
+  "data": {
+    "rate": {
+      "USDT_to_NGN": {
+        "fromAmount": 1,
+        "fromCurrency": "USDT",
+        "key": "1640-USDT_to_NGN-a1b2c3d4-1755873777",
+        "rate": 1640,
+        "toAmount": 1640,
+        "toCurrency": "NGN"
+      }
+    }
+  },
+  "message": "success"
+}
+```
+
+## Rate keys
+
+A rate key locks in a quoted conversion rate for a limited time. When you initiate an onramp or offramp request, pass the `rateKey` from the rate response to guarantee the quoted price.
+
+You can also create a custom rate key using the [Create Ratekey](/api-reference/rate/create-ratekey) endpoint if you need to apply a custom spread or margin. Verify a rate key is still valid using [Verify Ratekey](/api-reference/rate/verify-ratekey).
+
+Rate keys expire. If a rate key expires before the transaction completes, the `expireAction` parameter on the ramp request controls what happens:
+
+| expireAction | Behavior |
+| --- | --- |
+| `useCurrentRate` | The transaction proceeds at whatever the current rate is at settlement time. This is the default. |
+| `deposit` | The funds are deposited to the user's balance instead of completing the conversion. |
+
+## Fee bearer
+
+When creating transactions, the `feeBearer` parameter controls who pays the transaction fee:
+
+| Value | Behavior |
+| --- | --- |
+| `merchant` | Fees are deducted from your merchant balance |
+| `client` | Fees are deducted from the customer's payment amount |
+
+Configure the default fee bearer in your merchant settings via the [dashboard](https://dashboard.getpartna.com) or the [Update Settings](/api-reference/user/update-settings) endpoint.

@@ -1,0 +1,57 @@
+---
+title: "Errors"
+description: "HTTP status codes and error response format"
+icon: "triangle-exclamation"
+---
+
+The Partna API uses standard HTTP status codes. All error responses include a JSON body with a `message` field describing what went wrong.
+
+## Error response format
+
+```json
+{
+  "message": "A human-readable description of the error"
+}
+```
+
+Some error responses also include a `data` field with additional context.
+
+## HTTP status codes
+
+| Code | Meaning | When you will see it |
+| --- | --- | --- |
+| `200` | OK | Request succeeded |
+| `201` | Created | Resource created successfully |
+| `400` | Bad Request | Missing required fields, invalid parameter values, or malformed request body |
+| `401` | Unauthorized | Missing or invalid `x-api-key` or `x-api-user` headers |
+| `403` | Forbidden | Your API key does not have permission for this action |
+| `404` | Not Found | The requested resource does not exist |
+| `409` | Conflict | A conflicting request is already in progress (e.g., a pending ramp request for the same user) |
+| `422` | Unprocessable Entity | The request is well-formed but cannot be processed (e.g., insufficient balance, KYC not completed) |
+| `429` | Too Many Requests | Rate limit exceeded. Back off and retry. |
+| `500` | Internal Server Error | Something went wrong on Partna's side. Contact support if this persists. |
+| `503` | Service Unavailable | The service is temporarily unavailable (e.g., rate service down). Retry after a short delay. |
+
+## Common errors and solutions
+
+### Authentication errors (401)
+
+**"Unauthorized"** or **"Invalid API key"**: Confirm that both `x-api-key` and `x-api-user` headers are present and correct. Staging and production credentials are not interchangeable.
+
+### Ramp request errors (400, 409)
+
+**"User already has a pending ramp request"**: Each user can only have one active ramp request at a time. Either wait for it to complete or set `cancelPendingRampRequest: true` in your next ramp request to cancel the existing one and create a new one.
+
+**"Invalid rate key"**: The rate key has expired or is malformed. Fetch a fresh rate using [Get Rate](/api-reference/rate/get-rate) and use the new key.
+
+### KYC errors (422)
+
+**"KYC not completed"**: The user account has not passed identity verification. Complete the KYC flow before initiating transactions. See [Accounts and KYC](/guides/accounts-and-kyc).
+
+### Balance errors (422)
+
+**"Insufficient balance"**: Your merchant payout balance does not have enough funds to cover the withdrawal. Fund your account before retrying.
+
+## Retry guidance
+
+For `429` and `503` responses, use exponential backoff starting at 1 second. Do not retry `400`, `401`, `403`, or `422` errors without fixing the underlying issue first. `500` errors can be retried, but if they persist, contact [dev@getpartna.com](mailto:dev@getpartna.com).

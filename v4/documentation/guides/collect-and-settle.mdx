@@ -1,0 +1,74 @@
+---
+title: "Collect and Settle"
+description: "Collect local currency payments and settle in USD or stablecoins"
+icon: "hand-holding-dollar"
+---
+
+The collect and settle flow lets you accept payments from African customers in local currency and receive settlement in USD or stablecoins. This is the solution for companies that sell services to African customers and need to get their money out efficiently.
+
+## How it works
+
+<Steps>
+  <Step title="Configure your merchant settings">
+    After receiving your credentials, configure your merchant account:
+
+    - **Callback URL**: Your webhook endpoint for payment notifications
+    - **Fee bearer**: Whether you or your customer absorbs transaction fees
+    - **Credit currency**: The currency you want to be settled in (e.g., `USD`, `USDT`, `USDC`)
+
+    Configure these via the [dashboard](https://dashboard.getpartna.com) or the [Update Settings](/api-reference/user/update-settings) endpoint.
+  </Step>
+  <Step title="Create a user account for your customer">
+    Register each customer using [Create Account](/api-reference/account/create-account). This creates a permanent payment account that your customer can deposit to at any time.
+  </Step>
+  <Step title="Complete KYC for the customer">
+    Your customer must verify their identity before making payments. See [Accounts and KYC](/v4/documentation/guides/accounts-and-kyc) for the verification flow. This is a one-time step.
+  </Step>
+  <Step title="Initiate a collection">
+    Use the onramp flow to collect a payment. Call [Onramp and Offramp](/api-reference/ramp/onramp-and-offramp) with `type: "fiatToCrypto"` to create a payment request. The response includes the bank account details where your customer should send their payment.
+
+    Alternatively, if you are using the collect API for simpler collection without crypto conversion, you can create a payment using [Create Transfer](/api-reference/transfer/create-transfer) or [Initiate Transfer](/api-reference/transfer/initiate-transfer).
+  </Step>
+  <Step title="Customer makes payment">
+    Your customer transfers the specified local currency amount to the provided bank account via bank transfer.
+  </Step>
+  <Step title="Receive settlement">
+    Partna converts the local currency and settles in your configured credit currency. You receive a webhook notification when the settlement completes.
+  </Step>
+</Steps>
+
+## Settlement currencies
+
+You can settle in any supported stablecoin (USDT, USDC) or hold balances in local currency. Configure your preferred settlement currency in your merchant settings.
+
+## Checking your balance
+
+Use [Get Balances](/api-reference/user/get-balances) to check your merchant account balances across all currencies:
+
+```bash
+curl --request GET \
+  --url https://staging-api.getpartna.com/v4/user/balances \
+  --header 'x-api-key: YOUR_API_KEY' \
+  --header 'x-api-user: YOUR_USERNAME'
+```
+
+## Withdrawing your balance
+
+Once funds are settled in your account, use [Withdraw](/api-reference/transfer/withdraw) to send funds to an external wallet or bank account.
+
+## Currency conversion
+
+If you hold balances in one currency and need to convert to another, use [Convert Currency](/api-reference/transfer/convert-currency) to convert between supported currencies within your account.
+
+## Use case: SaaS company collecting from Nigerian clients
+
+A typical flow for a SaaS company invoicing Nigerian enterprises:
+
+1. Customer is onboarded and KYC'd once
+2. For each invoice, create a ramp request specifying the NGN amount owed
+3. Share the generated bank account details with your customer
+4. Customer pays via standard Nigerian bank transfer
+5. You receive USDT or USD settlement within hours (typically same-day)
+6. Withdraw to your corporate wallet or bank account as needed
+
+This replaces the traditional process of waiting weeks or months for cross-border wire transfers from Nigeria.

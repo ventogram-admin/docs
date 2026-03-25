@@ -1,0 +1,91 @@
+---
+title: "Testing"
+description: "Test your integration with mock transactions in staging"
+icon: "vial"
+---
+
+The staging environment includes mock endpoints that simulate real transaction behavior. Use them to test your integration end-to-end without moving real funds.
+
+## Mock endpoints
+
+### Mock Deposit
+
+Simulates a crypto deposit to a user's account. Use this to test webhook delivery for `Deposit` events and to fund test accounts for subsequent operations.
+
+```bash
+curl --request POST \
+  --url https://staging-api.getpartna.com/v4/mock/deposit \
+  --header 'Content-Type: application/json' \
+  --header 'x-api-key: YOUR_API_KEY' \
+  --header 'x-api-user: YOUR_USERNAME' \
+  --data '{
+    "amount": 100,
+    "currency": "USDT"
+  }'
+```
+
+See the full reference: [Mock Deposit](/api-reference/mock/mock-deposit)
+
+### Mock Fiat Deposit
+
+Simulates a fiat (local currency) deposit. Use this to test the collect flow and onramp scenarios where a user pays in NGN.
+
+```bash
+curl --request POST \
+  --url https://staging-api.getpartna.com/v4/mock/fiat-deposit \
+  --header 'Content-Type: application/json' \
+  --header 'x-api-key: YOUR_API_KEY' \
+  --header 'x-api-user: YOUR_USERNAME' \
+  --data '{
+    "amount": 50000,
+    "currency": "NGN"
+  }'
+```
+
+See the full reference: [Mock Fiat Deposit](/api-reference/mock/mock-fiat-deposit)
+
+## Testing workflow
+
+A typical testing workflow looks like this:
+
+<Steps>
+  <Step title="Create a test user account">
+    Use [Create Account](/api-reference/account/create-account) to set up a test user. In staging, KYC can be completed with test data.
+  </Step>
+  <Step title="Complete KYC">
+    Run through the [KYC flow](/guides/accounts-and-kyc) using test identity data. In staging, verification succeeds with any valid-format input.
+  </Step>
+  <Step title="Fetch a rate">
+    Call [Get Rate](/api-reference/rate/get-rate) to get a conversion rate and rate key.
+  </Step>
+  <Step title="Initiate a ramp request">
+    Use [Onramp and Offramp](/api-reference/ramp/onramp-and-offramp) to create a test transaction.
+  </Step>
+  <Step title="Simulate the payment">
+    For onramp: call Mock Fiat Deposit to simulate the user's local currency payment. For offramp: call Mock Deposit to simulate an incoming crypto payment.
+  </Step>
+  <Step title="Verify webhook delivery">
+    Confirm your webhook endpoint received the expected events (`Deposit`, `Convert`, `Transfer`, etc.) with valid signatures.
+  </Step>
+</Steps>
+
+## Webhook testing tips
+
+If you do not have a publicly accessible server during development, use a tunneling tool like [ngrok](https://ngrok.com) to expose your local endpoint:
+
+```bash
+ngrok http 3000
+```
+
+Then set your webhook URL to the ngrok forwarding address (e.g., `https://abc123.ngrok.io/webhook`) via the [Update Webhook URL](/api-reference/user/update-webhook-url) endpoint.
+
+## Going to production
+
+When your staging integration is working correctly:
+
+1. Swap the base URL from `https://staging-api.getpartna.com/v4` to `https://api.getpartna.com/v4`
+2. Replace staging credentials with your production `x-api-key` and `x-api-user`
+3. Update your webhook signature verification to use the production public key
+4. Update your webhook URL to your production endpoint
+
+No other code changes are required. The API behaves identically in both environments.

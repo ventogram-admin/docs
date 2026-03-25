@@ -15,21 +15,48 @@
         "tabs": [
           {
             "tab": "Documentation",
+            "icon": "book",
             "groups": [
               {
-                "group": "Overview",
+                "group": "Getting Started",
+                "icon": "rocket",
                 "pages": [
-                  "v4",
-                  "v4webhook"
+                  "v4/documentation/introduction",
+                  "v4/documentation/quickstart",
+                  "v4/documentation/authentication",
+                  "v4/documentation/environments"
+                ]
+              },
+              {
+                "group": "Core Concepts",
+                "icon": "puzzle-piece",
+                "pages": [
+                  "v4/documentation/core-concepts/rates-and-fees",
+                  "v4/documentation/core-concepts/webhooks",
+                  "v4/documentation/core-concepts/errors",
+                  "v4/documentation/core-concepts/testing"
+                ]
+              },
+              {
+                "group": "Guides",
+                "icon": "map",
+                "pages": [
+                  "v4/documentation/guides/onramp",
+                  "v4/documentation/guides/offramp",
+                  "v4/documentation/guides/collect-and-settle",
+                  "v4/documentation/guides/accounts-and-kyc"
                 ]
               }
             ]
           },
           {
             "tab": "API Reference",
-            "groups": [
+            "icon": "code",
+            "pages": [
+              "v4/api-reference/overview",
               {
                 "group": "Account",
+                "icon": "user",
                 "pages": [
                   "api-reference/endpoint/v3/account/get-account",
                   "api-reference/endpoint/v3/account/create-bank-account",
@@ -44,13 +71,25 @@
                 ]
               },
               {
-                "group": "Bank",
+                "group": "Ramp",
+                "icon": "arrow-right-arrow-left",
                 "pages": [
-                  "api-reference/endpoint/v3/bank/get-banks"
+                  "api-reference/endpoint/v3/ramp/get-ramp-requests",
+                  "api-reference/endpoint/v3/ramp/onramp-and-offramp"
+                ]
+              },
+              {
+                "group": "Rate",
+                "icon": "chart-line",
+                "pages": [
+                  "api-reference/endpoint/v3/rate/create-a-custom-ratekey-for-conversion",
+                  "api-reference/endpoint/v3/rate/get-rate",
+                  "api-reference/endpoint/v3/rate/verify-rate-key"
                 ]
               },
               {
                 "group": "Transfer",
+                "icon": "money-bill-transfer",
                 "pages": [
                   "api-reference/endpoint/v3/transfer/convert-currency",
                   "api-reference/endpoint/v3/transfer/get-transfer",
@@ -61,21 +100,8 @@
                 ]
               },
               {
-                "group": "Rate",
-                "pages": [
-                  "api-reference/endpoint/v3/rate/create-a-custom-ratekey-for-conversion",
-                  "api-reference/endpoint/v3/rate/get-rate",
-                  "api-reference/endpoint/v3/rate/verify-rate-key"
-                ]
-              },
-              {
-                "group": "Discount",
-                "pages": [
-                  "api-reference/endpoint/v3/discount/get-discounts"
-                ]
-              },
-              {
                 "group": "KYC",
+                "icon": "id-card",
                 "pages": [
                   "api-reference/endpoint/v3/kyc/initiate-bvn-kyc",
                   "api-reference/endpoint/v3/kyc/merchant-kyc-users-manually",
@@ -88,43 +114,29 @@
                 ]
               },
               {
-                "group": "MFA",
+                "group": "Bank",
+                "icon": "building-columns",
                 "pages": [
-                  "api-reference/endpoint/v3/mfa/get-account-mfa",
-                  "api-reference/endpoint/v3/mfa/validate-account-mfa",
-                  "api-reference/endpoint/v3/mfa/enable-account-mfa",
-                  "api-reference/endpoint/v3/mfa/disable-account-mfa"
+                  "api-reference/endpoint/v3/bank/get-banks"
                 ]
               },
               {
-                "group": "Mock",
+                "group": "Discount",
+                "icon": "percent",
                 "pages": [
-                  "api-reference/endpoint/v3/mock/mock-deposit",
-                  "api-reference/endpoint/v3/mock/mock-fiat-deposit"
-                ]
-              },
-              {
-                "group": "Pricing",
-                "pages": [
-                  "api-reference/endpoint/v3/pricing/get-pending-pricing",
-                  "api-reference/endpoint/v3/pricing/pricing-alert"
-                ]
-              },
-              {
-                "group": "Ramp",
-                "pages": [
-                  "api-reference/endpoint/v3/ramp/get-ramp-requests",
-                  "api-reference/endpoint/v3/ramp/onramp-and-offramp"
+                  "api-reference/endpoint/v3/discount/get-discounts"
                 ]
               },
               {
                 "group": "Supported",
+                "icon": "coins",
                 "pages": [
                   "api-reference/endpoint/v3/supported/get-supported-assets"
                 ]
               },
               {
                 "group": "User",
+                "icon": "gear",
                 "pages": [
                   "api-reference/endpoint/v3/user/update-user",
                   "api-reference/endpoint/v3/user/create-user",
@@ -144,6 +156,31 @@
                   "api-reference/endpoint/v3/user/delete-webhook-url",
                   "api-reference/endpoint/v3/user/get-customers-account-profile"
                 ]
+              },
+              {
+                "group": "MFA",
+                "icon": "shield-halved",
+                "pages": [
+                  "api-reference/endpoint/v3/mfa/get-account-mfa",
+                  "api-reference/endpoint/v3/mfa/validate-account-mfa",
+                  "api-reference/endpoint/v3/mfa/enable-account-mfa",
+                  "api-reference/endpoint/v3/mfa/disable-account-mfa"
+                ]
+              },
+              {
+                "group": "Mock (Staging Only)",
+                "icon": "flask",
+                "pages": [
+                  "api-reference/endpoint/v3/mock/mock-deposit",
+                  "api-reference/endpoint/v3/mock/mock-fiat-deposit"
+                ]
+              },
+              {
+                "group": "Pricing",
+                "pages": [
+                  "api-reference/endpoint/v3/pricing/get-pending-pricing",
+                  "api-reference/endpoint/v3/pricing/pricing-alert"
+                ]
               }
             ]
           }
@@ -151,6 +188,7 @@
       },
       {
         "version": "v2",
+        "hidden": true,
         "tabs": [
           {
             "tab": "Documentation",
@@ -263,7 +301,7 @@
     "primary": {
       "type": "button",
       "label": "Dashboard",
-      "href": "https://app.getpartna.com"
+      "href": "https://dashboard.getpartna.com"
     }
   },
   "seo": {
