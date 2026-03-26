@@ -1,0 +1,72 @@
+---
+title: "API Reference"
+description: "Complete reference for all Partna API endpoints"
+icon: "book-open"
+---
+
+This is the complete reference for the Partna v4 API. All endpoints use the same base URL and authentication pattern.
+
+## Base URLs
+
+| Environment | Base URL |
+| --- | --- |
+| Staging | `https://staging-api.getpartna.com/v4` |
+| Production | `https://api.getpartna.com/v4` |
+
+## Authentication
+
+All requests require two headers:
+
+```text
+x-api-key: YOUR_API_KEY
+x-api-user: YOUR_USERNAME
+```
+
+See [Authentication](/v4/documentation/authentication) for details.
+
+## Request format
+
+All `POST` and `PUT` requests accept JSON bodies. Set the `Content-Type: application/json` header.
+
+## Response format
+
+All responses return JSON with this structure:
+
+```json
+{
+  "data": { },
+  "message": "success"
+}
+```
+
+Error responses include a descriptive message:
+
+```json
+{
+  "message": "Description of what went wrong"
+}
+```
+
+## Endpoint groups
+
+**Account**: Create and manage user accounts, bank accounts, and profiles.
+
+**Ramp**: Initiate onramp (fiat-to-crypto) and offramp (crypto-to-fiat) transactions. This is the core of the Partna API.
+
+**Rate**: Fetch conversion rates and create/verify rate keys for locking prices.
+
+**Transfer**: Create transfers, initiate payouts, convert currencies, and withdraw balances.
+
+**KYC**: Identity verification flows including BVN verification, OTP confirmation, and bank account resolution.
+
+**Bank**: List supported banks by currency.
+
+**Discount**: Fetch current volume-based discount tiers.
+
+**Supported**: List supported crypto assets and networks.
+
+**User**: Manage merchant settings, API keys, webhook URLs, balances, and admin access.
+
+**MFA**: Enable and manage multi-factor authentication for accounts.
+
+**Mock (Staging Only)**: Simulate deposits for testing.

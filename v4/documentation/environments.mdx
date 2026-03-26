@@ -1,0 +1,42 @@
+---
+title: "Environments"
+description: "Staging and production base URLs"
+icon: "server"
+---
+
+Partna provides separate staging and production environments. Build and test in staging before deploying to production.
+
+## Base URLs
+
+| Environment | Base URL |
+| --- | --- |
+| **Staging** | `https://staging-api.getpartna.com/v4` |
+| **Production** | `https://api.getpartna.com/v4` |
+
+All endpoint paths in this documentation are relative to these base URLs. For example, the Get Rate endpoint is:
+
+- Staging: `https://staging-api.getpartna.com/v4/rate`
+- Production: `https://api.getpartna.com/v4/rate`
+
+## Staging environment
+
+The staging environment mirrors production behavior but uses test data. Key differences:
+
+- **No real money moves.** Transactions are simulated.
+- **Mock endpoints available.** Use [Mock Deposit](/api-reference/endpoint/v3/mock/mock-deposit) and [Mock Fiat Deposit](/api-reference/endpoint/v3/mock/mock-fiat-deposit) to simulate incoming payments and test your webhook handling.
+- **Separate credentials.** Your staging `x-api-key` and `x-api-user` are different from production. They are provided during onboarding.
+
+Use staging to validate your integration end-to-end before switching to production credentials.
+
+## Production environment
+
+The production environment processes real transactions with real funds. Switch to production by changing the base URL and credentials. No other code changes are required.
+
+## Dashboard
+
+Manage your merchant settings, view transactions, and configure webhooks:
+
+| Environment | Dashboard |
+| :-- | :-- |
+| **Staging** | [staging-dashboard.getpartna.com](https://staging-dashboard.getpartna.com/) |
+| **Production** | [dashboard.getpartna.com](https://dashboard.getpartna.com/) |

@@ -1,0 +1,79 @@
+---
+title: "Authentication"
+description: "Authenticate your API requests with API keys"
+icon: "key"
+---
+
+Every request to the Partna API must include two headers: `x-api-key` and `x-api-user`.
+
+## Headers
+
+| Header | Description |
+| --- | --- |
+| `x-api-key` | Your API key. Provided during onboarding for both staging and production. |
+| `x-api-user` | Your merchant username. Provided during onboarding. |
+
+## Example request
+
+<CodeGroup>
+
+```bash cURL
+curl --request GET \
+  --url https://staging-api.getpartna.com/v4/rate \
+  --header 'x-api-key: sk_staging_abc123...' \
+  --header 'x-api-user: your-merchant-username'
+```
+
+```python Python
+import requests
+
+headers = {
+    "x-api-key": "sk_staging_abc123...",
+    "x-api-user": "your-merchant-username"
+}
+
+response = requests.get(
+    "https://staging-api.getpartna.com/v4/rate",
+    headers=headers
+)
+```
+
+```javascript Node.js
+const headers = {
+  "x-api-key": "sk_staging_abc123...",
+  "x-api-user": "your-merchant-username"
+};
+
+const response = await fetch("https://staging-api.getpartna.com/v4/rate", {
+  headers
+});
+```
+
+</CodeGroup>
+
+## Managing API keys
+
+You can generate, rotate, and revoke API keys programmatically:
+
+| Action | Endpoint |
+| --- | --- |
+| Generate a new key | [POST /user/api-key](/api-reference/endpoint/v3/user/generate-api-key) |
+| List all keys | [GET /user/api-keys](/api-reference/endpoint/v3/user/get-api-keys) |
+| View key scopes | [GET /user/api-key/scopes](/api-reference/endpoint/v3/user/get-api-key-scopes) |
+| Invalidate a key | [POST /user/api-key/invalidate](/api-reference/endpoint/v3/user/invalidate-api-key) |
+| Delete a key | [DELETE /user/api-key](/api-reference/endpoint/v3/user/delete-api-key) |
+
+## Security best practices
+
+**Never expose your API key in client-side code.** All API calls should be made from your backend server. The `x-api-key` grants full access to your merchant account.
+
+**Use separate keys for staging and production.** Your staging credentials only work against the staging environment and vice versa.
+
+**Rotate keys periodically.** Use the Generate API Key endpoint to create a new key, update your integration, then invalidate the old key.
+
+## Getting credentials
+
+If you do not have credentials yet, [request access here](https://forms.getpartna.com/get-started). The Partna team will contact you to complete onboarding and set up your merchant account. Once your account is active, generate your API keys from the dashboard:
+
+- Staging: [staging-dashboard.getpartna.com](https://staging-dashboard.getpartna.com/)
+- Production: [dashboard.getpartna.com](https://dashboard.getpartna.com/)

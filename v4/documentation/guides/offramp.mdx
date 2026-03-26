@@ -1,0 +1,118 @@
+---
+title: "Offramp"
+description: "Let your users convert crypto to local currency"
+icon: "arrow-down"
+---
+
+The offramp flow lets your users send crypto (USDT, USDC, BTC, ETH) and receive local currency (NGN, GHS, KES) in their bank account or mobile money wallet. Partna handles the crypto receipt, conversion, and local currency payout.
+
+## How it works
+
+<Steps>
+  <Step title="Create a user account">
+    Register your user with Partna using [Create Account](/api-reference/endpoint/v3/account/create-account) if they do not already have one.
+  </Step>
+  <Step title="Complete KYC">
+    The user must verify their identity. See [Accounts and KYC](/v4/documentation/guides/accounts-and-kyc). Users only need to verify once.
+  </Step>
+  <Step title="Resolve the destination bank account">
+    Verify the user's bank account details using [Resolve Bank](/api-reference/endpoint/v3/kyc/resolve-bank). This confirms the account number and returns the account holder's name.
+
+    ```bash
+    curl --request POST \
+      --url https://staging-api.getpartna.com/v4/kyc/resolve-account \
+      --header 'Content-Type: application/json' \
+      --header 'x-api-key: YOUR_API_KEY' \
+      --header 'x-api-user: YOUR_USERNAME' \
+      --data '{
+        "accountNumber": "0123456789",
+        "bankCode": "044",
+        "currency": "NGN"
+      }'
+    ```
+
+    Response:
+
+    ```json
+    {
+      "data": {
+        "accountName": "JANE DOE",
+        "accountNumber": "0123456789"
+      },
+      "message": "success"
+    }
+    ```
+  </Step>
+  <Step title="Fetch a rate">
+    Call [Get Rate](/api-reference/endpoint/v3/rate/get-rate) with `fromCurrency=USDT` and `toCurrency=NGN`. Save the rate `key`.
+
+    ```bash
+    curl --request GET \
+      --url 'https://staging-api.getpartna.com/v4/rate?fromCurrency=USDT&toCurrency=NGN&fromAmount=100' \
+      --header 'x-api-key: YOUR_API_KEY' \
+      --header 'x-api-user: YOUR_USERNAME'
+    ```
+  </Step>
+  <Step title="Initiate the offramp">
+    Call [Onramp and Offramp](/api-reference/endpoint/v3/ramp/onramp-and-offramp) with `type: "cryptoToFiat"`. Include the rate key, the user's bank details, and the crypto amount.
+
+    ```bash
+    curl --request POST \
+      --url https://staging-api.getpartna.com/v4/ramp \
+      --header 'Content-Type: application/json' \
+      --header 'x-api-key: YOUR_API_KEY' \
+      --header 'x-api-user: YOUR_USERNAME' \
+      --data '{
+        "type": "cryptoToFiat",
+        "fromCurrency": "USDT",
+        "fromNetwork": "tron",
+        "fromAmount": 100,
+        "toCurrency": "NGN",
+        "toNetwork": "naira",
+        "accountName": "JANE DOE",
+        "accountNumber": "0123456789",
+        "bankCode": "044",
+        "rateKey": "RATE_KEY_FROM_STEP_4",
+        "rampReference": "your-unique-reference-id"
+      }'
+    ```
+
+    The response includes a crypto wallet address where the user should send their USDT.
+  </Step>
+  <Step title="User sends crypto">
+    The user sends the specified crypto amount to the wallet address returned in step 5.
+  </Step>
+  <Step title="Partna converts and pays out">
+    Once Partna confirms the crypto deposit, the equivalent local currency is sent to the user's bank account. A webhook event is dispatched to your endpoint.
+  </Step>
+</Steps>
+
+## Key parameters
+
+| Parameter | Description |
+| --- | --- |
+| `type` | Must be `cryptoToFiat` for offramp |
+| `fromCurrency` | The crypto being sent (e.g., `USDT`, `USDC`, `BTC`) |
+| `fromNetwork` | The blockchain network (e.g., `tron`, `ethereum`, `solana`) |
+| `toCurrency` | The local currency for payout (e.g., `NGN`) |
+| `toNetwork` | The payout network (e.g., `naira`, `mobileMoney`, `mpesa`) |
+| `accountName` | The bank account holder's name (from Resolve Bank) |
+| `accountNumber` | The destination bank account number |
+| `bankCode` | The bank code (from [Get Banks](/api-reference/endpoint/v3/bank/get-banks)) |
+| `rateKey` | The rate key from [Get Rate](/api-reference/endpoint/v3/rate/get-rate) |
+| `rampReference` | Your unique reference for this transaction |
+
+## Custom payout amounts
+
+By default, Partna pays the full converted amount to the user's bank account. If you want to pay a different amount (e.g., to build in a margin), you can adjust the payout using the [Withdraw](/api-reference/endpoint/v3/transfer/withdraw) endpoint after the crypto deposit is confirmed. This requires sufficient funds in your payout balance.
+
+## Getting bank codes
+
+Use [Get Banks](/api-reference/endpoint/v3/bank/get-banks) to fetch the list of supported banks and their codes for a given currency:
+
+```bash
+curl --request GET \
+  --url 'https://staging-api.getpartna.com/v4/bank?currency=NGN' \
+  --header 'x-api-key: YOUR_API_KEY' \
+  --header 'x-api-user: YOUR_USERNAME'
+```

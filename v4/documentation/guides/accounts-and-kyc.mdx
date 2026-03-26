@@ -1,0 +1,137 @@
+---
+title: "Accounts and KYC"
+description: "Create user accounts and verify identity"
+icon: "id-card"
+---
+
+Every end user who transacts through Partna needs an account and must complete identity verification (KYC). This is a regulatory requirement for all transactions. Users only need to verify once.
+
+## Creating an account
+
+Use [Create Account](/api-reference/endpoint/v3/account/create-account) to register a new user:
+
+```bash
+curl --request POST \
+  --url https://staging-api.getpartna.com/v4/account \
+  --header 'Content-Type: application/json' \
+  --header 'x-api-key: YOUR_API_KEY' \
+  --header 'x-api-user: YOUR_USERNAME' \
+  --data '{
+    "email": "user@example.com",
+    "accountName": "Jane Doe"
+  }'
+```
+
+You can also use [Register Account](/api-reference/endpoint/v3/account/register-account) if your merchant registration type is set to "open", which creates a pending registration that the user can complete later.
+
+## KYC verification flow
+
+Identity verification in Nigeria uses BVN (Bank Verification Number). The flow depends on the user's country and the available verification methods.
+
+<Steps>
+  <Step title="Initiate KYC" stepNumber={1}>
+    Call [Initiate KYC](/api-reference/endpoint/v3/kyc/initiate-bvn-kyc) with the user's identity information (e.g., BVN for Nigeria). This triggers an OTP to be sent to the phone number associated with the user's identity.
+
+    ```bash
+    curl --request POST \
+      --url https://staging-api.getpartna.com/v4/kyc/initiate \
+      --header 'Content-Type: application/json' \
+      --header 'x-api-key: YOUR_API_KEY' \
+      --header 'x-api-user: YOUR_USERNAME' \
+      --data '{
+        "bvn": "12345678901",
+        "accountName": "user-account-name"
+      }'Check supported verification methods
+    ```
+  </Step>
+  <Step title="Confirm phone number">
+    After OTP verification, confirm the user's phone number using [Confirm Phone](/api-reference/endpoint/v3/kyc/confirm-phone).
+  </Step>
+  <Step title="Check supported verification methods" stepNumber={3}>
+    Call [Supported Verification Methods](/api-reference/endpoint/v3/kyc/supported-verification-methods) to see which identity verification methods are available for a given country.
+
+    ```bash
+    curl --request GET \
+      --url 'https://staging-api.getpartna.com/v4/kyc/verification-methods?country=NG' \
+      --header 'x-api-key: YOUR_API_KEY' \
+      --header 'x-api-user: YOUR_USERNAME'
+    ```
+  </Step>
+  <Step title="Confirm OTP">
+    Once the user receives the OTP, submit it using [Confirm KYC OTP](/api-reference/endpoint/v3/kyc/confirm-kyc-otp).
+
+    ```bash
+    curl --request PUT \
+      --url https://staging-api.getpartna.com/v4/kyc/confirm-otp \
+      --header 'Content-Type: application/json' \
+      --header 'x-api-key: YOUR_API_KEY' \
+      --header 'x-api-user: YOUR_USERNAME' \
+      --data '{
+        "otp": "123456",
+        "accountName": "user-account-name"
+      }'
+    ```
+  </Step>
+</Steps>
+
+<Tip>
+  In some cases, the user may need to select how they receive the OTP (e.g., SMS or phone call). 
+</Tip>
+
+After successful verification, you will receive a `verification.success` webhook event. The user can now transact.
+
+## Merchant-managed KYC
+
+If you have already verified your users' identities through your own KYC process, you can use [Merchant KYC Manually](/api-reference/endpoint/v3/kyc/merchant-kyc-users-manually) to mark a user as verified without going through Partna's KYC flow. This requires approval from the Partna team during onboarding.
+
+```bash
+curl --request POST \
+  --url https://staging-api.getpartna.com/v4/kyc/merchant-kyc \
+  --header 'Content-Type: application/json' \
+  --header 'x-api-key: YOUR_API_KEY' \
+  --header 'x-api-user: YOUR_USERNAME' \
+  --data '{
+    "accountName": "user-account-name",
+    "firstName": "Jane",
+    "lastName": "Doe",
+    "dateOfBirth": "1990-01-15"
+  }'
+```
+
+## Checking KYC status
+
+Use [Check Manual KYC](/api-reference/endpoint/v3/kyc/check-for-manual-kyc) to check whether a user has completed identity verification.
+
+## Resolving bank accounts
+
+Before initiating payouts or offramp transactions, verify the destination bank account using [Resolve Bank](/api-reference/endpoint/v3/kyc/resolve-bank):
+
+```bash
+curl --request POST \
+  --url https://staging-api.getpartna.com/v4/kyc/resolve-account \
+  --header 'Content-Type: application/json' \
+  --header 'x-api-key: YOUR_API_KEY' \
+  --header 'x-api-user: YOUR_USERNAME' \
+  --data '{
+    "accountNumber": "0123456789",
+    "bankCode": "044",
+    "currency": "NGN"
+  }'
+```
+
+This returns the account holder's name so you can confirm it matches before sending funds.
+
+## Creating bank accounts for users
+
+Use [Create Bank Account](/api-reference/endpoint/v3/account/create-bank-account) to link a verified bank account to a user's Partna account. This is required before the user can receive local currency payouts.
+
+## Account management
+
+| Action | Endpoint |
+| --- | --- |
+| Get account details | [Get Account](/api-reference/endpoint/v3/account/get-account) |
+| List accounts | [Get Accounts Details](/api-reference/endpoint/v3/account/get-accounts-details) |
+| Get user profile | [Get Account Profile](/api-reference/endpoint/v3/account/get-account-profile) |
+| Update email | [Update Account Email](/api-reference/endpoint/v3/account/update-account-email) |
+| Check permissions | [Get Account Permissions](/api-reference/endpoint/v3/account/get-account-permissions) |
+| Search accounts | [Search Account](/api-reference/endpoint/v3/account/search-account) |

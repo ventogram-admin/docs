@@ -1,0 +1,110 @@
+---
+title: "Onramp"
+description: "Let your users convert local currency to crypto"
+icon: "arrow-up"
+---
+
+The onramp flow lets your users pay in local currency (NGN, GHS, KES) and receive crypto (USDT, USDC, BTC, ETH) in their wallet. Partna handles the payment collection, currency conversion, and crypto delivery.
+
+## How it works
+
+<Steps>
+  <Step title="Create a user account">
+    Register your user with Partna using [Create Account](/api-reference/endpoint/v3/account/create-account). This creates a permanent account that can receive payments at any time.
+  </Step>
+  <Step title="Complete KYC">
+    Your user must verify their identity before transacting. See [Accounts and KYC](/v4/documentation/guides/accounts-and-kyc) for the full verification flow. Users only need to verify once.
+  </Step>
+  <Step title="Fetch a rate">
+    Call [Get Rate](/api-reference/endpoint/v3/rate/get-rate) with `fromCurrency=NGN` and `toCurrency=USDT` (or your desired fiat/crypto). Save the `key` from the response.
+
+    ```bash
+    curl --request GET \
+      --url 'https://staging-api.getpartna.com/v4/rate?fromCurrency=NGN&toCurrency=USDT&fromAmount=10000' \
+      --header 'x-api-key: YOUR_API_KEY' \
+      --header 'x-api-user: YOUR_USERNAME'
+    ```
+  </Step>
+  <Step title="Initiate the onramp">
+    Call [Onramp and Offramp](/api-reference/endpoint/v3/ramp/onramp-and-offramp) with `type: "fiatToCrypto"`. Include the rate key, amounts, currency pair, and the user's crypto wallet address.
+
+    ```bash
+    curl --request POST \
+      --url https://staging-api.getpartna.com/v4/ramp \
+      --header 'Content-Type: application/json' \
+      --header 'x-api-key: YOUR_API_KEY' \
+      --header 'x-api-user: YOUR_USERNAME' \
+      --data '{
+        "type": "fiatToCrypto",
+        "fromCurrency": "NGN",
+        "fromNetwork": "naira",
+        "fromAmount": 10000,
+        "toCurrency": "USDT",
+        "toNetwork": "tron",
+        "cryptoAddress": "TXyz123...userWalletAddress",
+        "rateKey": "RATE_KEY_FROM_STEP_3",
+        "rampReference": "your-unique-reference-id"
+      }'
+    ```
+
+    The response includes a bank account (`accountName`, `accountNumber`, `bankName`) where the user should send their NGN payment.
+  </Step>
+  <Step title="User makes payment">
+    The user transfers the specified NGN amount to the bank account returned in step 4. This can be done via bank transfer or any supported local payment method.
+  </Step>
+  <Step title="Partna converts and delivers">
+    Once Partna confirms the fiat payment, the equivalent crypto is sent to the user's wallet address. A webhook event is dispatched to your endpoint.
+  </Step>
+</Steps>
+
+## Example response (step 4)
+
+```json
+{
+  "data": {
+    "accountName": "JANE DOE",
+    "accountNumber": "9003001002",
+    "bankName": "Paystack-Titan",
+    "currentRate": 0.000597221725,
+    "discountApplied": "0",
+    "expiryDate": 1755873600,
+    "feeInFromCurrency": 16.74,
+    "feeInToCurrency": 0.01,
+    "fromAmount": 10000,
+    "fromCurrency": "NGN",
+    "fromNetwork": "naira",
+    "rampReference": "f32c3925063447a54905d31305a14da5",
+    "toAmount": 5.872,
+    "toCurrency": "USDT",
+    "toNetwork": "tron",
+    "totalFeesInFromCurrency": 16.74,
+    "totalFeesInToCurrency": 0.01
+  },
+  "message": "request completed"
+}
+```
+
+## Key parameters
+
+| Parameter | Description |
+| --- | --- |
+| `type` | Must be `fiatToCrypto` for onramp |
+| `fromCurrency` | The local currency the user is paying in (e.g., `NGN`) |
+| `fromNetwork` | The payment network for the local currency (e.g., `naira`, `mobileMoney`, `mpesa`) |
+| `toCurrency` | The crypto the user will receive (e.g., `USDT`, `USDC`, `BTC`) |
+| `toNetwork` | The blockchain network for delivery (e.g., `tron`, `ethereum`, `solana`) |
+| `cryptoAddress` | The user's wallet address to receive crypto |
+| `rateKey` | The rate key from [Get Rate](/api-reference/endpoint/v3/rate/get-rate) |
+| `rampReference` | Your unique reference for this transaction (use for idempotency) |
+| `fromAmount` | The amount in local currency |
+| `cancelPendingRampRequest` | Set to `true` to cancel any existing pending request for this user. Default: `false`. |
+| `expireAction` | What happens if the rate expires: `useCurrentRate` (default) or `deposit` |
+| `rampExpTime` | Custom expiration time in seconds. Default: 1 hour. |
+
+## Handling pending requests
+
+Each user can only have one active ramp request at a time. If you need to create a new request while one is pending, set `cancelPendingRampRequest: true` in your request body.
+
+## Tracking status
+
+Use [Get Ramp Requests](/api-reference/endpoint/v3/ramp/get-ramp-requests) to check the status of a ramp request. You will also receive webhook notifications as the transaction progresses through each stage.
