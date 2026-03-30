@@ -1,9 +1,9 @@
 import { $ } from "bun";
 
 const existingPartnaFile = (await import("./api-reference/partna.json")).default;
-const mintJson = (await import("./mint.json")).default;
+const docJson = (await import("./docs.json")).default;
 
-const updatedPartnaFile = (await (await Bun.fetch("https://staging-api.getpartna.com/v4/docs")).json());
+const updatedPartnaFile: any = (await (await Bun.fetch("https://staging-api.getpartna.com/v4/docs")).json());
 
 if (JSON.stringify(updatedPartnaFile, null, 2) == JSON.stringify(existingPartnaFile, null, 2)) {
     console.log("No changes detected in the OpenAPI spec. Exiting.");
@@ -20,11 +20,7 @@ outputJson.map((item: any) => {
     item["version"] = "v4";
 });
 
-const firstV4Index = mintJson.navigation.findIndex(item => item.group === "Account" && item.version === "v4");
-const count = mintJson.navigation.length - firstV4Index
-mintJson.navigation.splice(firstV4Index, count, ...outputJson);
-
-await Bun.write("./mint.json", JSON.stringify(mintJson, null, 2));
+await Bun.write("./docs.json", JSON.stringify(docJson, null, 2));
 
 // console.log({ outputJson });
 // Bun.spawn(["bun", "-c", script]);

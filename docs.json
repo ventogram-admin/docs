@@ -75,7 +75,8 @@
                 "icon": "arrow-right-arrow-left",
                 "pages": [
                   "api-reference/endpoint/v3/ramp/get-ramp-requests",
-                  "api-reference/endpoint/v3/ramp/onramp-and-offramp"
+                  "api-reference/endpoint/v3/ramp/onramp-and-offramp",
+                  "api-reference/endpoint/v3/ramp/calculate-ramp-fees-from-toamount-or-fromamount"
                 ]
               },
               {
@@ -154,7 +155,10 @@
                   "api-reference/endpoint/v3/user/get-webhook-url",
                   "api-reference/endpoint/v3/user/update-webhook-url",
                   "api-reference/endpoint/v3/user/delete-webhook-url",
-                  "api-reference/endpoint/v3/user/get-customers-account-profile"
+                  "api-reference/endpoint/v3/user/get-customers-account-profile",
+                  "api-reference/endpoint/v3/admin/add-ip-to-whitelist",
+                  "api-reference/endpoint/v3/admin/remove-ip-from-whitelist",
+                  "api-reference/endpoint/v3/admin/get-whitelisted-ips"
                 ]
               },
               {
