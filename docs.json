@@ -34,7 +34,7 @@
                   "v4/documentation/core-concepts/rates-and-fees",
                   "v4/documentation/core-concepts/webhooks",
                   "v4/documentation/core-concepts/errors",
-                  "v4/documentation/core-concepts/testing"
+                  "v4/documentation/core-concepts/testing-1"
                 ]
               },
               {
@@ -184,6 +184,7 @@
               },
               {
                 "group": "Pricing",
+                "icon": "receipt",
                 "pages": [
                   "api-reference/endpoint/v3/pricing/get-pending-pricing",
                   "api-reference/endpoint/v3/pricing/pricing-alert"

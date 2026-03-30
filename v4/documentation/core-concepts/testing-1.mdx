@@ -4,7 +4,7 @@ description: "Test your integration with mock transactions in staging"
 icon: "vial"
 ---
 
-You can use [our mock UI](https://staging-dashboard.getpartna.com/mock/deposit) to execute test transactions in the staging environment. The staging environment also includes mock endpoints which gives more flexibility. Use them to test your integration end-to-end without moving real funds.
+You can use [the mock UI](https://staging-dashboard.getpartna.com/mock/deposit) on the staging dashboard to execute test transactions with a few clicks. The staging environment also includes mock API endpoints for more flexibility. Use them to test your integration end-to-end without moving real funds.
 
 ## Mock endpoints
 
@@ -14,7 +14,7 @@ Simulates a crypto deposit to a user's account. Use this to test webhook deliver
 
 ```bash
 curl --request POST \
-  --url https://api.getpartna.com/v4/mock/deposit \
+  --url https://staging-api.getpartna.com/v4/mock/deposit \
   --header 'Content-Type: application/json' \
   --header 'x-api-key: YOUR_API_KEY' \
   --header 'x-api-user: YOUR_USERNAME' \
@@ -28,11 +28,11 @@ See the full reference: [Mock Deposit](/api-reference/endpoint/v3/mock/mock-depo
 
 ### Mock Fiat Deposit
 
-Simulates a fiat (local currency) deposit. Use this to test the collect flow and onramp scenarios where a user pays in NGN.
+Simulates a fiat (local currency) deposit. Use this to test the collect flow and onramp scenarios where a user pays in fiat.
 
 ```bash
 curl --request POST \
-  --url https://api.getpartna.com/v4/mock/fiat-deposit \
+  --url https://staging-api.getpartna.com/v4/mock/fiat-deposit \
   --header 'Content-Type: application/json' \
   --header 'x-api-key: YOUR_API_KEY' \
   --header 'x-api-user: YOUR_USERNAME' \
@@ -42,9 +42,9 @@ curl --request POST \
   }'
 ```
 
-See the full reference: [Mock Fiat Deposit](/api-reference/endpoint/v3/mock/mock-fiat-deposit)
+See the full reference: [Mock Fiat Deposit](/api-reference/mock/mock-fiat-deposit)
 
-There is also a mock deposit page on the staging dashboard if you prefer a UI: [Mock Deposits](https://staging-dashboard.getpartna.com/mock/deposit).
+You can also run these from the staging dashboard UI: [Mock Deposits](https://staging-dashboard.getpartna.com/mock/deposit).
 
 ## Testing workflow
 
@@ -52,16 +52,16 @@ A typical testing workflow looks like this:
 
 <Steps>
   <Step title="Create a test user account">
-    Use [Create Account](/api-reference/endpoint/v3/account/create-account) to set up a test user. In staging, KYC can be completed with test data.
+    Use [Create Account](/api-reference/account/create-account) to set up a test user. In staging, KYC can be completed with test data.
   </Step>
   <Step title="Complete KYC">
-    Run through the [KYC flow](/v4/documentation/guides/accounts-and-kyc) using test identity data. In staging, verification succeeds with any valid-format input.
+    Run through the [KYC flow](/guides/accounts-and-kyc) using test identity data. In staging, verification succeeds with any valid-format input.
   </Step>
   <Step title="Fetch a rate">
-    Call [Get Rate](/api-reference/endpoint/v3/rate/get-rate) to get a conversion rate and rate key.
+    Call [Get Rate](/api-reference/rate/get-rate) to get a conversion rate and rate key.
   </Step>
   <Step title="Initiate a ramp request">
-    Use [Onramp and Offramp](/api-reference/endpoint/v3/ramp/onramp-and-offramp) to create a test transaction.
+    Use [Onramp and Offramp](/api-reference/ramp/onramp-and-offramp) to create a test transaction.
   </Step>
   <Step title="Simulate the payment">
     For onramp: call Mock Fiat Deposit to simulate the user's local currency payment. For offramp: call Mock Deposit to simulate an incoming crypto payment.
@@ -73,13 +73,13 @@ A typical testing workflow looks like this:
 
 ## Webhook testing tips
 
-If you do not have a publicly accessible server during development, use a tunneling tool like [ngrok](https://ngrok.com) or [webhook.site](http://webhook.site/) to expose your local endpoint:
+If you do not have a publicly accessible server during development, use a tunneling tool like [ngrok](https://ngrok.com) or [webhook.site](https://webhook.site) to expose your local endpoint:
 
 ```bash
 ngrok http 3000
 ```
 
-Then set your webhook URL to the ngrok forwarding address or your unique webhook.site URL (e.g., `https://abc123.ngrok.io/webhook`, `http://webhook.site/2822ce2e-8c88-48b3-a8ff-ec891343013d`) via the [Update Webhook URL](/api-reference/endpoint/v3/user/update-webhook-url) endpoint.
+Then set your webhook URL to the forwarding address (e.g., `https://abc123.ngrok.io/webhook`) via the [Update Webhook URL](/api-reference/user/update-webhook-url) endpoint. If you just want to inspect payloads without writing code, webhook.site gives you a unique URL that logs every request it receives.
 
 ## Going to production
 
