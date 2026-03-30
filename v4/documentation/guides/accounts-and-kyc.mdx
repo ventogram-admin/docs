@@ -12,7 +12,7 @@ Use [Create Account](/api-reference/endpoint/v3/account/create-account) to regis
 
 ```bash
 curl --request POST \
-  --url https://staging-api.getpartna.com/v4/account \
+  --url https://api.getpartna.com/v4/account \
   --header 'Content-Type: application/json' \
   --header 'x-api-key: YOUR_API_KEY' \
   --header 'x-api-user: YOUR_USERNAME' \
@@ -34,7 +34,7 @@ Identity verification in Nigeria uses BVN (Bank Verification Number). The flow d
 
     ```bash
     curl --request POST \
-      --url https://staging-api.getpartna.com/v4/kyc/initiate \
+      --url https://api.getpartna.com/v4/kyc/initiate \
       --header 'Content-Type: application/json' \
       --header 'x-api-key: YOUR_API_KEY' \
       --header 'x-api-user: YOUR_USERNAME' \
@@ -52,7 +52,7 @@ Identity verification in Nigeria uses BVN (Bank Verification Number). The flow d
 
     ```bash
     curl --request GET \
-      --url 'https://staging-api.getpartna.com/v4/kyc/verification-methods?country=NG' \
+      --url 'https://api.getpartna.com/v4/kyc/verification-methods?country=NG' \
       --header 'x-api-key: YOUR_API_KEY' \
       --header 'x-api-user: YOUR_USERNAME'
     ```
@@ -62,7 +62,7 @@ Identity verification in Nigeria uses BVN (Bank Verification Number). The flow d
 
     ```bash
     curl --request PUT \
-      --url https://staging-api.getpartna.com/v4/kyc/confirm-otp \
+      --url https://api.getpartna.com/v4/kyc/confirm-otp \
       --header 'Content-Type: application/json' \
       --header 'x-api-key: YOUR_API_KEY' \
       --header 'x-api-user: YOUR_USERNAME' \
@@ -86,7 +86,7 @@ If you have already verified your users' identities through your own KYC process
 
 ```bash
 curl --request POST \
-  --url https://staging-api.getpartna.com/v4/kyc/merchant-kyc \
+  --url https://api.getpartna.com/v4/kyc/merchant-kyc \
   --header 'Content-Type: application/json' \
   --header 'x-api-key: YOUR_API_KEY' \
   --header 'x-api-user: YOUR_USERNAME' \
@@ -104,7 +104,7 @@ Before initiating payouts or offramp transactions, verify the destination bank a
 
 ```bash
 curl --request POST \
-  --url https://staging-api.getpartna.com/v4/kyc/resolve-account \
+  --url https://api.getpartna.com/v4/kyc/resolve-account \
   --header 'Content-Type: application/json' \
   --header 'x-api-key: YOUR_API_KEY' \
   --header 'x-api-user: YOUR_USERNAME' \

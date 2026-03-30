@@ -2872,7 +2872,7 @@
     },
     "/kyc/verification-method": {
       "put": {
-        "description": "Choose KYC verification method.",
+        "description": "Choose BVN verification method.",
         "operationId": "put-kyc-verification-method",
         "requestBody": {
           "content": {
@@ -2931,50 +2931,19 @@
             "content": {
               "application/json": {
                 "schema": {
-									"example": {
-										"data": {
-											"attempts": 1,
-											"expectedPayment": "500.00",
-											"maskedPhoneNumber": "080****2345",
-											"otp": "123456",
-											"partnaBankDetails": "Test Bank - 1234567890",
-											"subscriptionId": "dev-username-accountname"
-										},
-										"message": "success"
-									},
+                  "example": {
+                    "message": "OTP sent successfully"
+                  },
                   "properties": {
-										"data": {
-											"properties": {
-												"attempts": {
-													"type": "number"
-												},
-												"expectedPayment": {
-													"type": "string"
-												},
-												"maskedPhoneNumber": {
-													"type": "string"
-												},
-												"otp": {
-													"type": "string"
-												},
-												"partnaBankDetails": {
-													"type": "string"
-												},
-												"subscriptionId": {
-													"type": "string"
-												}
-											},
-											"type": "object"
-										},
                     "message": {
                       "type": "string"
                     }
-									},
-									"type": "object"
-                  }
+                  },
+                  "type": "object"
                 }
-						},
-						"description": "put kyc handle otp ok"
+              }
+            },
+            "description": "put kyc verification method ok"
           }
         },
         "security": [
@@ -2986,7 +2955,7 @@
             "authorization": []
           }
         ],
-        "summary": "Handle KYC OTP Method",
+        "summary": "Handle BVN OTP Method",
         "tags": [
           "KYC"
         ]
@@ -6978,13 +6947,14 @@
     },
     "/transfer/initiate": {
       "post": {
-        "description": "Initiate transfer.",
+        "description": "Initiate transfer for KES or GHS. This is not required for NGN.",
         "operationId": "post-transfer-initiate",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
                 "example": {
+                  "-": false,
                   "accountName": "",
                   "amount": 0,
                   "currency": "",
@@ -6993,6 +6963,9 @@
                   "transactionReference": ""
                 },
                 "properties": {
+                  "-": {
+                    "type": "boolean"
+                  },
                   "accountName": {
                     "type": "string"
                   },
@@ -7022,7 +6995,7 @@
                 },
                 "required": [
                   "currency",
-                  ""
+                  "-"
                 ],
                 "type": "object"
               }

@@ -4,7 +4,7 @@ description: "Test your integration with mock transactions in staging"
 icon: "vial"
 ---
 
-The staging environment includes mock endpoints that simulate real transaction behavior. Use them to test your integration end-to-end without moving real funds.
+You can use [our mock UI](https://staging-dashboard.getpartna.com/mock/deposit) to execute test transactions in the staging environment. The staging environment also includes mock endpoints which gives more flexibility. Use them to test your integration end-to-end without moving real funds.
 
 ## Mock endpoints
 
@@ -14,7 +14,7 @@ Simulates a crypto deposit to a user's account. Use this to test webhook deliver
 
 ```bash
 curl --request POST \
-  --url https://staging-api.getpartna.com/v4/mock/deposit \
+  --url https://api.getpartna.com/v4/mock/deposit \
   --header 'Content-Type: application/json' \
   --header 'x-api-key: YOUR_API_KEY' \
   --header 'x-api-user: YOUR_USERNAME' \
@@ -32,7 +32,7 @@ Simulates a fiat (local currency) deposit. Use this to test the collect flow and
 
 ```bash
 curl --request POST \
-  --url https://staging-api.getpartna.com/v4/mock/fiat-deposit \
+  --url https://api.getpartna.com/v4/mock/fiat-deposit \
   --header 'Content-Type: application/json' \
   --header 'x-api-key: YOUR_API_KEY' \
   --header 'x-api-user: YOUR_USERNAME' \

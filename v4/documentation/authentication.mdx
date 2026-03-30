@@ -19,7 +19,7 @@ Every request to the Partna API must include two headers: `x-api-key` and `x-api
 
 ```bash cURL
 curl --request GET \
-  --url https://staging-api.getpartna.com/v4/account \
+  --url https://api.getpartna.com/v4/account \
   --header 'x-api-key: YOUR_API_KEY' \
   --header 'x-api-user: YOUR_MERCHANT_USERNAME'
 ```
@@ -28,7 +28,7 @@ curl --request GET \
 import requests
 
 response = requests.get(
-    "https://staging-api.getpartna.com/v4/account",
+    "https://api.getpartna.com/v4/account",
     headers={
         "x-api-key": "YOUR_API_KEY",
         "x-api-user": "YOUR_MERCHANT_USERNAME"
@@ -39,7 +39,7 @@ print(response.json())
 ```
 
 ```javascript Node.js
-const response = await fetch("https://staging-api.getpartna.com/v4/account", {
+const response = await fetch("https://api.getpartna.com/v4/account", {
   headers: {
     "x-api-key": "YOUR_API_KEY",
     "x-api-user": "YOUR_MERCHANT_USERNAME"

@@ -142,11 +142,15 @@ func verifySignature(publicKeyPEM string, data json.RawMessage, signature string
         return false
     }
 
-    hash := sha256.Sum256(data)
-    sigBytes, _ := base64.StdEncoding.DecodeString(signature)
+    msgHash := sha256.New()
+    msgHash.Write(data)
+    msgHashSum := msgHash.Sum(nil)
+    sigBytes, err := base64.StdEncoding.DecodeString(signature)
+    if err != nil {
+        return false
+    }
 
-    opts := &rsa.PSSOptions{SaltLength: rsa.PSSSaltLengthAuto}
-    err = rsa.VerifyPSS(pub, crypto.SHA256, hash[:], sigBytes, opts)
+    err = rsa.VerifyPSS(pub, crypto.SHA256, msgHashSum, sigBytes, nil)
     return err == nil
 }
 ```
