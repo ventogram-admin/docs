@@ -111,7 +111,10 @@
                   "api-reference/endpoint/v3/kyc/handle-bvn-otp-method-1",
                   "api-reference/endpoint/v3/kyc/resolve-bank",
                   "api-reference/endpoint/v3/kyc/supported-verification-methods-by-country",
-                  "api-reference/endpoint/v3/kyc/check-for-manual-kyc"
+                  "api-reference/endpoint/v3/kyc/check-for-manual-kyc",
+                  "api-reference/endpoint/v3/kyc/initiate-users-phone-number-validation-by-country",
+                  "api-reference/endpoint/v3/kyc/used-to-get-a-users-verified-phone-numbers-by-country",
+                  "api-reference/endpoint/v3/kyc/validate-a-users-phone-number"
                 ]
               },
               {
