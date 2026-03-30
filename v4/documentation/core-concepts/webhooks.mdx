@@ -1,6 +1,6 @@
 ---
 title: "Webhooks"
-description: "Receive real-time notifications for transaction events"
+description: "Receive real-time notifications for transaction and verification events"
 icon: "bell"
 ---
 
@@ -8,7 +8,7 @@ Webhooks notify your application in real time when transaction events occur. Con
 
 ## Setup
 
-Configure your webhook URL through the [dashboard](https://dashboard.getpartna.com/) or programmatically via the [Update Webhook URL](/api-reference/endpoint/v3/user/update-webhook-url) endpoint.
+Configure your webhook URL through the [dashboard](/v4/documentation/environments#dashboard) or programmatically via the [Update Webhook URL](/api-reference/endpoint/v3/user/update-webhook-url) endpoint.
 
 Your endpoint must be a publicly accessible `POST` URL that returns a `200` status code immediately. Process events asynchronously after acknowledging receipt.
 
@@ -22,80 +22,6 @@ Every webhook payload includes three fields:
 | `data` | object | Event-specific payload |
 | `signature` | string | RSA signature for verification |
 
-<CodeGroup>
-
-```javascript Node.js (Express)
-import express from "express";
-
-const app = express();
-app.use(express.json());
-
-app.post("/webhook", (req, res) => {
-  const { signature, data, event } = req.body;
-
-  // Verify signature before processing (see below)
-  // ...
-
-  console.log("Received event:", event, data);
-  res.sendStatus(200);
-});
-
-app.listen(3000, () => console.log("Webhook server running on port 3000"));
-```
-
-```python Python (Flask)
-from flask import Flask, request, jsonify
-
-app = Flask(__name__)
-
-@app.route("/webhook", methods=["POST"])
-def webhook():
-    payload = request.get_json()
-    event = payload.get("event")
-    data = payload.get("data")
-    signature = payload.get("signature")
-
-    # Verify signature before processing (see below)
-    # ...
-
-    print(f"Received event: {event}", data)
-    return "", 200
-```
-
-```go Go
-package main
-
-import (
-    "encoding/json"
-    "fmt"
-    "net/http"
-)
-
-type WebhookPayload struct {
-    Event     string          `json:"event"`
-    Data      json.RawMessage `json:"data"`
-    Signature string          `json:"signature"`
-}
-
-func webhookHandler(w http.ResponseWriter, r *http.Request) {
-    var payload WebhookPayload
-    json.NewDecoder(r.Body).Decode(&payload)
-
-    // Verify signature before processing (see below)
-    // ...
-
-    fmt.Printf("Received event: %s\n", payload.Event)
-    w.WriteHeader(http.StatusOK)
-}
-
-func main() {
-    http.HandleFunc("/webhook", webhookHandler)
-    http.ListenAndServe(":3000", nil)
-}
-```
-
-</CodeGroup>
-
 ## Supported events
 
 | Event | Description |
@@ -106,6 +32,8 @@ func main() {
 | `Onramp` | An onramp (fiat-to-crypto) request status changed |
 | `Withdrawal` | A withdrawal was processed |
 | `Offramp` | An offramp (crypto-to-fiat) request status changed |
+| `verification.success` | A user successfully completed KYC verification |
+| `verification.failed` | A user failed KYC verification (includes reason) |
 
 ### Example: Deposit event
 
@@ -214,11 +142,15 @@ func verifySignature(publicKeyPEM string, data json.RawMessage, signature string
         return false
     }
 
-    hash := sha256.Sum256(data)
-    sigBytes, _ := base64.StdEncoding.DecodeString(signature)
+    msgHash := sha256.New()
+    msgHash.Write(data)
+    msgHashSum := msgHash.Sum(nil)
+    sigBytes, err := base64.StdEncoding.DecodeString(signature)
+    if err != nil {
+        return false
+    }
 
-    opts := &rsa.PSSOptions{SaltLength: rsa.PSSSaltLengthAuto}
-    err = rsa.VerifyPSS(pub, crypto.SHA256, hash[:], sigBytes, opts)
+    err = rsa.VerifyPSS(pub, crypto.SHA256, msgHashSum, sigBytes, nil)
     return err == nil
 }
 ```

@@ -12,15 +12,12 @@ The offramp flow lets your users send crypto (USDT, USDC, BTC, ETH) and receive 
   <Step title="Create a user account">
     Register your user with Partna using [Create Account](/api-reference/endpoint/v3/account/create-account) if they do not already have one.
   </Step>
-  <Step title="Complete KYC">
-    The user must verify their identity. See [Accounts and KYC](/v4/documentation/guides/accounts-and-kyc). Users only need to verify once.
-  </Step>
   <Step title="Resolve the destination bank account">
     Verify the user's bank account details using [Resolve Bank](/api-reference/endpoint/v3/kyc/resolve-bank). This confirms the account number and returns the account holder's name.
 
     ```bash
     curl --request POST \
-      --url https://staging-api.getpartna.com/v4/kyc/resolve-account \
+      --url https://api.getpartna.com/v4/kyc/resolve-account \
       --header 'Content-Type: application/json' \
       --header 'x-api-key: YOUR_API_KEY' \
       --header 'x-api-user: YOUR_USERNAME' \
@@ -48,7 +45,7 @@ The offramp flow lets your users send crypto (USDT, USDC, BTC, ETH) and receive 
 
     ```bash
     curl --request GET \
-      --url 'https://staging-api.getpartna.com/v4/rate?fromCurrency=USDT&toCurrency=NGN&fromAmount=100' \
+      --url 'https://api.getpartna.com/v4/rate?fromCurrency=USDT&toCurrency=NGN&fromAmount=100' \
       --header 'x-api-key: YOUR_API_KEY' \
       --header 'x-api-user: YOUR_USERNAME'
     ```
@@ -58,7 +55,7 @@ The offramp flow lets your users send crypto (USDT, USDC, BTC, ETH) and receive 
 
     ```bash
     curl --request POST \
-      --url https://staging-api.getpartna.com/v4/ramp \
+      --url https://api.getpartna.com/v4/ramp \
       --header 'Content-Type: application/json' \
       --header 'x-api-key: YOUR_API_KEY' \
       --header 'x-api-user: YOUR_USERNAME' \
@@ -112,7 +109,7 @@ Use [Get Banks](/api-reference/endpoint/v3/bank/get-banks) to fetch the list of 
 
 ```bash
 curl --request GET \
-  --url 'https://staging-api.getpartna.com/v4/bank?currency=NGN' \
+  --url 'https://api.getpartna.com/v4/bank?currency=NGN' \
   --header 'x-api-key: YOUR_API_KEY' \
   --header 'x-api-user: YOUR_USERNAME'
 ```

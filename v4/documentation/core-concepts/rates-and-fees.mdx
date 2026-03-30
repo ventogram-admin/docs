@@ -12,7 +12,7 @@ Use the [Get Rate](/api-reference/endpoint/v3/rate/get-rate) endpoint to fetch c
 
 ```bash
 curl --request GET \
-  --url 'https://staging-api.getpartna.com/v4/rate?fromCurrency=NGN&toCurrency=USDT&fromAmount=100000' \
+  --url 'https://api.getpartna.com/v4/rate?fromCurrency=NGN&toCurrency=USDT&fromAmount=100000' \
   --header 'x-api-key: YOUR_API_KEY' \
   --header 'x-api-user: YOUR_USERNAME'
 ```
@@ -59,4 +59,4 @@ When creating transactions, the `feeBearer` parameter controls who pays the tran
 | `merchant` | Fees are deducted from your merchant balance |
 | `client` | Fees are deducted from the customer's payment amount |
 
-Configure the default fee bearer in your merchant settings via the [dashboard](https://dashboard.getpartna.com) or the [Update Settings](/api-reference/endpoint/v3/user/registration-deposit-and-fee-settings) endpoint.
+Configure the default fee bearer in your merchant settings via the [Update Settings](/api-reference/endpoint/v3/user/registration-deposit-and-fee-settings) endpoint.

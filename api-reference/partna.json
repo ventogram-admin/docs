@@ -805,6 +805,24 @@
             },
             "description": "post account created"
           },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "message": "Account name or email already exists"
+                  },
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "post account bad request"
+          },
           "401": {
             "content": {
               "application/json": {
@@ -1025,47 +1043,78 @@
                     "data": {
                       "accounts": [
                         {
-                          "bankDetails": {
-                            "account_name": "TEST-MANAGED-ACCOUNT",
-                            "account_number": "1238271618",
-                            "bank_name": "Test Bank",
-                            "createdAt": 1755873600
+                          "Banks": {
+                            "KE": {
+                              "mobile_network": "Safaricom",
+                              "shortcode": "0805439865",
+                              "status": "ACTIVE"
+                            },
+                            "NG": {
+                              "account_name": "TEST-MANAGED-ACCOUNT",
+                              "account_number": "1238271618",
+                              "bank_code": "",
+                              "bank_name": "Test Bank",
+                              "currency": "NGN",
+                              "mobile_network": "",
+                              "shortcode": "",
+                              "status": ""
+                            }
+                          },
+                          "KYCs": {
+                            "KE": {
+                              "mobile_network": "Safaricom",
+                              "shortcode": "0805439865",
+                              "status": "verified"
+                            },
+                            "NG": {
+                              "address_line_1": "",
+                              "address_line_2": "",
+                              "dob": "2002-09-01",
+                              "first_name": "rahman",
+                              "last_name": "rahman",
+                              "lga_of_residence": "",
+                              "middle_name": "rahman",
+                              "mobile_network": "",
+                              "shortcode": "",
+                              "state_of_residence": "",
+                              "status": "verified"
+                            }
                           },
                           "createdAt": 1755873600,
                           "email": "",
-                          "externalRef": "chang",
-                          "kycDetails": {
-                            "address_line_1": "",
-                            "address_line_2": "",
-                            "dob": "2002-09-01",
-                            "first_name": "rahman",
-                            "last_name": "rahman",
-                            "lga_of_residence": "",
-                            "middle_name": "rahman",
-                            "state_of_residence": ""
-                          }
+                          "externalRef": "chang"
                         },
                         {
-                          "bankDetails": {
-                            "account_name": "Madilyn Lakin II",
-                            "account_number": "9640426250",
-                            "bank_code": "242",
-                            "bank_name": "Maplerad",
-                            "createdAt": 1755873600
+                          "Banks": {
+                            "NG": {
+                              "account_name": "Madilyn Lakin II",
+                              "account_number": "9640426250",
+                              "bank_code": "242",
+                              "bank_name": "Maplerad",
+                              "currency": "NGN",
+                              "mobile_network": "",
+                              "shortcode": "",
+                              "status": ""
+                            }
+                          },
+                          "KYCs": {
+                            "NG": {
+                              "address_line_1": "",
+                              "address_line_2": "",
+                              "dob": "1999-01-01",
+                              "first_name": "Samuel",
+                              "last_name": "Olamide",
+                              "lga_of_residence": "",
+                              "middle_name": "Nomo",
+                              "mobile_network": "",
+                              "shortcode": "",
+                              "state_of_residence": "",
+                              "status": ""
+                            }
                           },
                           "createdAt": 1755873600,
                           "email": "",
-                          "externalRef": "changuser1",
-                          "kycDetails": {
-                            "address_line_1": "",
-                            "address_line_2": "",
-                            "dob": "1999-01-01",
-                            "first_name": "Samuel",
-                            "last_name": "Olamide",
-                            "lga_of_residence": "",
-                            "middle_name": "Nomo",
-                            "state_of_residence": ""
-                          }
+                          "externalRef": "changuser1"
                         }
                       ],
                       "page": 1,
@@ -1080,19 +1129,107 @@
                         "accounts": {
                           "items": {
                             "properties": {
-                              "bankDetails": {
+                              "Banks": {
                                 "properties": {
-                                  "account_name": {
-                                    "type": "string"
+                                  "KE": {
+                                    "properties": {
+                                      "mobile_network": {
+                                        "type": "string"
+                                      },
+                                      "shortcode": {
+                                        "type": "string"
+                                      },
+                                      "status": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "type": "object"
                                   },
-                                  "account_number": {
-                                    "type": "string"
+                                  "NG": {
+                                    "properties": {
+                                      "account_name": {
+                                        "type": "string"
+                                      },
+                                      "account_number": {
+                                        "type": "string"
+                                      },
+                                      "bank_code": {
+                                        "type": "string"
+                                      },
+                                      "bank_name": {
+                                        "type": "string"
+                                      },
+                                      "currency": {
+                                        "type": "string"
+                                      },
+                                      "mobile_network": {
+                                        "type": "string"
+                                      },
+                                      "shortcode": {
+                                        "type": "string"
+                                      },
+                                      "status": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "type": "object"
+                                  }
+                                },
+                                "type": "object"
+                              },
+                              "KYCs": {
+                                "properties": {
+                                  "KE": {
+                                    "properties": {
+                                      "mobile_network": {
+                                        "type": "string"
+                                      },
+                                      "shortcode": {
+                                        "type": "string"
+                                      },
+                                      "status": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "type": "object"
                                   },
-                                  "bank_name": {
-                                    "type": "string"
-                                  },
-                                  "createdAt": {
-                                    "type": "number"
+                                  "NG": {
+                                    "properties": {
+                                      "address_line_1": {
+                                        "type": "string"
+                                      },
+                                      "address_line_2": {
+                                        "type": "string"
+                                      },
+                                      "dob": {
+                                        "type": "string"
+                                      },
+                                      "first_name": {
+                                        "type": "string"
+                                      },
+                                      "last_name": {
+                                        "type": "string"
+                                      },
+                                      "lga_of_residence": {
+                                        "type": "string"
+                                      },
+                                      "middle_name": {
+                                        "type": "string"
+                                      },
+                                      "mobile_network": {
+                                        "type": "string"
+                                      },
+                                      "shortcode": {
+                                        "type": "string"
+                                      },
+                                      "state_of_residence": {
+                                        "type": "string"
+                                      },
+                                      "status": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "type": "object"
                                   }
                                 },
                                 "type": "object"
@@ -1105,35 +1242,6 @@
                               },
                               "externalRef": {
                                 "type": "string"
-                              },
-                              "kycDetails": {
-                                "properties": {
-                                  "address_line_1": {
-                                    "type": "string"
-                                  },
-                                  "address_line_2": {
-                                    "type": "string"
-                                  },
-                                  "dob": {
-                                    "type": "string"
-                                  },
-                                  "first_name": {
-                                    "type": "string"
-                                  },
-                                  "last_name": {
-                                    "type": "string"
-                                  },
-                                  "lga_of_residence": {
-                                    "type": "string"
-                                  },
-                                  "middle_name": {
-                                    "type": "string"
-                                  },
-                                  "state_of_residence": {
-                                    "type": "string"
-                                  }
-                                },
-                                "type": "object"
                               }
                             },
                             "type": "object"
@@ -2482,7 +2590,7 @@
     },
     "/kyc/handle-otp": {
       "put": {
-        "description": "Choose KYC verification method.",
+        "description": "Choose BVN verification method.",
         "operationId": "put-kyc-handle-otp",
         "requestBody": {
           "content": {
@@ -2565,7 +2673,7 @@
             "authorization": []
           }
         ],
-        "summary": "Handle KYC OTP Method",
+        "summary": "Handle BVN OTP Method",
         "tags": [
           "KYC"
         ]
@@ -2764,7 +2872,7 @@
     },
     "/kyc/verification-method": {
       "put": {
-        "description": "Choose KYC verification method.",
+        "description": "Choose BVN verification method.",
         "operationId": "put-kyc-verification-method",
         "requestBody": {
           "content": {
@@ -2819,55 +2927,24 @@
           "required": true
         },
         "responses": {
-          					"200": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"example": {
-										"data": {
-											"attempts": 1,
-											"expectedPayment": "500.00",
-											"maskedPhoneNumber": "080****2345",
-											"otp": "123456",
-											"partnaBankDetails": "Test Bank - 1234567890",
-											"subscriptionId": "dev-username-accountname"
-										},
-										"message": "success"
-									},
-									"properties": {
-										"data": {
-											"properties": {
-												"attempts": {
-													"type": "number"
-												},
-												"expectedPayment": {
-													"type": "string"
-												},
-												"maskedPhoneNumber": {
-													"type": "string"
-												},
-												"otp": {
-													"type": "string"
-												},
-												"partnaBankDetails": {
-													"type": "string"
-												},
-												"subscriptionId": {
-													"type": "string"
-												}
-											},
-											"type": "object"
-										},
-										"message": {
-											"type": "string"
-										}
-									},
-									"type": "object"
-								}
-							}
-						},
-						"description": "put kyc handle otp ok"
-					}
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "message": "OTP sent successfully"
+                  },
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "put kyc verification method ok"
+          }
         },
         "security": [
           {
@@ -2878,7 +2955,7 @@
             "authorization": []
           }
         ],
-        "summary": "Handle KYC OTP Method",
+        "summary": "Handle BVN OTP Method",
         "tags": [
           "KYC"
         ]
@@ -3176,6 +3253,7 @@
                   "currency": "",
                   "fiatEvent": "",
                   "fromAddress": "",
+                  "isRamp": false,
                   "network": "",
                   "reference": "",
                   "sourceAccount": "",
@@ -3215,9 +3293,13 @@
                   "fromAddress": {
                     "type": "string"
                   },
+                  "isRamp": {
+                    "type": "boolean"
+                  },
                   "network": {
                     "enum": [
                       "avalanche",
+                      "base",
                       "binance",
                       "bitcoin",
                       "celo",
@@ -3407,6 +3489,371 @@
         "summary": "Mock Fiat Deposit",
         "tags": [
           "Mock"
+        ]
+      }
+    },
+    "/phone": {
+      "get": {
+        "description": "Used to get a user's verified phone numbers by country.",
+        "operationId": "get-phone",
+        "parameters": [
+          {
+            "description": "",
+            "in": "query",
+            "name": "accountName",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "",
+            "in": "query",
+            "name": "country",
+            "required": true,
+            "schema": {
+              "enum": [
+                "KE",
+                "NG"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "data": {
+                      "validPhoneRecords": [
+                        {
+                          "country": "KE",
+                          "mobileNetwork": "Safaricom",
+                          "phoneID": "506e46b8e67f4f4bbdda96b3ee3295d1",
+                          "phoneNumber": "+254712345678"
+                        }
+                      ]
+                    },
+                    "message": "successful"
+                  },
+                  "properties": {
+                    "data": {
+                      "properties": {
+                        "validPhoneRecords": {
+                          "items": {
+                            "properties": {
+                              "country": {
+                                "type": "string"
+                              },
+                              "mobileNetwork": {
+                                "type": "string"
+                              },
+                              "phoneID": {
+                                "type": "string"
+                              },
+                              "phoneNumber": {
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "get phone ok"
+          }
+        },
+        "security": [
+          {
+            "x-api-key": [],
+            "x-api-user": []
+          },
+          {
+            "authorization": []
+          }
+        ],
+        "summary": "Used to get a user's verified phone numbers by country",
+        "tags": [
+          "KYC"
+        ]
+      },
+      "post": {
+        "description": "Initiate user's phone number validation by country",
+        "operationId": "post-phone",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "example": {
+                  "accountName": "",
+                  "country": "",
+                  "mobileNetwork": "",
+                  "phoneNumber": ""
+                },
+                "properties": {
+                  "accountName": {
+                    "type": "string"
+                  },
+                  "country": {
+                    "enum": [
+                      "KE",
+                      "NG"
+                    ],
+                    "type": "string"
+                  },
+                  "mobileNetwork": {
+                    "type": "string"
+                  },
+                  "phoneNumber": {
+                    "description": "phone number",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "accountName",
+                  "country",
+                  "phoneNumber",
+                  "mobileNetwork"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "data": {
+                      "maskedPhoneNumber": "+25475****600",
+                      "methods": [
+                        {
+                          "hint": "To complete verification, resend received OTP from your submitted phone number",
+                          "method": "receiveotp"
+                        },
+                        {
+                          "hint": "We send OTP to your phone number. Use OTP to complete verification",
+                          "method": "sendotp"
+                        }
+                      ],
+                      "phoneID": "506e46b8e67f4f4bbdda96b3ee3295d1"
+                    },
+                    "message": "successful"
+                  },
+                  "properties": {
+                    "data": {
+                      "properties": {
+                        "maskedPhoneNumber": {
+                          "type": "string"
+                        },
+                        "methods": {
+                          "items": {
+                            "properties": {
+                              "hint": {
+                                "type": "string"
+                              },
+                              "method": {
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "type": "array"
+                        },
+                        "phoneID": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "initiate verify post phone ok"
+          }
+        },
+        "security": [
+          {
+            "x-api-key": [],
+            "x-api-user": []
+          },
+          {
+            "authorization": []
+          }
+        ],
+        "summary": "Initiate user's phone number validation by country",
+        "tags": [
+          "KYC"
+        ]
+      }
+    },
+    "/phone/confirm": {
+      "put": {
+        "description": "Confirm phone verification OTP.",
+        "operationId": "put-phone-confirm",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "example": {
+                  "otp": "",
+                  "phoneID": ""
+                },
+                "properties": {
+                  "otp": {
+                    "description": "6 digit otp from authenticator app",
+                    "type": "string"
+                  },
+                  "phoneID": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "otp",
+                  "phoneID"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "messagge": "Phone verification successful!"
+                  },
+                  "properties": {
+                    "messagge": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "put phone confirm ok"
+          }
+        },
+        "security": [
+          {
+            "x-api-key": [],
+            "x-api-user": []
+          },
+          {
+            "authorization": []
+          }
+        ],
+        "summary": "Confirm phone OTP",
+        "tags": [
+          "KYC"
+        ]
+      }
+    },
+    "/phone/verify": {
+      "put": {
+        "description": "Validate a user's phone number",
+        "operationId": "put-phone-verify",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "example": {
+                  "phoneID": "",
+                  "verificationMethod": ""
+                },
+                "properties": {
+                  "phoneID": {
+                    "type": "string"
+                  },
+                  "verificationMethod": {
+                    "enum": [
+                      "sendotp",
+                      "receiveotp"
+                    ],
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "phoneID",
+                  "verificationMethod"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "data": {
+                      "maskedPhoneNumber": "+25475****600",
+                      "phoneID": "506e46b8e67f4f4bbdda96b3ee3295d1"
+                    },
+                    "message": "verification method set successfully"
+                  },
+                  "properties": {
+                    "data": {
+                      "properties": {
+                        "maskedPhoneNumber": {
+                          "type": "string"
+                        },
+                        "phoneID": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "choose phone verification method ok"
+          }
+        },
+        "security": [
+          {
+            "x-api-key": [],
+            "x-api-user": []
+          },
+          {
+            "authorization": []
+          }
+        ],
+        "summary": "Validate a user's phone number",
+        "tags": [
+          "KYC"
         ]
       }
     },
@@ -3813,9 +4260,14 @@
                   "fromAmount": 0,
                   "fromCurrency": "",
                   "fromNetwork": "",
+                  "mobileNetwork": "",
+                  "paymentNetwork": "",
+                  "phoneID": "",
                   "rampExpTime": 0,
                   "rampReference": "",
                   "rateKey": "",
+                  "sendingAddress": "",
+                  "shortcode": "",
                   "toAmount": 0,
                   "toCurrency": "",
                   "toNetwork": "",
@@ -3858,13 +4310,15 @@
                       "USDT",
                       "CUSD",
                       "BNB",
-                      "NGN"
+                      "NGN",
+                      "KES"
                     ],
                     "type": "string"
                   },
                   "fromNetwork": {
                     "enum": [
                       "avalanche",
+                      "base",
                       "binance",
                       "bitcoin",
                       "celo",
@@ -3874,8 +4328,29 @@
                       "solana",
                       "naira",
                       "mobileMoney",
-                      "mpesa"
+                      "mpesa",
+                      "kenyanshilling"
                     ],
+                    "type": "string"
+                  },
+                  "mobileNetwork": {
+                    "description": "mobileNetwork, required if ToNetwork is kenyanshilling",
+                    "enum": [
+                      "Safaricom",
+                      "Airtel"
+                    ],
+                    "type": "string"
+                  },
+                  "paymentNetwork": {
+                    "description": "paymentNetwork, required if ToNetwork is kenyanshilling",
+                    "enum": [
+                      "MOBILE",
+                      "BUY_GOODS",
+                      "PAYBILL"
+                    ],
+                    "type": "string"
+                  },
+                  "phoneID": {
                     "type": "string"
                   },
                   "rampExpTime": {
@@ -3886,6 +4361,14 @@
                     "type": "string"
                   },
                   "rateKey": {
+                    "type": "string"
+                  },
+                  "sendingAddress": {
+                    "description": "Address from which the user will be sending or receiving funds",
+                    "type": "string"
+                  },
+                  "shortcode": {
+                    "description": "shortcode, required if ToNetwork is kenyanshilling",
                     "type": "string"
                   },
                   "toAmount": {
@@ -3899,13 +4382,15 @@
                       "USDT",
                       "CUSD",
                       "BNB",
-                      "NGN"
+                      "NGN",
+                      "KES"
                     ],
                     "type": "string"
                   },
                   "toNetwork": {
                     "enum": [
                       "avalanche",
+                      "base",
                       "binance",
                       "bitcoin",
                       "celo",
@@ -3915,7 +4400,8 @@
                       "solana",
                       "naira",
                       "mobileMoney",
-                      "mpesa"
+                      "mpesa",
+                      "kenyanshilling"
                     ],
                     "type": "string"
                   },
@@ -4064,6 +4550,244 @@
           }
         ],
         "summary": "Onramp and Offramp",
+        "tags": [
+          "Ramp"
+        ]
+      }
+    },
+    "/ramp/breakdown": {
+      "post": {
+        "description": "Calculate ramp fees from toAmount or fromAmount",
+        "operationId": "post-ramp-breakdown",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "example": {
+                  "accountName": "",
+                  "accountNumber": "",
+                  "bankCode": "",
+                  "cryptoAddress": "",
+                  "fromAmount": 0,
+                  "fromCurrency": "",
+                  "fromNetwork": "",
+                  "rateKey": "",
+                  "toAmount": 0,
+                  "toCurrency": "",
+                  "toNetwork": "",
+                  "type": ""
+                },
+                "properties": {
+                  "accountName": {
+                    "description": "accountname of the user (not bank account name)",
+                    "type": "string"
+                  },
+                  "accountNumber": {
+                    "type": "string"
+                  },
+                  "bankCode": {
+                    "type": "string"
+                  },
+                  "cryptoAddress": {
+                    "type": "string"
+                  },
+                  "fromAmount": {
+                    "type": "number"
+                  },
+                  "fromCurrency": {
+                    "enum": [
+                      "BTC",
+                      "ETH",
+                      "USDC",
+                      "USDT",
+                      "CUSD",
+                      "BNB",
+                      "NGN",
+                      "KES"
+                    ],
+                    "type": "string"
+                  },
+                  "fromNetwork": {
+                    "enum": [
+                      "avalanche",
+                      "binance",
+                      "bitcoin",
+                      "celo",
+                      "ethereum",
+                      "polygon",
+                      "tron",
+                      "solana",
+                      "naira",
+                      "mobileMoney",
+                      "mpesa",
+                      "kenyanshilling"
+                    ],
+                    "type": "string"
+                  },
+                  "rateKey": {
+                    "type": "string"
+                  },
+                  "toAmount": {
+                    "type": "number"
+                  },
+                  "toCurrency": {
+                    "enum": [
+                      "BTC",
+                      "ETH",
+                      "USDC",
+                      "USDT",
+                      "CUSD",
+                      "BNB",
+                      "NGN",
+                      "KES"
+                    ],
+                    "type": "string"
+                  },
+                  "toNetwork": {
+                    "enum": [
+                      "avalanche",
+                      "base",
+                      "binance",
+                      "bitcoin",
+                      "celo",
+                      "ethereum",
+                      "polygon",
+                      "tron",
+                      "solana",
+                      "naira",
+                      "mobileMoney",
+                      "mpesa",
+                      "kenyanshilling"
+                    ],
+                    "type": "string"
+                  },
+                  "type": {
+                    "description": "initiate offramp with cryptoToFiat type and onramp with fiatToCrypto type",
+                    "enum": [
+                      "fiatToCrypto",
+                      "cryptoToFiat"
+                    ],
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "fromCurrency",
+                  "fromNetwork",
+                  "toCurrency",
+                  "toNetwork",
+                  "rateKey"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "data": {
+                      "DepositFeeCapped": false,
+                      "DepositFeeInFromCurrency": 1000,
+                      "DepositFeeInToCurrency": 0.597221725,
+                      "DepositPercentageApplied": 0,
+                      "MerchantFeeCapped": false,
+                      "MerchantFeeInFromCurrency": 200,
+                      "MerchantFeeInToCurrency": 0.11944434500000001,
+                      "MerchantFeeUSD": 0.11944434500000001,
+                      "MerchantPercentageApplied": 0.02,
+                      "NetAmountInToCurrency": 5.2455,
+                      "Rate": 0.000597221725,
+                      "TotalAmountInFromCurrency": 10000,
+                      "TotalAmountInToCurrency": 5.97221725,
+                      "TotalFeesInFromCurrency": 1216.7441999870316,
+                      "TotalFeesInToCurrency": 0.72666607,
+                      "WithdrawalFeeInFromCurrency": 16.744199987031617,
+                      "WithdrawalFeeInToCurrency": 0.01
+                    },
+                    "message": "success"
+                  },
+                  "properties": {
+                    "data": {
+                      "properties": {
+                        "DepositFeeCapped": {
+                          "type": "boolean"
+                        },
+                        "DepositFeeInFromCurrency": {
+                          "type": "number"
+                        },
+                        "DepositFeeInToCurrency": {
+                          "type": "number"
+                        },
+                        "DepositPercentageApplied": {
+                          "type": "number"
+                        },
+                        "MerchantFeeCapped": {
+                          "type": "boolean"
+                        },
+                        "MerchantFeeInFromCurrency": {
+                          "type": "number"
+                        },
+                        "MerchantFeeInToCurrency": {
+                          "type": "number"
+                        },
+                        "MerchantFeeUSD": {
+                          "type": "number"
+                        },
+                        "MerchantPercentageApplied": {
+                          "type": "number"
+                        },
+                        "NetAmountInToCurrency": {
+                          "type": "number"
+                        },
+                        "Rate": {
+                          "type": "number"
+                        },
+                        "TotalAmountInFromCurrency": {
+                          "type": "number"
+                        },
+                        "TotalAmountInToCurrency": {
+                          "type": "number"
+                        },
+                        "TotalFeesInFromCurrency": {
+                          "type": "number"
+                        },
+                        "TotalFeesInToCurrency": {
+                          "type": "number"
+                        },
+                        "WithdrawalFeeInFromCurrency": {
+                          "type": "number"
+                        },
+                        "WithdrawalFeeInToCurrency": {
+                          "type": "number"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "post ramp breakdown ok"
+          }
+        },
+        "security": [
+          {
+            "x-api-key": [],
+            "x-api-user": []
+          },
+          {
+            "authorization": []
+          }
+        ],
+        "summary": "Calculate ramp fees from toAmount or fromAmount",
         "tags": [
           "Ramp"
         ]
@@ -5780,7 +6504,8 @@
                 "NGN",
                 "USD",
                 "BNB",
-                "GHS"
+                "GHS",
+                "KES"
               ],
               "type": "string"
             }
@@ -5915,6 +6640,24 @@
               }
             },
             "description": "get transfer ok"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "message": "endpoint temporarily disabled"
+                  },
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "get transfer unauthorized"
           }
         },
         "security": [
@@ -6204,13 +6947,14 @@
     },
     "/transfer/initiate": {
       "post": {
-        "description": "Initiate transfer.",
+        "description": "Initiate transfer for KES or GHS. This is not required for NGN.",
         "operationId": "post-transfer-initiate",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
                 "example": {
+                  "-": false,
                   "accountName": "",
                   "amount": 0,
                   "currency": "",
@@ -6219,6 +6963,9 @@
                   "transactionReference": ""
                 },
                 "properties": {
+                  "-": {
+                    "type": "boolean"
+                  },
                   "accountName": {
                     "type": "string"
                   },
@@ -6247,7 +6994,8 @@
                   }
                 },
                 "required": [
-                  "currency"
+                  "currency",
+                  "-"
                 ],
                 "type": "object"
               }
@@ -6352,6 +7100,7 @@
                   "network": {
                     "enum": [
                       "avalanche",
+                      "base",
                       "binance",
                       "bitcoin",
                       "celo",
@@ -6360,7 +7109,8 @@
                       "tron",
                       "solana",
                       "MOBILE",
-                      "BUY_GOODS"
+                      "BUY_GOODS",
+                      "PAYBILL"
                     ],
                     "type": "string"
                   },
@@ -6920,6 +7670,7 @@
               "schema": {
                 "example": {
                   "apikey": "",
+                  "expirationInDays": 0,
                   "expirationInMonths": 0,
                   "keyname": "",
                   "otp": "",
@@ -6929,6 +7680,9 @@
                   "apikey": {
                     "description": "supplied if there's an existing api key that needs to be deleted",
                     "type": "string"
+                  },
+                  "expirationInDays": {
+                    "type": "number"
                   },
                   "expirationInMonths": {
                     "type": "number"
@@ -7504,6 +8258,181 @@
         ]
       }
     },
+    "/user/ip-whitelist": {
+      "delete": {
+        "description": "Remove ip address from the whitelist.",
+        "operationId": "delete-user-ip-whitelist",
+        "parameters": [
+          {
+            "description": "",
+            "in": "query",
+            "name": "merchantName",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "",
+            "in": "query",
+            "name": "ipAddress",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "message": "success"
+                  },
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "ip address removed successfully"
+          }
+        },
+        "security": [
+          {
+            "x-api-key": [],
+            "x-api-user": []
+          }
+        ],
+        "summary": "Remove IP from Whitelist",
+        "tags": [
+          "Admin",
+          "Users"
+        ]
+      },
+      "get": {
+        "description": "Retrieve all whitelisted ip addresses for a merchant.",
+        "operationId": "get-user-ip-whitelist",
+        "parameters": [
+          {
+            "description": "",
+            "in": "query",
+            "name": "merchantName",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "data": [
+                      "127.0.0.1"
+                    ],
+                    "message": "success"
+                  },
+                  "properties": {
+                    "data": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "get merchant whitelisted ip addresses ok"
+          }
+        },
+        "security": [
+          {
+            "x-api-key": [],
+            "x-api-user": []
+          }
+        ],
+        "summary": "Get Whitelisted IPs",
+        "tags": [
+          "Admin",
+          "Users"
+        ]
+      },
+      "post": {
+        "description": "Add ip address(es) to the whitelist.",
+        "operationId": "post-user-ip-whitelist",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "example": {
+                  "ipAddresses": {},
+                  "merchantName": ""
+                },
+                "properties": {
+                  "ipAddresses": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "merchantName": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "ipAddresses"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "message": "success"
+                  },
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "ip address(es) added successfully"
+          }
+        },
+        "security": [
+          {
+            "x-api-key": [],
+            "x-api-user": []
+          }
+        ],
+        "summary": "Add IP to Whitelist",
+        "tags": [
+          "Admin",
+          "Users"
+        ]
+      }
+    },
     "/user/kyc-exempt": {
       "get": {
         "description": "Checks if the merchant is exempt from KYC requirements.",
@@ -7774,7 +8703,7 @@
                     "type": "string"
                   },
                   "feeAccount": {
-                    "description": "account to receive fees",
+                    "description": "account to receive fees and it must be an existing account",
                     "type": "string"
                   },
                   "feeAmount": {
@@ -7859,6 +8788,24 @@
               }
             },
             "description": "put user settings bad request"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "message": "invalid feeAccount name"
+                  },
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "put user settings not found"
           }
         },
         "security": [

@@ -4,7 +4,7 @@ description: "Test your integration with mock transactions in staging"
 icon: "vial"
 ---
 
-The staging environment includes mock endpoints that simulate real transaction behavior. Use them to test your integration end-to-end without moving real funds.
+You can use [the mock UI](https://staging-dashboard.getpartna.com/mock/deposit) on the staging dashboard to execute test transactions with a few clicks. The staging environment also includes mock API endpoints for more flexibility. Use them to test your integration end-to-end without moving real funds.
 
 ## Mock endpoints
 
@@ -28,7 +28,7 @@ See the full reference: [Mock Deposit](/api-reference/endpoint/v3/mock/mock-depo
 
 ### Mock Fiat Deposit
 
-Simulates a fiat (local currency) deposit. Use this to test the collect flow and onramp scenarios where a user pays in NGN.
+Simulates a fiat (local currency) deposit. Use this to test the collect flow and onramp scenarios where a user pays in fiat.
 
 ```bash
 curl --request POST \
@@ -42,7 +42,9 @@ curl --request POST \
   }'
 ```
 
-See the full reference: [Mock Fiat Deposit](/api-reference/endpoint/v3/mock/mock-fiat-deposit)
+See the full reference: [Mock Fiat Deposit](/api-reference/mock/mock-fiat-deposit)
+
+You can also run these from the staging dashboard UI: [Mock Deposits](https://staging-dashboard.getpartna.com/mock/deposit).
 
 ## Testing workflow
 
@@ -50,16 +52,16 @@ A typical testing workflow looks like this:
 
 <Steps>
   <Step title="Create a test user account">
-    Use [Create Account](/api-reference/endpoint/v3/account/create-account) to set up a test user. In staging, KYC can be completed with test data.
+    Use [Create Account](/api-reference/account/create-account) to set up a test user. In staging, KYC can be completed with test data.
   </Step>
   <Step title="Complete KYC">
-    Run through the [KYC flow](/v4/documentation/guides/accounts-and-kyc) using test identity data. In staging, verification succeeds with any valid-format input.
+    Run through the [KYC flow](/guides/accounts-and-kyc) using test identity data. In staging, verification succeeds with any valid-format input.
   </Step>
   <Step title="Fetch a rate">
-    Call [Get Rate](/api-reference/endpoint/v3/rate/get-rate) to get a conversion rate and rate key.
+    Call [Get Rate](/api-reference/rate/get-rate) to get a conversion rate and rate key.
   </Step>
   <Step title="Initiate a ramp request">
-    Use [Onramp and Offramp](/api-reference/endpoint/v3/ramp/onramp-and-offramp) to create a test transaction.
+    Use [Onramp and Offramp](/api-reference/ramp/onramp-and-offramp) to create a test transaction.
   </Step>
   <Step title="Simulate the payment">
     For onramp: call Mock Fiat Deposit to simulate the user's local currency payment. For offramp: call Mock Deposit to simulate an incoming crypto payment.
@@ -71,13 +73,13 @@ A typical testing workflow looks like this:
 
 ## Webhook testing tips
 
-If you do not have a publicly accessible server during development, use a tunneling tool like [ngrok](https://ngrok.com) to expose your local endpoint:
+If you do not have a publicly accessible server during development, use a tunneling tool like [ngrok](https://ngrok.com) or [webhook.site](https://webhook.site) to expose your local endpoint:
 
 ```bash
 ngrok http 3000
 ```
 
-Then set your webhook URL to the ngrok forwarding address (e.g., `https://abc123.ngrok.io/webhook`) via the [Update Webhook URL](/api-reference/endpoint/v3/user/update-webhook-url) endpoint.
+Then set your webhook URL to the forwarding address (e.g., `https://abc123.ngrok.io/webhook`) via the [Update Webhook URL](/api-reference/user/update-webhook-url) endpoint. If you just want to inspect payloads without writing code, webhook.site gives you a unique URL that logs every request it receives.
 
 ## Going to production
 

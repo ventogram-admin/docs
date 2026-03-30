@@ -20,7 +20,7 @@ The onramp flow lets your users pay in local currency (NGN, GHS, KES) and receiv
 
     ```bash
     curl --request GET \
-      --url 'https://staging-api.getpartna.com/v4/rate?fromCurrency=NGN&toCurrency=USDT&fromAmount=10000' \
+      --url 'https://api.getpartna.com/v4/rate?fromCurrency=NGN&toCurrency=USDT&fromAmount=10000' \
       --header 'x-api-key: YOUR_API_KEY' \
       --header 'x-api-user: YOUR_USERNAME'
     ```
@@ -30,7 +30,7 @@ The onramp flow lets your users pay in local currency (NGN, GHS, KES) and receiv
 
     ```bash
     curl --request POST \
-      --url https://staging-api.getpartna.com/v4/ramp \
+      --url https://api.getpartna.com/v4/ramp \
       --header 'Content-Type: application/json' \
       --header 'x-api-key: YOUR_API_KEY' \
       --header 'x-api-user: YOUR_USERNAME' \

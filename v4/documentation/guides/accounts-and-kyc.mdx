@@ -12,7 +12,7 @@ Use [Create Account](/api-reference/endpoint/v3/account/create-account) to regis
 
 ```bash
 curl --request POST \
-  --url https://staging-api.getpartna.com/v4/account \
+  --url https://api.getpartna.com/v4/account \
   --header 'Content-Type: application/json' \
   --header 'x-api-key: YOUR_API_KEY' \
   --header 'x-api-user: YOUR_USERNAME' \
@@ -34,35 +34,35 @@ Identity verification in Nigeria uses BVN (Bank Verification Number). The flow d
 
     ```bash
     curl --request POST \
-      --url https://staging-api.getpartna.com/v4/kyc/initiate \
+      --url https://api.getpartna.com/v4/kyc/initiate \
       --header 'Content-Type: application/json' \
       --header 'x-api-key: YOUR_API_KEY' \
       --header 'x-api-user: YOUR_USERNAME' \
       --data '{
         "bvn": "12345678901",
         "accountName": "user-account-name"
-      }'Check supported verification methods
+      }'
     ```
   </Step>
   <Step title="Confirm phone number">
-    After OTP verification, confirm the user's phone number using [Confirm Phone](/api-reference/endpoint/v3/kyc/confirm-phone).
+    After OTP verification, confirm the user's phone number using [Confirm Phone](/api-reference/endpoint/v3/kyc/confirm-phone). In staging environment, use phone number of this format `0803***3843` `(e.g 08030003843)` to simulate a successful verification.
   </Step>
   <Step title="Check supported verification methods" stepNumber={3}>
     Call [Supported Verification Methods](/api-reference/endpoint/v3/kyc/supported-verification-methods) to see which identity verification methods are available for a given country.
 
     ```bash
     curl --request GET \
-      --url 'https://staging-api.getpartna.com/v4/kyc/verification-methods?country=NG' \
+      --url 'https://api.getpartna.com/v4/kyc/verification-methods?country=NG' \
       --header 'x-api-key: YOUR_API_KEY' \
       --header 'x-api-user: YOUR_USERNAME'
     ```
   </Step>
   <Step title="Confirm OTP">
-    Once the user receives the OTP, submit it using [Confirm KYC OTP](/api-reference/endpoint/v3/kyc/confirm-kyc-otp).
+    Once the user receives the OTP, submit it using [Confirm KYC OTP](/api-reference/endpoint/v3/kyc/confirm-kyc-otp). In staging environment, use `123456` as the OTP to simulate a successful verification.
 
     ```bash
     curl --request PUT \
-      --url https://staging-api.getpartna.com/v4/kyc/confirm-otp \
+      --url https://api.getpartna.com/v4/kyc/confirm-otp \
       --header 'Content-Type: application/json' \
       --header 'x-api-key: YOUR_API_KEY' \
       --header 'x-api-user: YOUR_USERNAME' \
@@ -78,7 +78,7 @@ Identity verification in Nigeria uses BVN (Bank Verification Number). The flow d
   In some cases, the user may need to select how they receive the OTP (e.g., SMS or phone call). 
 </Tip>
 
-After successful verification, you will receive a `verification.success` webhook event. The user can now transact.
+After successful verification, you will receive a `verification.success` webhook event or a `verification.failed` event with reason if verification failed. If successful, the user can now transact.
 
 ## Merchant-managed KYC
 
@@ -86,7 +86,7 @@ If you have already verified your users' identities through your own KYC process
 
 ```bash
 curl --request POST \
-  --url https://staging-api.getpartna.com/v4/kyc/merchant-kyc \
+  --url https://api.getpartna.com/v4/kyc/merchant-kyc \
   --header 'Content-Type: application/json' \
   --header 'x-api-key: YOUR_API_KEY' \
   --header 'x-api-user: YOUR_USERNAME' \
@@ -98,17 +98,13 @@ curl --request POST \
   }'
 ```
 
-## Checking KYC status
-
-Use [Check Manual KYC](/api-reference/endpoint/v3/kyc/check-for-manual-kyc) to check whether a user has completed identity verification.
-
 ## Resolving bank accounts
 
 Before initiating payouts or offramp transactions, verify the destination bank account using [Resolve Bank](/api-reference/endpoint/v3/kyc/resolve-bank):
 
 ```bash
 curl --request POST \
-  --url https://staging-api.getpartna.com/v4/kyc/resolve-account \
+  --url https://api.getpartna.com/v4/kyc/resolve-account \
   --header 'Content-Type: application/json' \
   --header 'x-api-key: YOUR_API_KEY' \
   --header 'x-api-user: YOUR_USERNAME' \
