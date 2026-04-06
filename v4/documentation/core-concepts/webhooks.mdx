@@ -235,14 +235,15 @@ def verify_signature(payload: bytes, signature: str) -> bool:
 
 def main():
     json_data = json.loads(SAMPLE_WEBHOOK_REQUEST)
-
     event = json_data["event"]
-    data = json_data["data"]
     signature = json_data["signature"]
 
-    payload = json.dumps(
-        data, separators=(",", ":")
-    ).encode()  # Ensure consistent JSON formatting
+    # extract data bytes
+    payload = SAMPLE_WEBHOOK_REQUEST[
+        SAMPLE_WEBHOOK_REQUEST.index(b'"data":') + 7
+        : 
+        SAMPLE_WEBHOOK_REQUEST.index(b"}") + 1
+    ]
 
     if verify_signature(payload, signature):
         print(f"Signature valid for event: {event}")
