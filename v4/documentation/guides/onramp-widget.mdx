@@ -1,16 +1,17 @@
 ---
 title: "Onramp Widget"
 description: "Redirect users to Partna's onramp widget"
-icon: "window"
+icon: "window-restore"
 ---
 
 The onramp widget lets you send users to a Partna-managed checkout where they can pay in local currency and receive crypto in their wallet. Use this flow when you want a faster integration without building your own payment UI.
 
-## Base URL
+## Base URLs
 
-```text
-https://pay.getpartna.com/v4/pay/onramp
-```
+| Environment | URL |
+| --- | --- |
+| `staging` | `https://staging-pay.getpartna.com/v4/pay/onramp` |
+| `production` | `https://pay.getpartna.com/v4/pay/onramp` |
 
 ## Required query parameters
 
@@ -22,13 +23,26 @@ https://pay.getpartna.com/v4/pay/onramp
 | `to_network` | Yes | Network to deliver the crypto on, such as `tron`, `celo`, or `ethereum` |
 | `address` | Yes | Wallet address that will receive the crypto |
 | `merchant` | Yes | Your Partna merchant username |
-| `reference` | No | Your custom transaction reference |
+| `reference` | No | A hex string transaction reference |
+
+## Registration modes
+
+The widget supports two merchant-controlled registration modes:
+
+| Mode | Behavior |
+| --- | --- |
+| `open` | Users can begin registration through the widget flow and complete onboarding later |
+| `closed` | Only users you have already created can continue in the widget flow |
+
+You can manage this setting through [Update Settings](/api-reference/endpoint/v3/user/registration-deposit-and-fee-settings) and inspect the current value with [Get Settings](/api-reference/endpoint/v3/user/get-registration-deposit-and-fee-settings).
+
+If your registration mode is `open`, you can use [Register Account](/api-reference/endpoint/v3/account/register-account) to create a pending registration. If your registration mode is `closed`, create the user up front with [Create Account](/api-reference/endpoint/v3/account/create-account).
 
 ## How it works
 
 <Steps>
   <Step title="Generate the redirect URL">
-    Build a URL using the base URL and the required query parameters.
+    Build a URL using the correct environment URL and the required query parameters.
   </Step>
   <Step title="Redirect the user">
     Send the user to the hosted Partna checkout from your app or website.
@@ -49,7 +63,10 @@ https://pay.getpartna.com/v4/pay/onramp
 <CodeGroup>
 
 ```typescript TypeScript
-const redirectURL = "https://pay.getpartna.com/v4/pay/onramp";
+const redirectURL =
+  environment === "staging"
+    ? "https://staging-pay.getpartna.com/v4/pay/onramp"
+    : "https://pay.getpartna.com/v4/pay/onramp";
 
 const params = new URLSearchParams();
 params.append("from_currency", fromCurrency);
@@ -68,7 +85,10 @@ window.location.href = url;
 ```
 
 ```javascript JavaScript
-const redirectURL = "https://pay.getpartna.com/v4/pay/onramp";
+const redirectURL =
+  environment === "staging"
+    ? "https://staging-pay.getpartna.com/v4/pay/onramp"
+    : "https://pay.getpartna.com/v4/pay/onramp";
 
 const params = new URLSearchParams({
   from_currency: fromCurrency,
@@ -91,8 +111,10 @@ window.location.href = `${redirectURL}?${params.toString()}`;
 ## Example redirect URL
 
 ```text
-https://pay.getpartna.com/v4/pay/onramp?amount=1000&from_currency=KES&to_currency=CUSD&to_network=celo&address=0x00B6845c6F47C770cE630B96df9BD4A6dA91C65d&merchant=your-merchant-username&reference=order-1024
+https://pay.getpartna.com/v4/pay/onramp?amount=1000&from_currency=KES&to_currency=CUSD&to_network=celo&address=0x00B6845c6F47C770cE630B96df9BD4A6dA91C65d&merchant=your-merchant-username&reference=a152225b9ccd6d28c2b58f8828a81125
 ```
+
+For staging, use `https://staging-pay.getpartna.com/v4/pay/onramp` instead.
 
 ## Transaction lifecycle
 

@@ -6,13 +6,14 @@ icon: "window-restore"
 
 The offramp widget lets you redirect users to a Partna-managed flow where they can send crypto and receive local currency. Use this flow when you want Partna to handle the payout collection interface and transaction instructions.
 
-## Base URL
+## Base URLs
 
-```text
-https://pay.getpartna.com/v4/pay/offramp
-```
+| Environment | URL |
+| --- | --- |
+| `staging` | `https://staging-pay.getpartna.com/v4/pay/offramp` |
+| `production` | `https://pay.getpartna.com/v4/pay/offramp` |
 
-## Required query parameters
+## Query parameters
 
 | Parameter | Required | Description |
 | --- | --- | --- |
@@ -21,7 +22,21 @@ https://pay.getpartna.com/v4/pay/offramp
 | `from_network` | Yes | Network the user is sending from, such as `tron`, `celo`, or `ethereum` |
 | `to_currency` | Yes | Local payout currency, such as `NGN`, `KES`, or `GHS` |
 | `merchant` | Yes | Your Partna merchant username |
-| `reference` | No | Your custom transaction reference |
+| `address` | No | Wallet address the crypto will be sent from |
+| `reference` | No | A hex string transaction reference |
+
+## Registration modes
+
+The widget supports two merchant-controlled registration modes:
+
+| Mode | Behavior |
+| --- | --- |
+| `open` | Users can begin registration through the widget flow and complete onboarding later |
+| `closed` | Only users you have already created can continue in the widget flow |
+
+You can manage this setting through [Update Settings](/api-reference/endpoint/v3/user/registration-deposit-and-fee-settings) and inspect the current value with [Get Settings](/api-reference/endpoint/v3/user/get-registration-deposit-and-fee-settings).
+
+If your registration mode is `open`, you can use [Register Account](/api-reference/endpoint/v3/account/register-account) to create a pending registration. If your registration mode is `closed`, create the user up front with [Create Account](/api-reference/endpoint/v3/account/create-account).
 
 The hosted flow collects the user's payout details before finalizing the transaction.
 
@@ -29,7 +44,7 @@ The hosted flow collects the user's payout details before finalizing the transac
 
 <Steps>
   <Step title="Generate the redirect URL">
-    Build a URL using the base URL and the required query parameters.
+    Build a URL using the correct environment URL and the required query parameters.
   </Step>
   <Step title="Redirect the user">
     Send the user to the hosted Partna offramp flow from your app or website.
@@ -50,13 +65,19 @@ The hosted flow collects the user's payout details before finalizing the transac
 <CodeGroup>
 
 ```typescript TypeScript
-const redirectURL = "https://pay.getpartna.com/v4/pay/offramp";
+const redirectURL =
+  environment === "staging"
+    ? "https://staging-pay.getpartna.com/v4/pay/offramp"
+    : "https://pay.getpartna.com/v4/pay/offramp";
 
 const params = new URLSearchParams();
 params.append("from_currency", fromCurrency);
 params.append("to_currency", toCurrency);
 params.append("from_network", fromNetwork);
 params.append("amount", amount);
+if (address) {
+  params.append("address", address);
+}
 params.append("merchant", merchant);
 
 if (reference) {
@@ -68,7 +89,10 @@ window.location.href = url;
 ```
 
 ```javascript JavaScript
-const redirectURL = "https://pay.getpartna.com/v4/pay/offramp";
+const redirectURL =
+  environment === "staging"
+    ? "https://staging-pay.getpartna.com/v4/pay/offramp"
+    : "https://pay.getpartna.com/v4/pay/offramp";
 
 const params = new URLSearchParams({
   from_currency: fromCurrency,
@@ -77,6 +101,10 @@ const params = new URLSearchParams({
   amount,
   merchant,
 });
+
+if (address) {
+  params.append("address", address);
+}
 
 if (reference) {
   params.append("reference", reference);
@@ -90,8 +118,10 @@ window.location.href = `${redirectURL}?${params.toString()}`;
 ## Example redirect URL
 
 ```text
-https://pay.getpartna.com/v4/pay/offramp?amount=0.11&from_currency=CUSD&from_network=celo&to_currency=KES&merchant=your-merchant-username&reference=withdrawal-1024
+https://pay.getpartna.com/v4/pay/offramp?amount=0.11&from_currency=CUSD&from_network=celo&to_currency=KES&address=0x00B6845c6F47C770cE630B96df9BD4A6dA91C65d&merchant=your-merchant-username&reference=a13953b727b9f20ab1ab76dfd9abe4ca
 ```
+
+For staging, use `https://staging-pay.getpartna.com/v4/pay/offramp` instead.
 
 ## Transaction lifecycle
 
