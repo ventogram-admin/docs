@@ -44,7 +44,15 @@
                   "v4/documentation/guides/onramp",
                   "v4/documentation/guides/offramp",
                   "v4/documentation/guides/collect-and-settle",
-                  "v4/documentation/guides/accounts-and-kyc"
+                  "v4/documentation/guides/accounts-and-kyc",
+                  {
+                    "group": "Widgets",
+                    "icon": "window",
+                    "pages": [
+                      "v4/documentation/guides/onramp-widget",
+                      "v4/documentation/guides/offramp-widget"
+                    ]
+                  }
                 ]
               }
             ]

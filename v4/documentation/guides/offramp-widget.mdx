@@ -1,0 +1,208 @@
+---
+title: "Offramp Widget"
+description: "Redirect users to Partna's offramp widget"
+icon: "window-restore"
+---
+
+The offramp widget lets you redirect users to a Partna-managed flow where they can send crypto and receive local currency. Use this flow when you want Partna to handle the payout collection interface and transaction instructions.
+
+## Base URL
+
+```text
+https://pay.getpartna.com/v4/pay/offramp
+```
+
+## Required query parameters
+
+| Parameter | Required | Description |
+| --- | --- | --- |
+| `amount` | Yes | Amount the user wants to convert |
+| `from_currency` | Yes | Crypto the user is sending, such as `USDT`, `USDC`, `BTC`, or `ETH` |
+| `from_network` | Yes | Network the user is sending from, such as `tron`, `celo`, or `ethereum` |
+| `to_currency` | Yes | Local payout currency, such as `NGN`, `KES`, or `GHS` |
+| `merchant` | Yes | Your Partna merchant username |
+| `reference` | No | Your custom transaction reference |
+
+The hosted flow collects the user's payout details before finalizing the transaction.
+
+## How it works
+
+<Steps>
+  <Step title="Generate the redirect URL">
+    Build a URL using the base URL and the required query parameters.
+  </Step>
+  <Step title="Redirect the user">
+    Send the user to the hosted Partna offramp flow from your app or website.
+  </Step>
+  <Step title="User submits payout details and sends crypto">
+    The user enters the required payout details in the hosted flow and transfers the specified crypto amount.
+  </Step>
+  <Step title="Receive webhook updates">
+    Partna sends `Offramp` webhook events as the transaction progresses. See [Webhooks](/v4/documentation/core-concepts/webhooks) for verification details.
+  </Step>
+  <Step title="Handle completion">
+    Once the transaction reaches `completed`, the local currency payout has been sent.
+  </Step>
+</Steps>
+
+## Build the redirect URL
+
+<CodeGroup>
+
+```typescript TypeScript
+const redirectURL = "https://pay.getpartna.com/v4/pay/offramp";
+
+const params = new URLSearchParams();
+params.append("from_currency", fromCurrency);
+params.append("to_currency", toCurrency);
+params.append("from_network", fromNetwork);
+params.append("amount", amount);
+params.append("merchant", merchant);
+
+if (reference) {
+  params.append("reference", reference);
+}
+
+const url = `${redirectURL}?${params.toString()}`;
+window.location.href = url;
+```
+
+```javascript JavaScript
+const redirectURL = "https://pay.getpartna.com/v4/pay/offramp";
+
+const params = new URLSearchParams({
+  from_currency: fromCurrency,
+  to_currency: toCurrency,
+  from_network: fromNetwork,
+  amount,
+  merchant,
+});
+
+if (reference) {
+  params.append("reference", reference);
+}
+
+window.location.href = `${redirectURL}?${params.toString()}`;
+```
+
+</CodeGroup>
+
+## Example redirect URL
+
+```text
+https://pay.getpartna.com/v4/pay/offramp?amount=0.11&from_currency=CUSD&from_network=celo&to_currency=KES&merchant=your-merchant-username&reference=withdrawal-1024
+```
+
+## Transaction lifecycle
+
+Partna emits `Offramp` webhooks with these statuses:
+
+| Status | Meaning |
+| --- | --- |
+| `pending` | The offramp request has been created and is awaiting crypto payment |
+| `received` | Partna has received the user's crypto transfer |
+| `processing` | Conversion or payout is currently being processed |
+| `completed` | The local currency payout is complete |
+
+## Sample webhook payloads
+
+### `pending`
+
+```json
+{
+  "event": "Offramp",
+  "data": {
+    "transactionReference": "a13953b727b9f20ab1ab76dfd9abe4ca",
+    "status": "pending",
+    "timestamp": 1773706850,
+    "fromAmount": 0.11,
+    "toAmount": 12.93,
+    "fromCurrency": "CUSD",
+    "toCurrency": "KES",
+    "fromNetwork": "celo",
+    "toNetwork": "kenyanshilling",
+    "totalFeesInFromCurrency": 0.0089,
+    "totalFeesInToCurrency": 1.14,
+    "sendingAddress": "0x00B6845c6F47C770cE630B96df9BD4A6dA91C65d",
+    "paymentAddress": "0xc89f5afe4d5c13daeef96164abc8001c1e320718",
+    "expireAt": 1773710450,
+    "toExternalAccount": "Safaricom::0726140198::::MOBILE"
+  },
+  "signature": "BASE64_SIGNATURE"
+}
+```
+
+### `received`
+
+```json
+{
+  "event": "Offramp",
+  "data": {
+    "transactionReference": "a13953b727b9f20ab1ab76dfd9abe4ca",
+    "status": "received",
+    "timestamp": 1773706902,
+    "transactionHash": "0xeefee6c33e572458e6aef553b1572c58084ad59d7f3bcec9654d60810def6d2b",
+    "fromAmount": 0.11,
+    "fromCurrency": "CUSD",
+    "toCurrency": "KES",
+    "sendingAddress": "0x00B6845c6F47C770cE630B96df9BD4A6dA91C65d"
+  },
+  "signature": "BASE64_SIGNATURE"
+}
+```
+
+### `processing`
+
+```json
+{
+  "event": "Offramp",
+  "data": {
+    "transactionReference": "a13953b727b9f20ab1ab76dfd9abe4ca",
+    "status": "processing",
+    "timestamp": 1773706921,
+    "fromAmount": 0.11,
+    "toAmount": 12.9392,
+    "fromCurrency": "CUSD",
+    "toCurrency": "KES",
+    "fromNetwork": "celo",
+    "toNetwork": "kenyanshilling",
+    "sendingAddress": "0x00B6845c6F47C770cE630B96df9BD4A6dA91C65d",
+    "expireAt": 1773710450,
+    "toExternalAccount": "Safaricom::0726140198::::MOBILE"
+  },
+  "signature": "BASE64_SIGNATURE"
+}
+```
+
+### `completed`
+
+```json
+{
+  "event": "Offramp",
+  "data": {
+    "transactionReference": "a13953b727b9f20ab1ab76dfd9abe4ca",
+    "status": "completed",
+    "timestamp": 1773706921,
+    "sessionId": "DFE48F597F",
+    "fromAmount": 0.11,
+    "toAmount": 12.9392,
+    "fromCurrency": "CUSD",
+    "toCurrency": "KES",
+    "fromNetwork": "celo",
+    "toNetwork": "kenyanshilling",
+    "sendingAddress": "0x00B6845c6F47C770cE630B96df9BD4A6dA91C65d",
+    "toExternalAccount": "Safaricom::0726140198::::MOBILE"
+  },
+  "signature": "BASE64_SIGNATURE"
+}
+```
+
+## When to use the hosted widget
+
+Use the hosted widget when you want:
+
+- A redirect-based offramp experience with less frontend work
+- Partna to collect payout details inside the hosted flow
+- A fast way to launch crypto-to-fiat payouts
+
+Use the API-based [Offramp Guide](/v4/documentation/guides/offramp) when you need to manage account resolution, payout details, and user experience yourself.

@@ -1,0 +1,208 @@
+---
+title: "Onramp Widget"
+description: "Redirect users to Partna's onramp widget"
+icon: "window"
+---
+
+The onramp widget lets you send users to a Partna-managed checkout where they can pay in local currency and receive crypto in their wallet. Use this flow when you want a faster integration without building your own payment UI.
+
+## Base URL
+
+```text
+https://pay.getpartna.com/v4/pay/onramp
+```
+
+## Required query parameters
+
+| Parameter | Required | Description |
+| --- | --- | --- |
+| `amount` | Yes | Amount the user will pay in local currency |
+| `from_currency` | Yes | Local currency the user is paying with, such as `NGN`, `KES`, or `GHS` |
+| `to_currency` | Yes | Crypto the user should receive, such as `USDT`, `USDC`, `BTC`, or `ETH` |
+| `to_network` | Yes | Network to deliver the crypto on, such as `tron`, `celo`, or `ethereum` |
+| `address` | Yes | Wallet address that will receive the crypto |
+| `merchant` | Yes | Your Partna merchant username |
+| `reference` | No | Your custom transaction reference |
+
+## How it works
+
+<Steps>
+  <Step title="Generate the redirect URL">
+    Build a URL using the base URL and the required query parameters.
+  </Step>
+  <Step title="Redirect the user">
+    Send the user to the hosted Partna checkout from your app or website.
+  </Step>
+  <Step title="User completes payment">
+    The user follows the payment instructions in the hosted flow and pays the local currency amount.
+  </Step>
+  <Step title="Receive webhook updates">
+    Partna sends `Onramp` webhook events as the transaction moves through each state. See [Webhooks](/v4/documentation/core-concepts/webhooks) for signature verification and endpoint setup.
+  </Step>
+  <Step title="Handle completion">
+    Once the transaction reaches `completed`, the crypto has been sent to the destination wallet address.
+  </Step>
+</Steps>
+
+## Build the redirect URL
+
+<CodeGroup>
+
+```typescript TypeScript
+const redirectURL = "https://pay.getpartna.com/v4/pay/onramp";
+
+const params = new URLSearchParams();
+params.append("from_currency", fromCurrency);
+params.append("to_currency", toCurrency);
+params.append("to_network", toNetwork);
+params.append("amount", amount);
+params.append("address", walletAddress);
+params.append("merchant", merchant);
+
+if (reference) {
+  params.append("reference", reference);
+}
+
+const url = `${redirectURL}?${params.toString()}`;
+window.location.href = url;
+```
+
+```javascript JavaScript
+const redirectURL = "https://pay.getpartna.com/v4/pay/onramp";
+
+const params = new URLSearchParams({
+  from_currency: fromCurrency,
+  to_currency: toCurrency,
+  to_network: toNetwork,
+  amount,
+  address: walletAddress,
+  merchant,
+});
+
+if (reference) {
+  params.append("reference", reference);
+}
+
+window.location.href = `${redirectURL}?${params.toString()}`;
+```
+
+</CodeGroup>
+
+## Example redirect URL
+
+```text
+https://pay.getpartna.com/v4/pay/onramp?amount=1000&from_currency=KES&to_currency=CUSD&to_network=celo&address=0x00B6845c6F47C770cE630B96df9BD4A6dA91C65d&merchant=your-merchant-username&reference=order-1024
+```
+
+## Transaction lifecycle
+
+Partna emits `Onramp` webhooks with these statuses:
+
+| Status | Meaning |
+| --- | --- |
+| `pending` | The onramp request has been created and is awaiting user payment |
+| `received` | Partna has received the user's payment |
+| `processing` | Conversion or transfer is currently being processed |
+| `completed` | The crypto delivery is complete |
+
+## Sample webhook payloads
+
+### `pending`
+
+```json
+{
+  "event": "Onramp",
+  "data": {
+    "transactionReference": "a152225b9ccd6d28c2b58f8828a81125",
+    "status": "pending",
+    "timestamp": 1773760151,
+    "fromAmount": 14.2,
+    "toAmount": 0.0954,
+    "fromCurrency": "KES",
+    "toCurrency": "CUSD",
+    "fromNetwork": "kenyanshilling",
+    "toNetwork": "celo",
+    "totalFeesInFromCurrency": 1.8,
+    "totalFeesInToCurrency": 0.0138,
+    "expireAt": 1773763751,
+    "toExternalAccount": "0x00B6845c6F47C770cE630B96df9BD4A6dA91C65d"
+  },
+  "signature": "BASE64_SIGNATURE"
+}
+```
+
+### `received`
+
+```json
+{
+  "event": "Onramp",
+  "data": {
+    "transactionReference": "a152225b9ccd6d28c2b58f8828a81125",
+    "status": "received",
+    "timestamp": 1773760193,
+    "fromAmount": 14.2,
+    "toAmount": 0.095407692303476,
+    "fromCurrency": "KES",
+    "toCurrency": "CUSD",
+    "totalFeesInFromCurrency": 1.797000000052,
+    "totalFeesInToCurrency": 0.013823076922924,
+    "toExternalAccount": "0x00B6845c6F47C770cE630B96df9BD4A6dA91C65d"
+  },
+  "signature": "BASE64_SIGNATURE"
+}
+```
+
+### `processing`
+
+```json
+{
+  "event": "Onramp",
+  "data": {
+    "transactionReference": "a152225b9ccd6d28c2b58f8828a81125",
+    "status": "processing",
+    "timestamp": 1773760502,
+    "transactionHash": "0xc41e313cfb60826d8ccb1803f55fdaaa8d72c269b35fc1a273f7fe3bd7b86831",
+    "fromAmount": 14.2,
+    "toAmount": 0.0954,
+    "fromCurrency": "KES",
+    "toCurrency": "CUSD",
+    "fromNetwork": "kenyanshilling",
+    "toNetwork": "celo",
+    "expireAt": 1773763751,
+    "toExternalAccount": "0x00B6845c6F47C770cE630B96df9BD4A6dA91C65d"
+  },
+  "signature": "BASE64_SIGNATURE"
+}
+```
+
+### `completed`
+
+```json
+{
+  "event": "Onramp",
+  "data": {
+    "transactionReference": "a152225b9ccd6d28c2b58f8828a81125",
+    "status": "completed",
+    "timestamp": 1773760502,
+    "transactionHash": "0xc41e313cfb60826d8ccb1803f55fdaaa8d72c269b35fc1a273f7fe3bd7b86831",
+    "fromAmount": 14.2,
+    "toAmount": 0.0954,
+    "fromCurrency": "KES",
+    "toCurrency": "CUSD",
+    "fromNetwork": "kenyanshilling",
+    "toNetwork": "celo",
+    "toExternalAccount": "0x00B6845c6F47C770cE630B96df9BD4A6dA91C65d"
+  },
+  "signature": "BASE64_SIGNATURE"
+}
+```
+
+## When to use the hosted widget
+
+Use the hosted widget when you want:
+
+- A faster integration with less frontend work
+- Partna to handle the payment instructions UI
+- A simple redirect-based flow from your product
+
+Use the API-based [Onramp Guide](/v4/documentation/guides/onramp) when you need full control over the user experience and payment orchestration.
