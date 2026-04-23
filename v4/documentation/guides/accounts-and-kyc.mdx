@@ -30,7 +30,7 @@ Identity verification in Nigeria uses BVN (Bank Verification Number). The flow d
 
 <Steps>
   <Step title="Initiate KYC" stepNumber={1}>
-    Call [Initiate KYC](/api-reference/endpoint/v3/kyc/initiate-bvn-kyc) with the user's identity information (e.g., BVN for Nigeria). This triggers an OTP to be sent to the phone number associated with the user's identity.
+    Call [Initiate KYC](/api-reference/endpoint/v3/kyc/initiate-bvn-kyc) with the user's identity information (e.g., BVN for Nigeria). This triggers an OTP to be sent to the phone number associated with the user's identity. In staging, you can use any 11-digit number as the BVN to simulate a successful verification.
 
     ```bash
     curl --request POST \
@@ -45,7 +45,7 @@ Identity verification in Nigeria uses BVN (Bank Verification Number). The flow d
     ```
   </Step>
   <Step title="Confirm phone number">
-    After OTP verification, confirm the user's phone number using [Confirm Phone](/api-reference/endpoint/v3/kyc/confirm-phone). In staging environment, use phone number of this format `0803***3843` `(e.g 08030003843)` to simulate a successful verification.
+    After OTP verification, confirm the user's phone number using [Confirm Phone](/api-reference/endpoint/v3/kyc/confirm-phone). In staging, use `08030013843` when asked to verify the user's phone number.
   </Step>
   <Step title="Check supported verification methods" stepNumber={3}>
     Call [Supported Verification Methods](/api-reference/endpoint/v3/kyc/supported-verification-methods) to see which identity verification methods are available for a given country.
@@ -58,7 +58,7 @@ Identity verification in Nigeria uses BVN (Bank Verification Number). The flow d
     ```
   </Step>
   <Step title="Confirm OTP">
-    Once the user receives the OTP, submit it using [Confirm KYC OTP](/api-reference/endpoint/v3/kyc/confirm-kyc-otp). In staging environment, use `123456` as the OTP to simulate a successful verification.
+    Once the user receives the OTP, submit it using [Confirm KYC OTP](/api-reference/endpoint/v3/kyc/confirm-kyc-otp). In staging, use `123456` as the OTP to simulate a successful verification.
 
     ```bash
     curl --request PUT \
