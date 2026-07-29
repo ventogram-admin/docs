@@ -84,7 +84,8 @@
                 "pages": [
                   "api-reference/endpoint/v3/ramp/get-ramp-requests",
                   "api-reference/endpoint/v3/ramp/onramp-and-offramp",
-                  "api-reference/endpoint/v3/ramp/calculate-ramp-fees-from-toamount-or-fromamount"
+                  "api-reference/endpoint/v3/ramp/calculate-ramp-fees-from-toamount-or-fromamount",
+                  "api-reference/endpoint/v3/ramp/handle-ramp"
                 ]
               },
               {
@@ -122,7 +123,8 @@
                   "api-reference/endpoint/v3/kyc/check-for-manual-kyc",
                   "api-reference/endpoint/v3/kyc/initiate-users-phone-number-validation-by-country",
                   "api-reference/endpoint/v3/kyc/used-to-get-a-users-verified-phone-numbers-by-country",
-                  "api-reference/endpoint/v3/kyc/validate-a-users-phone-number"
+                  "api-reference/endpoint/v3/kyc/validate-a-users-phone-number", 
+                  "api-reference/endpoint/v3/kyc/populate-address-details-for-an-existing-ng-kyc-record"
                 ]
               },
               {
