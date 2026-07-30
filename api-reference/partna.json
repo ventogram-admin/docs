@@ -452,7 +452,7 @@
                 },
                 "properties": {
                   "accountName": {
-                    "description": "accountName should be alphanumeric, lowercase and between 2 to 40 characters long",
+                    "description": "accountName should be alphanumeric, lowercase, between 2 to 40 characters long, and not start with 0",
                     "type": "string"
                   },
                   "email": {
@@ -1618,6 +1618,75 @@
         ]
       }
     },
+    "/account/profile": {
+      "get": {
+        "description": "Get customer's account profile.",
+        "operationId": "get-account-profile",
+        "parameters": [
+          {
+            "description": "",
+            "in": "query",
+            "name": "accountName",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "data": {
+                      "createdAt": 1755873600,
+                      "email": "chang+user1@payourse.com",
+                      "phoneNumber": "+2348012345616"
+                    },
+                    "message": "success"
+                  },
+                  "properties": {
+                    "data": {
+                      "properties": {
+                        "createdAt": {
+                          "type": "number"
+                        },
+                        "email": {
+                          "type": "string"
+                        },
+                        "phoneNumber": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "get account profile success"
+          }
+        },
+        "security": [
+          {
+            "x-api-key": [],
+            "x-api-user": []
+          },
+          {
+            "authorization": []
+          }
+        ],
+        "summary": "Get Customer's Account Profile",
+        "tags": [
+          "Account"
+        ]
+      }
+    },
     "/account/register": {
       "post": {
         "description": "Create a pending account registration request. This is used when merchant registration type is set to open",
@@ -1685,6 +1754,15 @@
             "description": "The name of the account to search for. Must be at least 2 characters.",
             "in": "query",
             "name": "accountName",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Search by account name or email.",
+            "in": "query",
+            "name": "accountNameOrEmail",
             "required": false,
             "schema": {
               "type": "string"
@@ -1884,12 +1962,12 @@
                   },
                   "fromCurrency": {
                     "enum": [
+                      "BNB",
                       "BTC",
                       "ETH",
-                      "USD",
-                      "BNB",
+                      "KES",
                       "NGN",
-                      "KES"
+                      "USD"
                     ],
                     "type": "string"
                   },
@@ -1901,12 +1979,12 @@
                   },
                   "toCurrency": {
                     "enum": [
+                      "BNB",
                       "BTC",
                       "ETH",
-                      "USD",
-                      "BNB",
+                      "KES",
                       "NGN",
-                      "KES"
+                      "USD"
                     ],
                     "type": "string"
                   },
@@ -1914,9 +1992,6 @@
                     "type": "string"
                   }
                 },
-                "required": [
-                  "rateKey"
-                ],
                 "type": "object"
               }
             }
@@ -2286,6 +2361,24 @@
               }
             },
             "description": "post kyc ok"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "message": "No valid phonenumber found in bvn response"
+                  },
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "post kyc bad request"
           }
         },
         "security": [
@@ -2298,6 +2391,81 @@
           }
         ],
         "summary": "Initiate BVN KYC",
+        "tags": [
+          "KYC"
+        ]
+      }
+    },
+    "/kyc/address": {
+      "put": {
+        "description": "Adds street address, city, and state to the other details for an existing NG KYC record.",
+        "operationId": "put-kyc-address",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "example": {
+                  "accountName": "",
+                  "lga": "",
+                  "state": "",
+                  "streetAddress": ""
+                },
+                "properties": {
+                  "accountName": {
+                    "type": "string"
+                  },
+                  "lga": {
+                    "type": "string"
+                  },
+                  "state": {
+                    "type": "string"
+                  },
+                  "streetAddress": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "accountName",
+                  "streetAddress",
+                  "lga",
+                  "state"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "message": "success"
+                  },
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "put kyc address ok"
+          }
+        },
+        "security": [
+          {
+            "x-api-key": [],
+            "x-api-user": []
+          },
+          {
+            "authorization": []
+          }
+        ],
+        "summary": "Populate address details for an existing NG KYC record",
         "tags": [
           "KYC"
         ]
@@ -2320,8 +2488,11 @@
                   "gender": "",
                   "kycDocument": "",
                   "lastName": "",
+                  "lga": "",
                   "middleName": "",
-                  "phoneNumber": ""
+                  "phoneNumber": "",
+                  "state": "",
+                  "streetAddress": ""
                 },
                 "properties": {
                   "accountName": {
@@ -2355,24 +2526,35 @@
                   "lastName": {
                     "type": "string"
                   },
+                  "lga": {
+                    "type": "string"
+                  },
                   "middleName": {
                     "type": "string"
                   },
                   "phoneNumber": {
+                    "type": "string"
+                  },
+                  "state": {
+                    "type": "string"
+                  },
+                  "streetAddress": {
                     "type": "string"
                   }
                 },
                 "required": [
                   "accountName",
                   "firstName",
-                  "middleName",
                   "lastName",
                   "email",
                   "phoneNumber",
                   "kycDocument",
                   "documentId",
                   "dob",
-                  "gender"
+                  "gender",
+                  "streetAddress",
+                  "lga",
+                  "state"
                 ],
                 "type": "object"
               }
@@ -2443,6 +2625,78 @@
           }
         ],
         "summary": "Merchant KYC users manually",
+        "tags": [
+          "KYC"
+        ]
+      }
+    },
+    "/kyc/complete-kyc-address": {
+      "post": {
+        "description": "Allows a merchant to manually populate KYC address information for their members.",
+        "operationId": "post-kyc-complete-kyc-address",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "example": {
+                  "accountName": "",
+                  "lga": "",
+                  "state": "",
+                  "streetAddress": ""
+                },
+                "properties": {
+                  "accountName": {
+                    "type": "string"
+                  },
+                  "lga": {
+                    "type": "string"
+                  },
+                  "state": {
+                    "type": "string"
+                  },
+                  "streetAddress": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "accountName",
+                  "streetAddress",
+                  "lga",
+                  "state"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "message": "success"
+                  },
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "post kyc address complete ok"
+          }
+        },
+        "security": [
+          {
+            "x-api-key": [],
+            "x-api-user": []
+          }
+        ],
+        "summary": "Merchant KYC populate users address manually",
         "tags": [
           "KYC"
         ]
@@ -2650,9 +2904,40 @@
               "application/json": {
                 "schema": {
                   "example": {
-                    "message": "OTP sent successfully"
+                    "data": {
+                      "attempts": 1,
+                      "expectedPayment": "500.00",
+                      "maskedPhoneNumber": "080****2345",
+                      "otp": "123456",
+                      "partnaBankDetails": "Test Bank - 1234567890",
+                      "subscriptionId": "dev-username-accountname"
+                    },
+                    "message": "success"
                   },
                   "properties": {
+                    "data": {
+                      "properties": {
+                        "attempts": {
+                          "type": "number"
+                        },
+                        "expectedPayment": {
+                          "type": "string"
+                        },
+                        "maskedPhoneNumber": {
+                          "type": "string"
+                        },
+                        "otp": {
+                          "type": "string"
+                        },
+                        "partnaBankDetails": {
+                          "type": "string"
+                        },
+                        "subscriptionId": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    },
                     "message": {
                       "type": "string"
                     }
@@ -2932,9 +3217,40 @@
               "application/json": {
                 "schema": {
                   "example": {
-                    "message": "OTP sent successfully"
+                    "data": {
+                      "attempts": 1,
+                      "expectedPayment": "500.00",
+                      "maskedPhoneNumber": "080****2345",
+                      "otp": "123456",
+                      "partnaBankDetails": "Test Bank - 1234567890",
+                      "subscriptionId": "dev-username-accountname"
+                    },
+                    "message": "success"
                   },
                   "properties": {
+                    "data": {
+                      "properties": {
+                        "attempts": {
+                          "type": "number"
+                        },
+                        "expectedPayment": {
+                          "type": "string"
+                        },
+                        "maskedPhoneNumber": {
+                          "type": "string"
+                        },
+                        "otp": {
+                          "type": "string"
+                        },
+                        "partnaBankDetails": {
+                          "type": "string"
+                        },
+                        "subscriptionId": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    },
                     "message": {
                       "type": "string"
                     }
@@ -2943,7 +3259,7 @@
                 }
               }
             },
-            "description": "put kyc verification method ok"
+            "description": "put kyc handle otp ok"
           }
         },
         "security": [
@@ -3256,6 +3572,7 @@
                   "isRamp": false,
                   "network": "",
                   "reference": "",
+                  "sessionID": "",
                   "sourceAccount": "",
                   "transactionID": "",
                   "txHash": "",
@@ -3275,12 +3592,12 @@
                     "enum": [
                       "BNB",
                       "BTC",
-                      "ETH",
-                      "USDC",
-                      "USDT",
                       "CUSD",
+                      "ETH",
+                      "KES",
                       "NGN",
-                      "KES"
+                      "USDC",
+                      "USDT"
                     ],
                     "type": "string"
                   },
@@ -3304,15 +3621,18 @@
                       "bitcoin",
                       "celo",
                       "ethereum",
-                      "polygon",
-                      "tron",
-                      "solana",
+                      "kenyanshilling",
                       "naira",
-                      "kenyanshilling"
+                      "polygon",
+                      "solana",
+                      "tron"
                     ],
                     "type": "string"
                   },
                   "reference": {
+                    "type": "string"
+                  },
+                  "sessionID": {
                     "type": "string"
                   },
                   "sourceAccount": {
@@ -3370,6 +3690,24 @@
               }
             },
             "description": "post mock deposit bad request"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "message": "duplicateReference"
+                  },
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "post mock deposit conflict"
           },
           "500": {
             "content": {
@@ -3960,7 +4298,7 @@
     },
     "/pricing/trigger": {
       "get": {
-        "description": "Trigger pricing reminder, charge, retry or receipt.",
+        "description": "Trigger pricing reminder, charge, retry, receipt or control-account reconciliation.",
         "operationId": "get-pricing-trigger",
         "parameters": [
           {
@@ -3973,7 +4311,8 @@
                 "reminder",
                 "charge",
                 "retry",
-                "receipt"
+                "receipt",
+                "reconcile"
               ],
               "type": "string"
             }
@@ -4087,7 +4426,10 @@
                           "fromCurrency": "USDT",
                           "fromNetwork": "tron",
                           "initialRate": 1674.42,
+                          "paymentAddress": "TCc8ZvxqCi6GikedsdnmHPHim6fV6PZFVo",
+                          "processedFromAmount": 0.2,
                           "processedRate": 1674.42,
+                          "processedToAmount": 334.874,
                           "rampReference": "f32c3925063447a54905d31305a14da2",
                           "status": "completed",
                           "toAmount": 334.87,
@@ -4106,6 +4448,9 @@
                           "fromCurrency": "NGN",
                           "fromNetwork": "naira",
                           "initialRate": 0.000597221725,
+                          "paymentBankAccount": "9003001002",
+                          "paymentBankCode": "100039",
+                          "paymentBankName": "Paystack-Titan",
                           "rampReference": "f32c3925063447a54905d31305a14d99",
                           "status": "canceled",
                           "toAmount": 0.5872,
@@ -4165,7 +4510,16 @@
                               "initialRate": {
                                 "type": "number"
                               },
+                              "paymentAddress": {
+                                "type": "string"
+                              },
+                              "processedFromAmount": {
+                                "type": "number"
+                              },
                               "processedRate": {
+                                "type": "number"
+                              },
+                              "processedToAmount": {
                                 "type": "number"
                               },
                               "rampReference": {
@@ -4253,6 +4607,7 @@
                 "example": {
                   "accountName": "",
                   "accountNumber": "",
+                  "autoComplete": false,
                   "bankCode": "",
                   "cancelPendingRampRequest": false,
                   "cryptoAddress": "",
@@ -4281,6 +4636,10 @@
                   "accountNumber": {
                     "type": "string"
                   },
+                  "autoComplete": {
+                    "description": "allows you to suspend the ramp request to be completed later",
+                    "type": "boolean"
+                  },
                   "bankCode": {
                     "type": "string"
                   },
@@ -4304,14 +4663,14 @@
                   },
                   "fromCurrency": {
                     "enum": [
-                      "BTC",
-                      "ETH",
-                      "USDC",
-                      "USDT",
-                      "CUSD",
                       "BNB",
+                      "BTC",
+                      "CUSD",
+                      "ETH",
+                      "KES",
                       "NGN",
-                      "KES"
+                      "USDC",
+                      "USDT"
                     ],
                     "type": "string"
                   },
@@ -4323,29 +4682,28 @@
                       "bitcoin",
                       "celo",
                       "ethereum",
-                      "polygon",
-                      "tron",
-                      "solana",
+                      "kenyanshilling",
                       "naira",
-                      "mobileMoney",
-                      "mpesa",
-                      "kenyanshilling"
+                      "polygon",
+                      "solana",
+                      "tron"
                     ],
                     "type": "string"
                   },
                   "mobileNetwork": {
-                    "description": "mobileNetwork, required if ToNetwork is kenyanshilling",
+                    "description": "mobile network of the payout recipient; required for mobile currencies",
                     "enum": [
+                      "Airtel",
                       "Safaricom",
-                      "Airtel"
+                      "Telkom"
                     ],
                     "type": "string"
                   },
                   "paymentNetwork": {
-                    "description": "paymentNetwork, required if ToNetwork is kenyanshilling",
+                    "description": "payment network of the payout recipient; required for mobile currencies",
                     "enum": [
-                      "MOBILE",
                       "BUY_GOODS",
+                      "MOBILE",
                       "PAYBILL"
                     ],
                     "type": "string"
@@ -4368,7 +4726,7 @@
                     "type": "string"
                   },
                   "shortcode": {
-                    "description": "shortcode, required if ToNetwork is kenyanshilling",
+                    "description": "shortcode, required for mobile currencies",
                     "type": "string"
                   },
                   "toAmount": {
@@ -4376,14 +4734,14 @@
                   },
                   "toCurrency": {
                     "enum": [
-                      "BTC",
-                      "ETH",
-                      "USDC",
-                      "USDT",
-                      "CUSD",
                       "BNB",
+                      "BTC",
+                      "CUSD",
+                      "ETH",
+                      "KES",
                       "NGN",
-                      "KES"
+                      "USDC",
+                      "USDT"
                     ],
                     "type": "string"
                   },
@@ -4395,13 +4753,11 @@
                       "bitcoin",
                       "celo",
                       "ethereum",
-                      "polygon",
-                      "tron",
-                      "solana",
+                      "kenyanshilling",
                       "naira",
-                      "mobileMoney",
-                      "mpesa",
-                      "kenyanshilling"
+                      "polygon",
+                      "solana",
+                      "tron"
                     ],
                     "type": "string"
                   },
@@ -4596,31 +4952,30 @@
                   },
                   "fromCurrency": {
                     "enum": [
-                      "BTC",
-                      "ETH",
-                      "USDC",
-                      "USDT",
-                      "CUSD",
                       "BNB",
+                      "BTC",
+                      "CUSD",
+                      "ETH",
+                      "KES",
                       "NGN",
-                      "KES"
+                      "USDC",
+                      "USDT"
                     ],
                     "type": "string"
                   },
                   "fromNetwork": {
                     "enum": [
                       "avalanche",
+                      "base",
                       "binance",
                       "bitcoin",
                       "celo",
                       "ethereum",
-                      "polygon",
-                      "tron",
-                      "solana",
+                      "kenyanshilling",
                       "naira",
-                      "mobileMoney",
-                      "mpesa",
-                      "kenyanshilling"
+                      "polygon",
+                      "solana",
+                      "tron"
                     ],
                     "type": "string"
                   },
@@ -4632,14 +4987,14 @@
                   },
                   "toCurrency": {
                     "enum": [
-                      "BTC",
-                      "ETH",
-                      "USDC",
-                      "USDT",
-                      "CUSD",
                       "BNB",
+                      "BTC",
+                      "CUSD",
+                      "ETH",
+                      "KES",
                       "NGN",
-                      "KES"
+                      "USDC",
+                      "USDT"
                     ],
                     "type": "string"
                   },
@@ -4651,13 +5006,11 @@
                       "bitcoin",
                       "celo",
                       "ethereum",
-                      "polygon",
-                      "tron",
-                      "solana",
+                      "kenyanshilling",
                       "naira",
-                      "mobileMoney",
-                      "mpesa",
-                      "kenyanshilling"
+                      "polygon",
+                      "solana",
+                      "tron"
                     ],
                     "type": "string"
                   },
@@ -4694,6 +5047,7 @@
                       "DepositFeeInFromCurrency": 1000,
                       "DepositFeeInToCurrency": 0.597221725,
                       "DepositPercentageApplied": 0,
+                      "MerchantBearsFee": true,
                       "MerchantFeeCapped": false,
                       "MerchantFeeInFromCurrency": 200,
                       "MerchantFeeInToCurrency": 0.11944434500000001,
@@ -4724,6 +5078,9 @@
                         },
                         "DepositPercentageApplied": {
                           "type": "number"
+                        },
+                        "MerchantBearsFee": {
+                          "type": "boolean"
                         },
                         "MerchantFeeCapped": {
                           "type": "boolean"
@@ -4788,6 +5145,106 @@
           }
         ],
         "summary": "Calculate ramp fees from toAmount or fromAmount",
+        "tags": [
+          "Ramp"
+        ]
+      }
+    },
+    "/ramp/complete": {
+      "post": {
+        "description": "Manual handler for completing a ramp request.",
+        "operationId": "post-ramp-complete",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "example": {
+                  "feeBearerAccount": "",
+                  "feeCurrency": "",
+                  "merchantFee": 0,
+                  "merchantFeeAccount": "",
+                  "rampReference": ""
+                },
+                "properties": {
+                  "feeBearerAccount": {
+                    "type": "string"
+                  },
+                  "feeCurrency": {
+                    "enum": [
+                      "BNB",
+                      "BTC",
+                      "CUSD",
+                      "ETH",
+                      "KES",
+                      "NGN",
+                      "USDC",
+                      "USDT"
+                    ],
+                    "type": "string"
+                  },
+                  "merchantFee": {
+                    "type": "number"
+                  },
+                  "merchantFeeAccount": {
+                    "type": "string"
+                  },
+                  "rampReference": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "rampReference"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "message": "success"
+                  },
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "post ramp complete ok"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "message": "failed to update ramp request"
+                  },
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "post ramp complete bad request"
+          }
+        },
+        "security": [
+          {
+            "authorization": []
+          }
+        ],
+        "summary": "Handle Ramp",
         "tags": [
           "Ramp"
         ]
@@ -5078,6 +5535,129 @@
         ]
       }
     },
+    "/states": {
+      "get": {
+        "description": "Get supported states for a country.",
+        "operationId": "get-states",
+        "parameters": [
+          {
+            "description": "",
+            "in": "query",
+            "name": "country",
+            "required": true,
+            "schema": {
+              "enum": [
+                "NG"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "data": {
+                      "states": [
+                        "Abia",
+                        "Adamawa",
+                        "Lagos"
+                      ]
+                    },
+                    "message": "success"
+                  },
+                  "properties": {
+                    "data": {
+                      "properties": {
+                        "states": {
+                          "items": {
+                            "type": "string"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "get states ok"
+          }
+        },
+        "security": [],
+        "summary": "Get States",
+        "tags": [
+          "State"
+        ]
+      }
+    },
+    "/states/lgas": {
+      "get": {
+        "description": "Get supported local governments for a state in Nigeria.",
+        "operationId": "get-states-lgas",
+        "parameters": [
+          {
+            "description": "",
+            "in": "query",
+            "name": "state",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "data": {
+                      "lgas": [
+                        "Aba North",
+                        "Aba South",
+                        "Umuahia North"
+                      ]
+                    },
+                    "message": "success"
+                  },
+                  "properties": {
+                    "data": {
+                      "properties": {
+                        "lgas": {
+                          "items": {
+                            "type": "string"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "get lgas by state ok"
+          }
+        },
+        "security": [],
+        "summary": "Get LGAs By State",
+        "tags": [
+          "State"
+        ]
+      }
+    },
     "/supported/assets": {
       "get": {
         "description": "Get a list of supported assets including symbols, contract details, withdrawal constraints, and transaction explorer links.",
@@ -5090,15 +5670,14 @@
             "required": false,
             "schema": {
               "enum": [
-                "BTC",
-                "ETH",
-                "USDC",
-                "USDT",
-                "CUSD",
                 "BNB",
+                "BTC",
+                "CUSD",
+                "ETH",
+                "KES",
                 "NGN",
-                "GHS",
-                "KES"
+                "USDC",
+                "USDT"
               ],
               "type": "string"
             }
@@ -6499,13 +7078,12 @@
             "required": false,
             "schema": {
               "enum": [
+                "BNB",
                 "BTC",
                 "ETH",
+                "KES",
                 "NGN",
-                "USD",
-                "BNB",
-                "GHS",
-                "KES"
+                "USD"
               ],
               "type": "string"
             }
@@ -6694,13 +7272,12 @@
                   },
                   "currency": {
                     "enum": [
-                      "NGN",
-                      "GHS",
+                      "BNB",
                       "BTC",
                       "ETH",
-                      "USD",
-                      "BNB",
-                      "KES"
+                      "KES",
+                      "NGN",
+                      "USD"
                     ],
                     "type": "string"
                   },
@@ -6954,18 +7531,12 @@
             "application/json": {
               "schema": {
                 "example": {
-                  "-": false,
                   "accountName": "",
                   "amount": 0,
                   "currency": "",
-                  "mobileNetwork": "",
-                  "mobileNumber": "",
                   "transactionReference": ""
                 },
                 "properties": {
-                  "-": {
-                    "type": "boolean"
-                  },
                   "accountName": {
                     "type": "string"
                   },
@@ -6974,19 +7545,8 @@
                   },
                   "currency": {
                     "enum": [
-                      "GHS",
                       "KES"
                     ],
-                    "type": "string"
-                  },
-                  "mobileNetwork": {
-                    "enum": [
-                      "MTN",
-                      "TELECEL"
-                    ],
-                    "type": "string"
-                  },
-                  "mobileNumber": {
                     "type": "string"
                   },
                   "transactionReference": {
@@ -6994,8 +7554,7 @@
                   }
                 },
                 "required": [
-                  "currency",
-                  "-"
+                  "currency"
                 ],
                 "type": "object"
               }
@@ -7056,6 +7615,7 @@
                   "mobileNetwork": "",
                   "network": "",
                   "otp": "",
+                  "paymentNetwork": "",
                   "shortcode": "",
                   "transactionReference": "",
                   "type": ""
@@ -7077,13 +7637,12 @@
                     "enum": [
                       "BNB",
                       "BTC",
-                      "ETH",
-                      "USDC",
-                      "USDT",
                       "CUSD",
+                      "ETH",
+                      "KES",
                       "NGN",
-                      "GHS",
-                      "KES"
+                      "USDC",
+                      "USDT"
                     ],
                     "type": "string"
                   },
@@ -7091,9 +7650,11 @@
                     "type": "string"
                   },
                   "mobileNetwork": {
+                    "description": "mobile network of the recipient; required for mobile currencies",
                     "enum": [
+                      "Airtel",
                       "Safaricom",
-                      "Airtel"
+                      "Telkom"
                     ],
                     "type": "string"
                   },
@@ -7105,12 +7666,11 @@
                       "bitcoin",
                       "celo",
                       "ethereum",
+                      "kenyanshilling",
+                      "naira",
                       "polygon",
-                      "tron",
                       "solana",
-                      "MOBILE",
-                      "BUY_GOODS",
-                      "PAYBILL"
+                      "tron"
                     ],
                     "type": "string"
                   },
@@ -7118,8 +7678,17 @@
                     "description": "6 digit otp from authenticator app; required if withdrawal request is made with jwt token",
                     "type": "string"
                   },
+                  "paymentNetwork": {
+                    "description": "payment network of the recipient; required for mobile currencies",
+                    "enum": [
+                      "BUY_GOODS",
+                      "MOBILE",
+                      "PAYBILL"
+                    ],
+                    "type": "string"
+                  },
                   "shortcode": {
-                    "description": "mobile number of the recipient",
+                    "description": "mobile number of the recipient; required for mobile currencies",
                     "type": "string"
                   },
                   "transactionReference": {
@@ -8521,14 +9090,8 @@
                   "example": {
                     "data": {
                       "createdAt": 1755873600,
-                      "dob": "2002-09-01",
-                      "firstName": "jane",
-                      "kycs": [
-                        "NG"
-                      ],
-                      "lastName": "doe",
-                      "middleName": "doe",
-                      "phoneNumber": "+2349099999999"
+                      "email": "chang+user1@payourse.com",
+                      "phoneNumber": "+2348012345616"
                     },
                     "message": "success"
                   },
@@ -8538,22 +9101,7 @@
                         "createdAt": {
                           "type": "number"
                         },
-                        "dob": {
-                          "type": "string"
-                        },
-                        "firstName": {
-                          "type": "string"
-                        },
-                        "kycs": {
-                          "items": {
-                            "type": "string"
-                          },
-                          "type": "array"
-                        },
-                        "lastName": {
-                          "type": "string"
-                        },
-                        "middleName": {
+                        "email": {
                           "type": "string"
                         },
                         "phoneNumber": {
@@ -8570,7 +9118,7 @@
                 }
               }
             },
-            "description": "get user profile ok"
+            "description": "get account profile success"
           }
         },
         "security": [
@@ -8599,6 +9147,7 @@
                 "schema": {
                   "example": {
                     "data": {
+                      "allowAutoRamp": true,
                       "autoMoveDeposit": false,
                       "cryptoPaymentSource": "unknown",
                       "fees": {
@@ -8615,6 +9164,9 @@
                   "properties": {
                     "data": {
                       "properties": {
+                        "allowAutoRamp": {
+                          "type": "boolean"
+                        },
                         "autoMoveDeposit": {
                           "type": "boolean"
                         },
@@ -8680,16 +9232,22 @@
             "application/json": {
               "schema": {
                 "example": {
+                  "allowAutoRamp": false,
                   "autoMoveDeposit": false,
                   "cryptoPaymentSource": "",
                   "feeAccount": "",
                   "feeAmount": 0,
+                  "feeBearer": "",
                   "feeCap": 0,
                   "feeCurrency": "",
                   "feeType": "",
                   "registrationType": ""
                 },
                 "properties": {
+                  "allowAutoRamp": {
+                    "description": "select true if NGN deposits without matching ramps can create auto ramp requests; defaults to false",
+                    "type": "boolean"
+                  },
                   "autoMoveDeposit": {
                     "description": "select true if all user's account deposits should be held in the user's main account; defaults to false",
                     "type": "boolean"
@@ -8709,6 +9267,14 @@
                   "feeAmount": {
                     "description": "required with feeCurrency and feeType",
                     "type": "number"
+                  },
+                  "feeBearer": {
+                    "description": "select customer if the fee should be borne by the customer; select merchant if the fee should be borne by the merchant; defaults to customer",
+                    "enum": [
+                      "customer",
+                      "merchant"
+                    ],
+                    "type": "string"
                   },
                   "feeCap": {
                     "description": "optional maximum fee amount; if set, the fee will not exceed this amount if type is percentage",
