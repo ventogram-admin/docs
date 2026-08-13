@@ -5244,7 +5244,514 @@
             "authorization": []
           }
         ],
-        "summary": "Handle Ramp",
+        "summary": "Complete Ramp",
+        "tags": [
+          "Ramp"
+        ]
+      }
+    },
+    "/ramp/offramp": {
+      "post": {
+        "description": "Initiates offramp requests.",
+        "operationId": "post-ramp-offramp",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "example": {
+                  "accountName": "",
+                  "accountNumber": "",
+                  "autoComplete": false,
+                  "bankCode": "",
+                  "cancelPendingRampRequest": false,
+                  "expireAction": "",
+                  "fromAmount": 0,
+                  "fromCurrency": "",
+                  "fromNetwork": "",
+                  "mobileNetwork": "",
+                  "paymentNetwork": "",
+                  "rampExpTime": 0,
+                  "rampReference": "",
+                  "rateKey": "",
+                  "sendingAddress": "",
+                  "shortcode": "",
+                  "toAmount": 0,
+                  "toCurrency": ""
+                },
+                "properties": {
+                  "accountName": {
+                    "description": "accountname of the user (not bank account name)",
+                    "type": "string"
+                  },
+                  "accountNumber": {
+                    "type": "string"
+                  },
+                  "autoComplete": {
+                    "description": "allows you to suspend the ramp request to be completed later",
+                    "type": "boolean"
+                  },
+                  "bankCode": {
+                    "type": "string"
+                  },
+                  "cancelPendingRampRequest": {
+                    "description": "users can only have one pending RampRequest at a time; if you have a pending RampRequest, set CancelPendingRampRequest as true; defaults to false",
+                    "type": "boolean"
+                  },
+                  "expireAction": {
+                    "description": "allows you to choose what should happen to your ramp request if the current rate is no longer applicable; default is useCurrentRate",
+                    "enum": [
+                      "useCurrentRate",
+                      "deposit"
+                    ],
+                    "type": "string"
+                  },
+                  "fromAmount": {
+                    "type": "number"
+                  },
+                  "fromCurrency": {
+                    "enum": [
+                      "BNB",
+                      "BTC",
+                      "CUSD",
+                      "ETH",
+                      "USDC",
+                      "USDT"
+                    ],
+                    "type": "string"
+                  },
+                  "fromNetwork": {
+                    "enum": [
+                      "avalanche",
+                      "base",
+                      "binance",
+                      "bitcoin",
+                      "celo",
+                      "ethereum",
+                      "polygon",
+                      "solana",
+                      "tron"
+                    ],
+                    "type": "string"
+                  },
+                  "mobileNetwork": {
+                    "description": "mobile network of the payout recipient; required for mobile currencies",
+                    "enum": [
+                      "Airtel",
+                      "Safaricom",
+                      "Telkom"
+                    ],
+                    "type": "string"
+                  },
+                  "paymentNetwork": {
+                    "description": "payment network of the payout recipient; required for mobile currencies",
+                    "enum": [
+                      "BUY_GOODS",
+                      "MOBILE",
+                      "PAYBILL"
+                    ],
+                    "type": "string"
+                  },
+                  "rampExpTime": {
+                    "description": "allows you to set when you need the ramp to expire or cancel; default is 1 hour",
+                    "type": "number"
+                  },
+                  "rampReference": {
+                    "type": "string"
+                  },
+                  "rateKey": {
+                    "type": "string"
+                  },
+                  "sendingAddress": {
+                    "description": "Address from which the user will be sending or receiving funds",
+                    "type": "string"
+                  },
+                  "shortcode": {
+                    "description": "shortcode, required for mobile currencies",
+                    "type": "string"
+                  },
+                  "toAmount": {
+                    "type": "number"
+                  },
+                  "toCurrency": {
+                    "enum": [
+                      "NGN",
+                      "KES"
+                    ],
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "accountName",
+                  "fromCurrency",
+                  "fromNetwork",
+                  "toCurrency"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "data": {
+                      "currentRate": 900,
+                      "discountApplied": "3",
+                      "expiryDate": 1755873600,
+                      "feeInFromCurrency": 0.05,
+                      "feeInToCurrency": 45,
+                      "fromAmount": 400,
+                      "fromCurrency": "USDT",
+                      "fromNetwork": "tron",
+                      "paymentAddress": "TRfF7GhpVFbQByVgA6fqfinHKVYyBAwVPV",
+                      "rampReference": "ca8c223a6505ae9e2d277f427623d6a4",
+                      "toAmount": 370753.65,
+                      "toCurrency": "NGN",
+                      "toNetwork": "naira",
+                      "totalFeesInFromCurrency": 0.05,
+                      "totalFeesInToCurrency": 45
+                    },
+                    "message": "request completed"
+                  },
+                  "properties": {
+                    "data": {
+                      "properties": {
+                        "currentRate": {
+                          "type": "number"
+                        },
+                        "discountApplied": {
+                          "type": "string"
+                        },
+                        "expiryDate": {
+                          "type": "number"
+                        },
+                        "feeInFromCurrency": {
+                          "type": "number"
+                        },
+                        "feeInToCurrency": {
+                          "type": "number"
+                        },
+                        "fromAmount": {
+                          "type": "number"
+                        },
+                        "fromCurrency": {
+                          "type": "string"
+                        },
+                        "fromNetwork": {
+                          "type": "string"
+                        },
+                        "paymentAddress": {
+                          "type": "string"
+                        },
+                        "rampReference": {
+                          "type": "string"
+                        },
+                        "toAmount": {
+                          "type": "number"
+                        },
+                        "toCurrency": {
+                          "type": "string"
+                        },
+                        "toNetwork": {
+                          "type": "string"
+                        },
+                        "totalFeesInFromCurrency": {
+                          "type": "number"
+                        },
+                        "totalFeesInToCurrency": {
+                          "type": "number"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "post ramp offramp ok"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "message": "invalid rate key"
+                  },
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "post ramp offramp bad request"
+          }
+        },
+        "security": [
+          {
+            "x-api-key": [],
+            "x-api-user": []
+          },
+          {
+            "authorization": []
+          }
+        ],
+        "summary": "Offramp",
+        "tags": [
+          "Ramp"
+        ]
+      }
+    },
+    "/ramp/onramp": {
+      "post": {
+        "description": "Initiates onramp requests.",
+        "operationId": "post-ramp-onramp",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "example": {
+                  "accountName": "",
+                  "autoComplete": false,
+                  "cancelPendingRampRequest": false,
+                  "cryptoAddress": "",
+                  "expireAction": "",
+                  "fromAmount": 0,
+                  "fromCurrency": "",
+                  "phoneID": "",
+                  "rampExpTime": 0,
+                  "rampReference": "",
+                  "rateKey": "",
+                  "sendingAddress": "",
+                  "toAmount": 0,
+                  "toCurrency": "",
+                  "toNetwork": ""
+                },
+                "properties": {
+                  "accountName": {
+                    "description": "accountname of the user (not bank account name)",
+                    "type": "string"
+                  },
+                  "autoComplete": {
+                    "description": "allows you to suspend the ramp request to be completed later",
+                    "type": "boolean"
+                  },
+                  "cancelPendingRampRequest": {
+                    "description": "users can only have one pending RampRequest at a time; if you have a pending RampRequest, set CancelPendingRampRequest as true; defaults to false",
+                    "type": "boolean"
+                  },
+                  "cryptoAddress": {
+                    "type": "string"
+                  },
+                  "expireAction": {
+                    "description": "allows you to choose what should happen to your ramp request if the current rate is no longer applicable; default is useCurrentRate",
+                    "enum": [
+                      "useCurrentRate",
+                      "deposit"
+                    ],
+                    "type": "string"
+                  },
+                  "fromAmount": {
+                    "type": "number"
+                  },
+                  "fromCurrency": {
+                    "enum": [
+                      "NGN",
+                      "KES"
+                    ],
+                    "type": "string"
+                  },
+                  "phoneID": {
+                    "type": "string"
+                  },
+                  "rampExpTime": {
+                    "description": "allows you to set when you need the ramp to expire or cancel; default is 1 hour",
+                    "type": "number"
+                  },
+                  "rampReference": {
+                    "type": "string"
+                  },
+                  "rateKey": {
+                    "type": "string"
+                  },
+                  "sendingAddress": {
+                    "description": "Address from which the user will be sending or receiving funds",
+                    "type": "string"
+                  },
+                  "toAmount": {
+                    "type": "number"
+                  },
+                  "toCurrency": {
+                    "enum": [
+                      "BNB",
+                      "BTC",
+                      "CUSD",
+                      "ETH",
+                      "USDC",
+                      "USDT"
+                    ],
+                    "type": "string"
+                  },
+                  "toNetwork": {
+                    "enum": [
+                      "avalanche",
+                      "base",
+                      "binance",
+                      "bitcoin",
+                      "celo",
+                      "ethereum",
+                      "polygon",
+                      "solana",
+                      "tron"
+                    ],
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "accountName",
+                  "fromCurrency",
+                  "toCurrency",
+                  "toNetwork"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "data": {
+                      "accountName": "RAMP ACCOUNT1",
+                      "accountNumber": "1920123522",
+                      "bankName": "WEMA BANK",
+                      "currentRate": 0.001,
+                      "discountApplied": "0",
+                      "expiryDate": 1755873600,
+                      "feeInFromCurrency": 1010,
+                      "feeInToCurrency": 1.01,
+                      "fromAmount": 100000,
+                      "fromCurrency": "NGN",
+                      "fromNetwork": "naira",
+                      "rampReference": "ba8c223a6505ae9e2d277f427623d6a4",
+                      "toAmount": 98.99,
+                      "toCurrency": "USDT",
+                      "toNetwork": "tron",
+                      "totalFeesInFromCurrency": 1010,
+                      "totalFeesInToCurrency": 1.01
+                    },
+                    "message": "request completed"
+                  },
+                  "properties": {
+                    "data": {
+                      "properties": {
+                        "accountName": {
+                          "type": "string"
+                        },
+                        "accountNumber": {
+                          "type": "string"
+                        },
+                        "bankName": {
+                          "type": "string"
+                        },
+                        "currentRate": {
+                          "type": "number"
+                        },
+                        "discountApplied": {
+                          "type": "string"
+                        },
+                        "expiryDate": {
+                          "type": "number"
+                        },
+                        "feeInFromCurrency": {
+                          "type": "number"
+                        },
+                        "feeInToCurrency": {
+                          "type": "number"
+                        },
+                        "fromAmount": {
+                          "type": "number"
+                        },
+                        "fromCurrency": {
+                          "type": "string"
+                        },
+                        "fromNetwork": {
+                          "type": "string"
+                        },
+                        "rampReference": {
+                          "type": "string"
+                        },
+                        "toAmount": {
+                          "type": "number"
+                        },
+                        "toCurrency": {
+                          "type": "string"
+                        },
+                        "toNetwork": {
+                          "type": "string"
+                        },
+                        "totalFeesInFromCurrency": {
+                          "type": "number"
+                        },
+                        "totalFeesInToCurrency": {
+                          "type": "number"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "post ramp onramp ok"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "message": "please cancel pending ramp request with reference - be8c223a6505ae9e2d277f427623d6a4"
+                  },
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "post ramp onramp bad request"
+          }
+        },
+        "security": [
+          {
+            "x-api-key": [],
+            "x-api-user": []
+          },
+          {
+            "authorization": []
+          }
+        ],
+        "summary": "Onramp",
         "tags": [
           "Ramp"
         ]
