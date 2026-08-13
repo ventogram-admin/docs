@@ -5621,7 +5621,8 @@
                   "accountName",
                   "fromCurrency",
                   "toCurrency",
-                  "toNetwork"
+                  "toNetwork",
+                  "cryptoAddress"
                 ],
                 "type": "object"
               }
