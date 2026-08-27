@@ -3336,7 +3336,7 @@
                 "schema": {
                   "example": {
                     "data": {
-                      "qrCode": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHEAAABxAQMAAADYsN6TAAAABlBMVEX///8AAABVwtN+AAABtElEQVR42sTUMapmOwgH8EBawa0IaQW3LqQV3IpgK/i459438J1x2hm7X5No8sf1z6vLCHIlL28drIC3rG2jrclu4nCB+1rN7q8Dmw/8wQmAzWfNVohzAK8DrMld9lO/+v/wWrWuIZ/6f+JPqyumNKR26OQFJxcyAcQajObg2rThwuTeXsm07WzTweGm1Vdu2NPR2zvOlot8gXPycUBEqFUFk2k3FUeK3Oe+t7k5iEqiy9dgIUNOAS1OHdyAW1EUEXgyBqWYns70yVqIIcZZWpPtrrIsOcbPe7+Nfet6+ba2ya7BzHhAdXRbOYHzdfvOz8uhymwAifrE6W3tPBvLwzom32tsfOgq8uQNGulOUT2aTxCv7GWok8PskG28WKPhEm4XW8Q2mRu95SjalsmuqhSWknYnL8jUiFNEMll3MDBTFzwNv71xKx9EV3vy+nZu97hXAtInk3TIodry/Z9vyyaj2CerQQcXGrm03OqavFajFliC/myMT3fpwbIOMJusQIyFVKk+2e2ida/2733zu3du/5qGaY1GdUZZkjBZYS1lTpGNk7+mtCpJvVcH/936LwAA//9xl5M1Qm7l5gAAAABJRU5ErkJggg==",
+                      "qrCode": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHEAAABxAQMAAADYsN6TAAAABlBMVEX///8AAABVwtN+AAABnklEQVR42sTUO6oeQAiGYWFawa0I0wpuXZhWcCuCrWD4yQUOMW3O1z3NMG8jfPumnbGgBGJssSG99vFDDpvDNfChzPPePZ8HRy7+w4VIIxd2G+a9SC8QYfO0/9qf/38xQMNzktu/i7/awqh0sGzSNgPeAhJGTFhMHhg2fPDh5jnRJXz8HrfFGW49T196w+KT9+gjeSi1+QYSETZ042Y+wy1Zqs9tsYwkc2tOByxWdpJStJayxYN0jNSIUDZTcqnbnarYbE2U6lJtvdkftFfrdUlYTPP6Rcfx8c1hKSJ00Wz1eAdjyAsfW5xmIo5YZAaLbeoe6kif3Pyei8vlZySbD1pWBGfParnJAjXgZJvT/bIfetSr8TGdUAcW3yxDMXqN/OjmMDNOLy1/mwGrLPM2s262k4IiPI1kiw8dk0sU5giL60Tke5pYsZl1Ui/3UfPNetg5z60etMVNzqGjr6c3AwxZoxdaw+Jpu9Q+ie6bDVmoibssNoc/8hmY+Hlv/vapE58aYVhNFkIKWrjZEMBESvXQ5k+ld2vZe7b4/+7HAHGXkzUkn50UAAAAAElFTkSuQmCC",
                       "recoveryPhrases": [
                         "c5d61a-2e7f25",
                         "04f71d-fc0a2d",
@@ -4598,7 +4598,8 @@
         ]
       },
       "post": {
-        "description": "Initiates onramp and offramp requests.",
+        "deprecated": true,
+        "description": "Deprecated. Use dedicated /onramp and /offramp endpoints to create onramp and offramp requests respectively.",
         "operationId": "post-ramp",
         "requestBody": {
           "content": {
